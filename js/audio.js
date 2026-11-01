@@ -396,8 +396,10 @@
         return null;
       }
 
+      var cleanedNeedle = cleanVoiceName(name).toLowerCase();
+
       return this.voices.filter(function (voice) {
-        return String(voice.name || "").toLowerCase() === needle;
+        return cleanVoiceName(voice.name).toLowerCase() === cleanedNeedle;
       })[0] || null;
     }
 
