@@ -19,7 +19,7 @@
 
   var FONT_SIZES = [1.12, 1.25, 1.4, 1.6, 1.85];
   var FONT_SIZE_LABELS = ["Small", "Cosy", "Standard", "Large", "Extra large"];
-  var RATE_VALUES = [0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1];
+  var RATE_VALUES = [0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1];
 
   var FONTS = {
     lexend: { label: "Lexend", stack: "var(--font-ui)" },
@@ -38,7 +38,7 @@
   var DEFAULT_PREFS = {
     font: "lexend",
     sizeIndex: 2,
-    rate: 0.85,
+    rate: 0.65,
     lineFocus: false,
     voiceName: ""
   };
@@ -255,7 +255,7 @@
   }
 
   function nearestRate(value) {
-    var target = clamp(value, 0.7, 1);
+    var target = clamp(value, 0.65, 1);
     var closest = RATE_VALUES[0];
 
     RATE_VALUES.forEach(function (rate) {
