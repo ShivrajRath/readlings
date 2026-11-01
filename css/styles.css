@@ -2115,6 +2115,17 @@ fieldset {
   gap: 0.45rem;
 }
 
+.dialog-chapter-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
+}
+
+.dialog-chapter-row .dialog-chapter {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .dialog-chapter {
   display: flex;
   align-items: center;
@@ -2884,6 +2895,44 @@ fieldset {
   flex-direction: column;
   gap: 0.25rem;
   padding: 0.65rem;
+}
+
+.chapter-nav-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.chapter-nav-row .chapter-nav-link {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.chapter-focus-link {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  place-items: center;
+  color: var(--ink-muted);
+  border: 1px solid #E8DFCE;
+  border-radius: 9px;
+  background: #FFFDF7;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.chapter-focus-link:hover {
+  color: var(--sunny-deep, #B87900);
+  background: #FFF4D6;
+  border-color: #F0D988;
+}
+
+.chapter-focus-link .icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 .chapter-nav-link {

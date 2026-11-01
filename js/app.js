@@ -907,16 +907,21 @@
       }
 
       return (
-        '<a class="dialog-chapter" href="' + escapeHtml(chapterUrl(chapter)) + '"' +
-          (current ? ' aria-current="page"' : "") + '>' +
-          '<span class="dialog-chapter__number">' + chapter.number + '</span>' +
-          '<span class="dialog-chapter__copy">' +
-            '<strong>' + escapeHtml(chapter.title) + '</strong>' +
-            '<small>' + escapeHtml(chapter.summary) + '</small>' +
-          '</span>' +
-          status +
-          icon("arrow-right") +
-        '</a>'
+        '<div class="dialog-chapter-row">' +
+          '<a class="dialog-chapter" href="' + escapeHtml(chapterUrl(chapter)) + '"' +
+            (current ? ' aria-current="page"' : "") + '>' +
+            '<span class="dialog-chapter__number">' + chapter.number + '</span>' +
+            '<span class="dialog-chapter__copy">' +
+              '<strong>' + escapeHtml(chapter.title) + '</strong>' +
+              '<small>' + escapeHtml(chapter.summary) + '</small>' +
+            '</span>' +
+            status +
+            icon("arrow-right") +
+          '</a>' +
+          '<a class="chapter-focus-link chapter-focus-link--dialog" href="' + escapeHtml(chapterUrl(chapter) + "&focus=1") + '" title="Focus on this chapter" aria-label="Focus on this chapter">' +
+            icon("focus") +
+          '</a>' +
+        '</div>'
       );
     }).join("");
     var footerAction = context === "reader" || !startChapter
@@ -965,6 +970,12 @@
     if (!currentBook || !currentChapter) {
       renderReaderError();
       return;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    if (params.get("focus") === "1") {
+      prefs.lineFocus = true;
+      savePrefs();
     }
 
     applyLevelTheme(currentChapter.levelData);
@@ -1294,16 +1305,21 @@
       var current = chapter.key === currentChapter.key;
 
       return (
-        '<a class="chapter-nav-link" href="' + escapeHtml(chapterUrl(chapter)) + '"' +
-          (current ? ' aria-current="page"' : "") + '>' +
-          '<span class="chapter-nav-link__number">' + chapter.number + '</span>' +
-          '<span class="chapter-nav-link__text">' +
-            '<strong>' + escapeHtml(chapter.title) + '</strong>' +
-            '<small>' + chapter.minutes + ' min · ' + (complete ? "Finished" : "Ready to read") + '</small>' +
-          '</span>' +
-          '<span class="chapter-nav-link__status' + (complete ? " is-complete" : "") + '" aria-label="' +
-            (complete ? "Star collected" : "No star yet") + '">' + icon("star") + '</span>' +
-        '</a>'
+        '<div class="chapter-nav-row">' +
+          '<a class="chapter-nav-link" href="' + escapeHtml(chapterUrl(chapter)) + '"' +
+            (current ? ' aria-current="page"' : "") + '>' +
+            '<span class="chapter-nav-link__number">' + chapter.number + '</span>' +
+            '<span class="chapter-nav-link__text">' +
+              '<strong>' + escapeHtml(chapter.title) + '</strong>' +
+              '<small>' + chapter.minutes + ' min · ' + (complete ? "Finished" : "Ready to read") + '</small>' +
+            '</span>' +
+            '<span class="chapter-nav-link__status' + (complete ? " is-complete" : "") + '" aria-label="' +
+              (complete ? "Star collected" : "No star yet") + '">' + icon("star") + '</span>' +
+          '</a>' +
+          '<a class="chapter-focus-link" href="' + escapeHtml(chapterUrl(chapter) + "&focus=1") + '" title="Focus on this chapter" aria-label="Focus on this chapter">' +
+            icon("focus") +
+          '</a>' +
+        '</div>'
       );
     }).join("");
 
