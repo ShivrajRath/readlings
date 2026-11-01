@@ -187,6 +187,53 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "dot-and-the-dog",
+      level: 0,
+      title: "Dot and the Dog",
+      kicker: "A bouncy new friend",
+      blurb: "Dot finds a big floppy dog who loves to run, fetch, and wag.",
+      emoji: "🐶",
+      skills: ["CVC words", "short o", "sight words"],
+      chapters: [
+        {
+          id: "a-new-dog",
+          title: "A New Dog",
+          summary: "Dot finds a big, floppy friend.",
+          minutes: 1,
+          paragraphs: [
+            "Dot has a dog.",
+            "The dog is big.",
+            "Dot and the dog run.",
+            "The dog has fun!"
+          ]
+        },
+        {
+          id: "the-ball",
+          title: "The Ball",
+          summary: "A game of fetch for two friends.",
+          minutes: 1,
+          paragraphs: [
+            "Dot brings a ball.",
+            "The dog sees the ball.",
+            "The dog runs for the ball.",
+            "The dog gets the ball!"
+          ]
+        },
+        {
+          id: "good-dog",
+          title: "Good Dog",
+          summary: "A silly game with a happy pup.",
+          minutes: 1,
+          paragraphs: [
+            "Dot says sit.",
+            "The dog sits.",
+            "The dog rolls over.",
+            "Dot claps. The dog wags."
+          ]
+        }
+      ]
     }
   ],
 
@@ -281,6 +328,53 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "wrens-snow-day",
+      level: 1,
+      title: "Wren's Snow Day",
+      kicker: "A chilly friendship",
+      blurb: "Wren wakes to a world of snow and builds a frosty friend for the whole valley.",
+      emoji: "⛄",
+      skills: ["blends", "short vowels", "weather"],
+      chapters: [
+        {
+          id: "the-first-snow",
+          title: "The First Snow",
+          summary: "Wren wakes to a world turned white.",
+          minutes: 2,
+          paragraphs: [
+            "Wren wakes to snow.",
+            "The trees wear white hats.",
+            "Wren catches a snowflake.",
+            "The snow is soft!"
+          ]
+        },
+        {
+          id: "snow-friend",
+          title: "Snow Friend",
+          summary: "Wren packs a frosty friend out of snow.",
+          minutes: 2,
+          paragraphs: [
+            "Wren packs a ball of snow.",
+            "Wren rolls it to the tree.",
+            "The snow friend waves.",
+            "Wren says hi!"
+          ]
+        },
+        {
+          id: "snow-day-play",
+          title: "Snow Day Play",
+          summary: "Sledding, snowballs, and warm cocoa.",
+          minutes: 2,
+          paragraphs: [
+            "Wren finds a sled.",
+            "Wren slides down the hill.",
+            "The snow goes swish, swish.",
+            "Warm cocoa waits inside."
+          ]
+        }
+      ]
     }
   ],
 
@@ -369,6 +463,53 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "the-rainbow-bridge",
+      level: 2,
+      title: "The Rainbow Bridge",
+      kicker: "A bridge of colours",
+      blurb: "Ana and Bea build a bridge from every colour they can find — and cross it together.",
+      emoji: "🌈",
+      skills: ["long vowels", "silent e", "colour words"],
+      chapters: [
+        {
+          id: "the-rainbow",
+          title: "The Rainbow",
+          summary: "A bridge needs a hundred colours.",
+          minutes: 3,
+          paragraphs: [
+            "Ana and Bea found a box of crayons.",
+            "The box was full of colours.",
+            "Ana drew a red road.",
+            "Bea drew a blue sky."
+          ]
+        },
+        {
+          id: "the-bridge",
+          title: "The Bridge",
+          summary: "They build a bridge over the stream.",
+          minutes: 3,
+          paragraphs: [
+            "The stream goes splash, splash.",
+            "Ana and Bea build a bridge.",
+            "The red planks go on.",
+            "The blue planks go on."
+          ]
+        },
+        {
+          id: "the-big-walk",
+          title: "The Big Walk",
+          summary: "They cross and cheer for every colour.",
+          minutes: 3,
+          paragraphs: [
+            "One, two, three — cross!",
+            "They walk over the bridge.",
+            "Red, blue, green — they made it!",
+            "The stream goes splish, splash."
+          ]
+        }
+      ]
     }
   ],
 
@@ -416,6 +557,52 @@ window.READLINGS_CURRICULUM = {
             "At the last second, Gran hooked the boat with her umbrella. The tiny mast wobbled, but the button wheel stayed safe.",
             "“You saved it!” Milo cheered. Gran grinned. “Every good captain needs a first mate.”",
             "They carried the boat home and set it on the shelf. Outside the rain kept falling, but Milo had a story to tell and a boat that could sail another day."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-backyard-rocket",
+      level: 3,
+      title: "The Backyard Rocket",
+      kicker: "A launch from the lawn",
+      blurb: "Two neighbours build a rocket and count down to a very backyard adventure.",
+      emoji: "🚀",
+      skills: ["compound words", "dialogue", "expression"],
+      chapters: [
+        {
+          id: "the-backyard-plan",
+          title: "The Backyard Plan",
+          summary: "Blueprints, tape, and a very important countdown.",
+          minutes: 4,
+          paragraphs: [
+            "“I’m building a rocket,” said Sam.",
+            "“From what?” asked Jo.",
+            "“From the backyard,” said Sam. “It’s the biggest launch pad in town.”",
+            "They taped cardboard fins to a big box."
+          ]
+        },
+        {
+          id: "the-launch",
+          title: "The Launch",
+          summary: "Three, two, one — blast off into the bushes.",
+          minutes: 4,
+          paragraphs: [
+            "“Ready?” said Jo.",
+            "“Ready,” said Sam.",
+            "They counted together. “Three, two, one, blast off!”",
+            "The rocket lifted off — straight into the bushes."
+          ]
+        },
+        {
+          id: "the-real-launch",
+          title: "The Real Launch",
+          summary: "A cardboard rocket still deserves the biggest countdown ever.",
+          minutes: 4,
+          paragraphs: [
+            "“Okay, real launch,” said Sam. “Three, two, one.”",
+            "Jo held the box tight. The rocket rose over the sandbox.",
+            "“We did it!” they shouted. The backyard cheered in cardboard."
           ]
         }
       ]
@@ -477,6 +664,58 @@ window.READLINGS_CURRICULUM = {
             "Nia leaned over the side of the boat and listened. Beneath the water, a steady glow pulsed like a heartbeat.",
             "She tapped the lantern three times with the oar. The sea opened in a circle of silver bubbles, and the drowned lantern rose, blazing with pale blue fire. The entire bay shimmered.",
             "When Nia rowed home, the lighthouse beam reached farther than it ever had. Grandfather was waiting on the steps. “You found the last light,” he said. Nia held up the map, now blank. “No,” she said. “I found the way back.”"
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-paper-kingdom",
+      level: 4,
+      title: "The Paper Kingdom",
+      kicker: "A kingdom of folded things",
+      blurb: "When the river that fed the kingdom runs dry, the smallest citizens learn to fold a new world.",
+      emoji: "📜",
+      skills: ["rich vocabulary", "inference", "chapter book"],
+      chapters: [
+        {
+          id: "the-paper-kingdom",
+          title: "The Paper Kingdom",
+          summary: "The kingdom is built from folded paper.",
+          minutes: 5,
+          paragraphs: [
+            "The kingdom of Lumen was built from folded paper.",
+            "Every tower began as a single square.",
+            "The queen folded the first roof herself. The people called it the Paper Kingdom, though the wind often called it a rumour."
+          ]
+        },
+        {
+          id: "the-rising-river",
+          title: "The Rising River",
+          summary: "The river that fed the kingdom begins to fade.",
+          minutes: 5,
+          paragraphs: [
+            "The river that watered Lumen slowed to a whisper.",
+            "The gardens curled brown at the edges, and the millers grumbled about the drought."
+          ]
+        },
+        {
+          id: "the-fold",
+          title: "The Fold",
+          summary: "The kingdom learns to make water from memory.",
+          minutes: 5,
+          paragraphs: [
+            "The oldest mapmaker folded a valley of blue paper and set it beside the hollow hills.",
+            "The river returned, quiet as a held breath, and the fields drank."
+          ]
+        },
+        {
+          id: "the-new-kingdom",
+          title: "The New Kingdom",
+          summary: "A kingdom rebuilt, one fold at a time.",
+          minutes: 5,
+          paragraphs: [
+            "They folded new rivers, new fields, new homes.",
+            "And the smallest paper citizen folded a door just big enough for a story."
           ]
         }
       ]

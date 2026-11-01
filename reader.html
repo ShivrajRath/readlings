@@ -107,6 +107,13 @@
           <button class="icon-btn icon-btn--stop" id="audio-stop" type="button" aria-label="Stop the read-along" disabled>
             <svg class="icon" aria-hidden="true"><use href="#icon-stop"></use></svg>
           </button>
+          <label class="voice-select">
+            <span class="sr-only">Reading voice</span>
+            <select id="audio-voice" aria-label="Reading voice">
+              <option value="">Automatic · warmest voice</option>
+            </select>
+            <svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+          </label>
           <label class="speed-select">
             <span class="sr-only">Reading speed</span>
             <select id="audio-rate" aria-label="Reading speed">

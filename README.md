@@ -7,8 +7,8 @@ Readlings is a free, standalone reading curriculum website for young children. I
 ## What is included
 
 - **Five reading levels (0–4):** from first CVC words to short chapter books.
-- **Eight illustrated storybooks / 25 chapters:** two books each at Levels 0–2, one three-chapter book at Level 3, and one four-chapter book at Level 4.
-- **Read-along narration:** automatic natural English voice selection, 0.85× default speed, adjustable 0.7×–1.0× speed, synchronized word highlighting, and Play / Pause / Resume / Stop controls.
+- **Thirteen illustrated storybooks / 41 chapters:** three books each at Levels 0–2, two three-chapter books at Level 3, and two four-chapter books at Level 4.
+- **Read-along narration:** automatic natural English voice selection, optional manual voice picker (US English and other English voices, male or female), 0.85× default speed, adjustable 0.7×–1.0× speed, synchronized word highlighting, and Play / Pause / Resume / Stop controls.
 - **Reader comfort tools:** Lexend, Comic Neue, and OpenDyslexic fonts; five text sizes; a toggleable line-focus mask.
 - **Progress:** stars and last-read position are saved in `localStorage` on the device.
 - **Print editions:** print the current chapter or the whole book. Printed pages use a white background, black 16pt text, 1.8 line-height, 0.75in margins, a running header, and a page break per chapter.
@@ -52,7 +52,7 @@ Edit `data/curriculum.js` to add or change levels, books, or chapters. Each chap
 Reader preferences use these storage keys:
 
 - `readlings.progress.v1` — `{ completed, lastRead }`
-- `readlings.prefs.v1` — `{ font, sizeIndex, rate, lineFocus }`
+- `readlings.prefs.v1` — `{ font, sizeIndex, rate, lineFocus, voiceName }` (`voiceName` is the chosen read-along voice, empty for automatic.)
 
 ## Printing tips
 

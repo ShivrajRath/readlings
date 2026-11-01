@@ -2505,6 +2505,41 @@ fieldset {
   pointer-events: none;
 }
 
+.voice-select {
+  position: relative;
+  display: inline-flex;
+  height: 31px;
+  align-items: center;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #EFE1BD;
+  border-radius: 8px;
+}
+
+.voice-select select {
+  height: 100%;
+  max-width: 150px;
+  padding: 0 1.25rem 0 0.5rem;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  font-size: 0.59rem;
+  font-weight: 700;
+  outline-offset: 2px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.voice-select > .icon {
+  position: absolute;
+  right: 0.3rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  pointer-events: none;
+}
+
 .toolbar-divider {
   width: 1px;
   height: 29px;
@@ -4676,6 +4711,10 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   }
 
   .toolbar-audio .speed-select select {
+    max-width: 92px;
+  }
+
+  .toolbar-audio .voice-select select {
     max-width: 92px;
   }
 

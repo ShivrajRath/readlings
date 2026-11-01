@@ -5,6 +5,7 @@
 
    Highlights:
    • Chooses the warmest natural English voice available on the device.
+   • Lets a grown-up pick a specific voice — US English, male or female.
    • Defaults to a calm 0.85× pace and a cheerful 1.05 pitch.
    • Turns `boundary` events into exact word highlights through a word map.
    • Gives the UI a small, predictable state machine:
@@ -78,6 +79,30 @@
     "fred",
     "espeak",
     "compact"
+  ];
+
+  /* Names that historically belong to the most natural consumer voices. */
+  var FEMALE_VOICE_HINTS = [
+    "samantha", "karen", "ava", "serena", "moira", "tessa", "kate", "michelle", "zoe",
+    "jenny", "natasha", "emma", "aria", "sonia", "libby", "allison", "brittany", "fiona",
+    "nora", "pauline", "leigha", "rachel", "shelley", "alina", "carol", "chandler", "dakota",
+    "ivy", "jana", "kendra", "kimberly", "leslie", "luna", "patty", "piper", "russell",
+    "sally", "selena", "sheila", "sophia", "susan", "terri", "thomas", "vicki", "willow",
+    "zira", "loria", "melissa", "mia", "mona", "olly", "rosa", "rosie", "vera", "victoria",
+    "viola", "vivian", "zelda", "jessica", "isabella", "elizabeth", "elise", "erin", "freya",
+    "gabriela", "hazel", "june", "katie", "krystal", "lea", "madeline", "maya", "nina",
+    "olive", "paige", "quinn", "rebecca", "sienna", "skyler", "taylor", "tina", "valentina",
+    "violet", "wanda", "xena", "yara", "yasmine", "alice", "amelia", "annie", "anna", "aurora",
+    "jane", "jade", "joy", "ruby", "sadie", "sky"
+  ];
+
+  var MALE_VOICE_HINTS = [
+    "daniel", "george", "frank", "josh", "liam", "matthew", "jack", "john", "will", "alex",
+    "tom", "carlos", "oliver", "samuel", "karl", "andrew", "lawrence", "gary", "tim", "michael",
+    "robert", "william", "charles", "josiah", "gabriel", "ethan", "noah", "asher", "leo",
+    "miles", "owen", "theo", "ryan", "caleb", "connor", "dylan", "evan", "gavin", "hunter",
+    "isaac", "kayden", "mason", "nathan", "oscar", "parker", "quinn", "reed", "rowan", "silas",
+    "wyatt"
   ];
 
   function clamp(value, min, max) {
@@ -185,6 +210,90 @@
       })[0]?.voice || null;
   }
 
+  /**
+   * Strip the noisy bits (vendor prefix, parentheticals, trailing language
+   * tags) so "Microsoft Aria" and "Samantha - English (US)" both become
+   * friendly labels such as "Aria" and "Samantha".
+   */
+  function cleanVoiceName(name) {
+    var cleaned = String(name || "");
+    cleaned = cleaned.replace(/\s*\(.*\)\s*$/g, "").replace(/^Microsoft\s+/i, "").replace(/^Google\s+/i, "");
+    cleaned = cleaned.replace(/\s*[-–—:]\s*English.*$/i, "").trim();
+    return cleaned || "Voice";
+  }
+
+  /**
+   * Best-effort gender guess from a voice name. Consumer voices are named
+   * after the character who speaks them, so a first-name hint list is enough.
+   */
+  function inferVoiceGender(voice) {
+    var cleaned = cleanVoiceName(voice && voice.name);
+    if (!cleaned) {
+      return "unknown";
+    }
+
+    var lowered = cleaned.toLowerCase();
+    var first = lowered.split(/[\s\-_]+/).filter(Boolean)[0] || lowered;
+    var isFemale =
+      FEMALE_VOICE_HINTS.indexOf(first) !== -1 ||
+      FEMALE_VOICE_HINTS.some(function (hint) {
+        return hint && lowered.indexOf(hint) !== -1;
+      });
+    var isMale =
+      MALE_VOICE_HINTS.indexOf(first) !== -1 ||
+      MALE_VOICE_HINTS.some(function (hint) {
+        return hint && lowered.indexOf(hint) !== -1;
+      });
+
+    if (isFemale) {
+      return "female";
+    }
+    if (isMale) {
+      return "male";
+    }
+    return "unknown";
+  }
+
+  function voiceLabel(voice) {
+    var cleaned = cleanVoiceName(voice && voice.name);
+    var gender = inferVoiceGender(voice);
+    var suffix = gender === "female" ? " · Female" : gender === "male" ? " · Male" : "";
+
+    return cleaned + suffix;
+  }
+
+  /**
+   * Every English voice the device can produce, warmest first, so the reader
+   * can offer a manual pick alongside the automatic favourite.
+   */
+  function getEnglishVoices() {
+    if (!speechIsSupported()) {
+      return [];
+    }
+
+    return getAvailableVoices()
+      .filter(function (voice) {
+        return ENGLISH_LANGUAGE.test(voice.lang || "");
+      })
+      .sort(function (a, b) {
+        var scoreDifference = scoreVoice(b) - scoreVoice(a);
+        if (scoreDifference !== 0) {
+          return scoreDifference;
+        }
+        return String(a.name).localeCompare(String(b.name));
+      });
+  }
+
+  function getVoiceOptions() {
+    return getEnglishVoices().map(function (voice) {
+      return {
+        voice: voice,
+        gender: inferVoiceGender(voice),
+        label: voiceLabel(voice)
+      };
+    });
+  }
+
   function getAvailableVoices() {
     if (!speechIsSupported()) {
       return [];
@@ -211,6 +320,7 @@
       this.rate = clamp(this.options.rate || DEFAULT_RATE, MIN_RATE, MAX_RATE);
       this.pitch = this.options.pitch || DEFAULT_PITCH;
       this.voice = null;
+      this.voiceName = typeof this.options.voiceName === "string" ? this.options.voiceName : "";
       this.voices = [];
       this.utterance = null;
       this.cancelled = false;
@@ -247,7 +357,9 @@
 
     refreshVoices(notify) {
       this.voices = getAvailableVoices();
-      this.voice = selectBestVoice(this.voices);
+      this.voice = this.voiceName
+        ? this.findVoice(this.voiceName) || selectBestVoice(this.voices)
+        : selectBestVoice(this.voices);
 
       if (notify) {
         this.onVoicesChanged({
@@ -261,7 +373,42 @@
     }
 
     getVoiceLabel() {
-      return this.voice ? this.voice.name : "your device’s voice";
+      if (!this.voice) {
+        return "your device’s voice";
+      }
+
+      return cleanVoiceName(this.voice.name);
+    }
+
+    /**
+     * Voices the device can actually speak, warmest first. Used by the
+     * reader toolbar to build the voice picker.
+     */
+    getVoices() {
+      return getEnglishVoices();
+    }
+
+    findVoice(name) {
+      var needle = String(name || "").trim().toLowerCase();
+
+      if (!needle || !this.voices || !this.voices.length) {
+        return null;
+      }
+
+      return this.voices.filter(function (voice) {
+        return String(voice.name || "").toLowerCase() === needle;
+      })[0] || null;
+    }
+
+    /**
+     * Pick a specific voice for the read-along, or clear the pick to fall back
+     * to the automatic warmest-voice choice. Pass null to return to auto.
+     */
+    setVoice(voice) {
+      var next = voice || null;
+      this.voice = next;
+      this.voiceName = next ? next.name : "";
+      return this.voice;
     }
 
     setRate(rate) {
@@ -567,6 +714,10 @@
     scoreVoice: scoreVoice,
     selectBestVoice: selectBestVoice,
     getAvailableVoices: getAvailableVoices,
+    getEnglishVoices: getEnglishVoices,
+    getVoiceOptions: getVoiceOptions,
+    cleanVoiceName: cleanVoiceName,
+    inferVoiceGender: inferVoiceGender,
     speechIsSupported: speechIsSupported
   };
 })();

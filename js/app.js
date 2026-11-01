@@ -39,7 +39,8 @@
     font: "lexend",
     sizeIndex: 2,
     rate: 0.85,
-    lineFocus: false
+    lineFocus: false,
+    voiceName: ""
   };
 
   var WORD_PATTERN = /[A-Za-z0-9]+(?:[’'\-][A-Za-z0-9]+)*/g;
@@ -220,7 +221,8 @@
       font: DEFAULT_PREFS.font,
       sizeIndex: DEFAULT_PREFS.sizeIndex,
       rate: DEFAULT_PREFS.rate,
-      lineFocus: false
+      lineFocus: false,
+      voiceName: ""
     };
 
     if (!raw || typeof raw !== "object") {
@@ -240,6 +242,10 @@
     }
 
     clean.lineFocus = Boolean(raw.lineFocus);
+
+    if (typeof raw.voiceName === "string") {
+      clean.voiceName = raw.voiceName;
+    }
 
     return clean;
   }
@@ -287,6 +293,70 @@
 
   function plural(word, count) {
     return count === 1 ? word : word + "s";
+  }
+
+  function languageGroupLabel(lang) {
+    var code = String(lang || "").toLowerCase();
+    var parts = code.split("-");
+    var base = parts[0] || "en";
+    var region = parts.length > 1 ? parts[1].toUpperCase() : "";
+    var name = base === "en" ? "English" : base.charAt(0).toUpperCase() + base.slice(1);
+    return region ? name + " · " + region : name;
+  }
+
+  function voiceSelectLabel(voice) {
+    var tools = window.ReadlingsAudioTools || {};
+    var label = typeof tools.cleanVoiceName === "function"
+      ? tools.cleanVoiceName(voice.name)
+      : String(voice.name || "");
+    var gender = typeof tools.inferVoiceGender === "function" ? tools.inferVoiceGender(voice) : "";
+
+    if (gender === "female") {
+      return label + " · Female";
+    }
+    if (gender === "male") {
+      return label + " · Male";
+    }
+    return label;
+  }
+
+  function populateVoiceSelect() {
+    var select = document.getElementById("audio-voice");
+    if (!select) {
+      return;
+    }
+
+    var voices = audio
+      ? audio.getVoices()
+      : (window.ReadlingsAudioTools ? window.ReadlingsAudioTools.getEnglishVoices() : []);
+
+    var groups = Object.create(null);
+
+    voices.forEach(function (voice) {
+      var key = String((voice && voice.lang) || "").toLowerCase();
+      if (!Object.prototype.hasOwnProperty.call(groups, key)) {
+        groups[key] = [];
+      }
+      groups[key].push(voice);
+    });
+
+    var html = '<option value="">Automatic · warmest voice</option>';
+
+    Object.keys(groups).sort().forEach(function (groupKey) {
+      html += '<optgroup label="' + escapeHtml(languageGroupLabel(groupKey)) + '">';
+      groups[groupKey].forEach(function (voice) {
+        html += '<option value="' + escapeHtml(voice.name) + '">' + escapeHtml(voiceSelectLabel(voice)) + '</option>';
+      });
+      html += '</optgroup>';
+    });
+
+    select.innerHTML = html;
+
+    if (prefs && typeof prefs.voiceName === "string" && prefs.voiceName) {
+      select.value = prefs.voiceName;
+    } else {
+      select.value = "";
+    }
   }
 
   function chapterUrl(chapter) {
@@ -981,6 +1051,11 @@
     if (rateSelect) {
       rateSelect.value = String(prefs.rate);
     }
+
+    var voiceSelect = document.getElementById("audio-voice");
+    if (voiceSelect) {
+      voiceSelect.value = prefs.voiceName || "";
+    }
   }
 
   function renderReaderChapter() {
@@ -1650,6 +1725,7 @@
     var stop = document.getElementById("audio-stop");
     var status = document.getElementById("audio-status");
     var rateSelect = document.getElementById("audio-rate");
+    var voiceSelect = document.getElementById("audio-voice");
 
     if (!toolbar || !toggle || !toggleIcon || !toggleLabel || !status) {
       return;
@@ -1671,6 +1747,10 @@
       }
       if (rateSelect) {
         rateSelect.disabled = true;
+      }
+
+      if (voiceSelect) {
+        voiceSelect.disabled = true;
       }
 
       setReadingHint("You can read the story yourself, or ask a grown-up to read it aloud.");
@@ -1716,6 +1796,30 @@
 
     if (rateSelect) {
       rateSelect.value = String(prefs.rate);
+    }
+
+    if (voiceSelect) {
+      populateVoiceSelect();
+
+      voiceSelect.addEventListener("change", function () {
+        if (!audio) {
+          return;
+        }
+
+        var selectedName = voiceSelect.value;
+        var selectedVoice = selectedName ? audio.findVoice(selectedName) : null;
+
+        prefs.voiceName = selectedName || "";
+        savePrefs();
+
+        audio.setVoice(selectedVoice);
+
+        /* A new voice has to ride a fresh utterance, so restart the reading. */
+        if (audio.state === "playing" || audio.state === "paused") {
+          audio.stop();
+          audio.play();
+        }
+      });
     }
 
     handleAudioState({
@@ -1809,6 +1913,10 @@
       return;
     }
 
+    if (typeof populateVoiceSelect === "function") {
+      populateVoiceSelect();
+    }
+
     if (currentAudioState === "idle" || currentAudioState === "error") {
       status.textContent = voiceStatus();
     }
@@ -1823,13 +1931,13 @@
       return "Tap Play to hear the story";
     }
 
-    var name = String(audio.voice.name || "")
-      .replace(/^Microsoft\s+/i, "")
-      .replace(/^Google\s+/i, "")
-      .replace(/\s*-\s*English.*$/i, "")
-      .replace(/\s*\(.*\)\s*$/, "");
+    var name = audio.getVoiceLabel();
 
-    return name ? "Voice · " + name : "Tap Play to hear the story";
+    if (!name || name === "your device’s voice") {
+      return "Tap Play to hear the story";
+    }
+
+    return "Voice · " + name;
   }
 
   function handleSpokenWord(record) {
