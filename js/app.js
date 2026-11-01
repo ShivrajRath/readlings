@@ -918,10 +918,7 @@
             status +
             icon("arrow-right") +
           '</a>' +
-          '<a class="chapter-focus-link chapter-focus-link--dialog" href="' + escapeHtml(chapterUrl(chapter) + "&focus=1") + '" title="Focus on this chapter" aria-label="Focus on this chapter">' +
-            icon("focus") +
-          '</a>' +
-        '</div>'
+          '</div>'
       );
     }).join("");
     var footerAction = context === "reader" || !startChapter
@@ -970,12 +967,6 @@
     if (!currentBook || !currentChapter) {
       renderReaderError();
       return;
-    }
-
-    var params = new URLSearchParams(window.location.search);
-    if (params.get("focus") === "1") {
-      prefs.lineFocus = true;
-      savePrefs();
     }
 
     applyLevelTheme(currentChapter.levelData);
@@ -1315,9 +1306,6 @@
             '</span>' +
             '<span class="chapter-nav-link__status' + (complete ? " is-complete" : "") + '" aria-label="' +
               (complete ? "Star collected" : "No star yet") + '">' + icon("star") + '</span>' +
-          '</a>' +
-          '<a class="chapter-focus-link" href="' + escapeHtml(chapterUrl(chapter) + "&focus=1") + '" title="Focus on this chapter" aria-label="Focus on this chapter">' +
-            icon("focus") +
           '</a>' +
         '</div>'
       );
