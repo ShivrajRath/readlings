@@ -45,6 +45,17 @@
 
   var WORD_PATTERN = /[A-Za-z0-9]+(?:[’'\-][A-Za-z0-9]+)*/g;
 
+  /* A small, research-informed high-frequency (sight) word list used to
+     build the pre-reading primer. These are the words early readers meet
+     most often, so practising them first lowers cognitive load. */
+  var SIGHT_WORDS = [
+    "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for",
+    "funny", "go", "help", "here", "i", "in", "is", "it", "jump", "little",
+    "look", "make", "me", "my", "not", "one", "play", "red", "run", "said",
+    "see", "the", "three", "to", "two", "up", "we", "where", "yellow", "you",
+    "has", "have", "like", "no", "so", "was", "with", "he", "she", "they"
+  ];
+
   /* Shared state */
   var books = [];
   var chapters = [];
@@ -962,7 +973,9 @@
     updateGlobalCounts();
     setupReaderControls();
     initReadAlong();
+    setupWordTapToDecode();
     rememberLastRead();
+    showPrimer();
 
     window.addEventListener("storage", function (event) {
       if (!event.key || event.key === STORAGE_PROGRESS) {
@@ -1292,7 +1305,7 @@
         ? '<a class="btn btn--primary complete-button" href="' + escapeHtml(chapterUrl(next)) + '">' +
             nextLabel + " " + icon("arrow-right") + '</a>'
         : '<a class="btn btn--primary complete-button" href="index.html#library">More stories ' + icon("arrow-right") + '</a>'
-      : '<button class="btn btn--primary complete-button" type="button" data-complete-chapter>' +
+      : '<button class="btn btn--primary complete-button" type="button" data-open-comprehension>' +
           icon("star") + ' I read this chapter</button>';
 
     zone.innerHTML =
@@ -1583,6 +1596,20 @@
       printBookButton.addEventListener("click", function () {
         closeAllPopovers();
         printWholeBook();
+      });
+    }
+
+    var primerStartButton = document.getElementById("primer-start-button");
+    if (primerStartButton) {
+      primerStartButton.addEventListener("click", function () {
+        closePrimer();
+      });
+    }
+
+    var comprehensionClose = document.getElementById("comprehension-dialog-close");
+    if (comprehensionClose) {
+      comprehensionClose.addEventListener("click", function () {
+        closeDialog(document.getElementById("comprehension-dialog"));
       });
     }
 
@@ -2011,6 +2038,389 @@
     }
   }
 
+  /* -----------------------------------------------------------------------
+     Pre-reading primer
+     ----------------------------------------------------------------------- */
+  function extractSightWords(chapter) {
+    var text = ((chapter && chapter.paragraphs) || []).join(" ").toLowerCase();
+    var found = [];
+    var seen = Object.create(null);
+
+    SIGHT_WORDS.forEach(function (word) {
+      var pattern = new RegExp("\\b" + word.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&") + "\\b", "i");
+      if (pattern.test(text) && !seen[word]) {
+        seen[word] = true;
+        found.push(word);
+      }
+    });
+
+    /* Fall back to the first short words in the chapter so we always have 3. */
+    if (found.length < 3) {
+      var tokens = text.match(WORD_PATTERN) || [];
+      tokens.forEach(function (token) {
+        var lower = token.toLowerCase();
+        if (found.length >= 3) {
+          return;
+        }
+        if (lower.length <= 6 && SIGHT_WORDS.indexOf(lower) === -1 && !seen[lower]) {
+          seen[lower] = true;
+          found.push(lower);
+        }
+      });
+    }
+
+    while (found.length < 3) {
+      var fallback = SIGHT_WORDS[found.length % SIGHT_WORDS.length];
+      if (!seen[fallback]) {
+        seen[fallback] = true;
+        found.push(fallback);
+      } else {
+        break;
+      }
+    }
+
+    return found.slice(0, 3);
+  }
+
+  function extractPhonicsRule(chapter, book) {
+    var skills = (book && Array.isArray(book.skills)) ? book.skills : [];
+    var level = chapter ? chapter.levelData : null;
+    var focus = (level && Array.isArray(level.focus)) ? level.focus : [];
+    var candidates = skills.concat(focus);
+
+    for (var i = 0; i < candidates.length; i += 1) {
+      var skill = String(candidates[i] || "").toLowerCase();
+      if (!skill) {
+        continue;
+      }
+      if (skill.indexOf("short") !== -1) {
+        return "Short vowel sound: " + skill;
+      }
+      if (skill.indexOf("long") !== -1) {
+        return "Long vowel sound: " + skill;
+      }
+      if (skill.indexOf("blend") !== -1) {
+        return "Consonant blends: " + skill;
+      }
+      if (skill.indexOf("silent") !== -1) {
+        return "Silent letters: " + skill;
+      }
+      if (skill.indexOf("compound") !== -1) {
+        return "Compound words: " + skill;
+      }
+      if (skill.indexOf("cvc") !== -1) {
+        return "CVC words: sound out consonant-vowel-consonant";
+      }
+    }
+
+    return focus.length ? String(focus[0]) : "Sound out each word slowly";
+  }
+
+  function speakText(text) {
+    if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== "function") {
+      return;
+    }
+
+    try {
+      window.speechSynthesis.cancel();
+      var utterance = new window.SpeechSynthesisUtterance(String(text || ""));
+      utterance.rate = 0.75;
+      utterance.pitch = 1.05;
+      utterance.volume = 1;
+      utterance.lang = "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      /* Speech is a progressive enhancement; never block reading. */
+    }
+  }
+
+  function showPrimer() {
+    var dialog = document.getElementById("primer-dialog");
+    var sightContainer = document.getElementById("primer-sight-words");
+    var ruleContainer = document.getElementById("primer-phonics-rule");
+
+    if (!dialog || !currentChapter) {
+      return;
+    }
+
+    var sightWords = extractSightWords(currentChapter);
+    var phonicsRule = extractPhonicsRule(currentChapter, currentBook);
+
+    if (sightContainer) {
+      sightContainer.innerHTML = sightWords.map(function (word) {
+        return (
+          '<button class="primer-chip" type="button" data-primer-speak="' + escapeHtml(word) + '">' +
+            escapeHtml(word) +
+            '<span class="primer-chip__audio" aria-hidden="true">' + icon("speaker") + '</span>' +
+          '</button>'
+        );
+      }).join("");
+
+      sightContainer.querySelectorAll("[data-primer-speak]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          speakText(button.getAttribute("data-primer-speak"));
+        });
+      });
+    }
+
+    if (ruleContainer) {
+      ruleContainer.innerHTML =
+        '<button class="primer-rule__audio" type="button" data-primer-speak="' + escapeHtml(phonicsRule) + '" aria-label="Play phonics rule">' +
+          icon("speaker") +
+        '</button>' +
+        '<span>' + escapeHtml(phonicsRule) + '</span>';
+
+      var ruleAudio = ruleContainer.querySelector("[data-primer-speak]");
+      if (ruleAudio) {
+        ruleAudio.addEventListener("click", function () {
+          speakText(ruleAudio.getAttribute("data-primer-speak"));
+        });
+      }
+    }
+
+    document.body.classList.add("primer-open");
+
+    if (typeof openDialog === "function") {
+      openDialog(dialog);
+    } else if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    }
+
+    /* Prevent closing via backdrop or escape until Start Story is pressed. */
+    dialog.addEventListener("cancel", function (event) {
+      event.preventDefault();
+    });
+
+    var startButton = document.getElementById("primer-start-button");
+    if (startButton) {
+      startButton.focus({ preventScroll: true });
+    }
+  }
+
+  function closePrimer() {
+    var dialog = document.getElementById("primer-dialog");
+
+    if (dialog) {
+      if (typeof closeDialog === "function") {
+        closeDialog(dialog);
+      } else if (typeof dialog.close === "function" && dialog.open) {
+        dialog.close();
+      }
+    }
+
+    document.body.classList.remove("primer-open");
+  }
+
+  /* -----------------------------------------------------------------------
+     Tap-to-decode
+     ----------------------------------------------------------------------- */
+  function isDecodableWord(word) {
+    var clean = String(word || "").replace(/[^A-Za-z]/g, "");
+    if (!clean || clean.length > 8) {
+      return false;
+    }
+    /* Only attempt sounding-out for the early levels. */
+    if (currentChapter && currentChapter.levelData && currentChapter.levelData.id > 2) {
+      return false;
+    }
+    return /^[bcdfghjklmnpqrstvwxyz]*[aeiou][bcdfghjklmnpqrstvwxyz]*$/i.test(clean);
+  }
+
+  function splitPhonemes(word) {
+    var clean = String(word || "").toLowerCase().replace(/[^a-z]/g, "");
+    var digraphs = ["tch", "dge", "igh", "eigh", "ould", "ch", "sh", "th", "ph", "wh", "ng", "ck", "qu"];
+    var chunks = [];
+    var i = 0;
+
+    while (i < clean.length) {
+      var matched = false;
+      for (var d = 0; d < digraphs.length; d += 1) {
+        var dg = digraphs[d];
+        if (clean.indexOf(dg, i) === i) {
+          chunks.push(dg);
+          i += dg.length;
+          matched = true;
+          break;
+        }
+      }
+      if (!matched) {
+        chunks.push(clean.charAt(i));
+        i += 1;
+      }
+    }
+
+    return chunks.length ? chunks : [clean];
+  }
+
+  function setupWordTapToDecode() {
+    var body = document.getElementById("chapter-body");
+    if (!body) {
+      return;
+    }
+
+    body.addEventListener("click", function (event) {
+      var wordEl = event.target.closest(".word");
+      if (!wordEl || !body.contains(wordEl)) {
+        return;
+      }
+
+      var original = wordEl.getAttribute("data-original-word");
+      if (!original) {
+        original = wordEl.textContent;
+        wordEl.setAttribute("data-original-word", original);
+      }
+
+      var word = original;
+      var decodable = isDecodableWord(word);
+
+      if (decodable) {
+        var chunks = splitPhonemes(word);
+        wordEl.textContent = chunks.join(" - ");
+        wordEl.classList.add("is-decoding");
+
+        /* Sound it out, phoneme by phoneme, then the whole word. */
+        if (window.speechSynthesis) {
+          try {
+            window.speechSynthesis.cancel();
+            chunks.forEach(function (chunk) {
+              var u = new window.SpeechSynthesisUtterance(chunk);
+              u.rate = 0.6;
+              u.pitch = 1.05;
+              u.volume = 1;
+              u.lang = "en-US";
+              window.speechSynthesis.speak(u);
+            });
+            var full = new window.SpeechSynthesisUtterance(word);
+            full.rate = 0.75;
+            full.pitch = 1.05;
+            full.volume = 1;
+            full.lang = "en-US";
+            window.speechSynthesis.speak(full);
+          } catch (error) {
+            /* Ignore speech errors. */
+          }
+        }
+
+        window.setTimeout(function () {
+          wordEl.textContent = original;
+          wordEl.classList.remove("is-decoding");
+        }, 1800);
+      } else {
+        speakText(word);
+        wordEl.classList.add("is-decoding");
+        window.setTimeout(function () {
+          wordEl.classList.remove("is-decoding");
+        }, 900);
+      }
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     Comprehension check
+     ----------------------------------------------------------------------- */
+  function getComprehension(chapter) {
+    if (chapter && chapter.comprehension) {
+      return chapter.comprehension;
+    }
+
+    var book = chapter ? chapter.book : currentBook;
+    var emoji = (book && book.emoji) ? book.emoji : "📖";
+    var otherEmojis = books
+      .map(function (item) { return item.emoji; })
+      .filter(function (item, index, list) {
+        return item && item !== emoji && list.indexOf(item) === index;
+      })
+      .slice(0, 2);
+
+    while (otherEmojis.length < 2) {
+      otherEmojis.push("🌟");
+    }
+
+    var answers = [
+      { emoji: emoji, label: "This story", correct: true },
+      { emoji: otherEmojis[0], label: "A different story", correct: false },
+      { emoji: otherEmojis[1], label: "Another adventure", correct: false }
+    ];
+
+    /* Shuffle gently so the correct answer is not always first. */
+    for (var i = answers.length - 1; i > 0; i -= 1) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = answers[i];
+      answers[i] = answers[j];
+      answers[j] = tmp;
+    }
+
+    return {
+      question: (chapter && chapter.summary) ? chapter.summary + " Which picture fits best?" : "Which picture fits our story best?",
+      answers: answers
+    };
+  }
+
+  function showComprehension() {
+    var dialog = document.getElementById("comprehension-dialog");
+    var questionEl = document.getElementById("comprehension-question");
+    var answersEl = document.getElementById("comprehension-answers");
+    var feedbackEl = document.getElementById("comprehension-feedback");
+
+    if (!dialog || !currentChapter) {
+      return;
+    }
+
+    var comprehension = getComprehension(currentChapter);
+
+    if (questionEl) {
+      questionEl.textContent = comprehension.question;
+    }
+
+    if (feedbackEl) {
+      feedbackEl.textContent = "";
+    }
+
+    if (answersEl) {
+      answersEl.innerHTML = comprehension.answers.map(function (answer, index) {
+        return (
+          '<button class="comprehension-answer" type="button" data-answer-index="' + index + '" data-correct="' +
+            (answer.correct ? "true" : "false") + '">' +
+            '<span class="comprehension-answer__emoji" aria-hidden="true">' + escapeHtml(answer.emoji) + '</span>' +
+            '<span>' + escapeHtml(answer.label) + '</span>' +
+          '</button>'
+        );
+      }).join("");
+
+      answersEl.querySelectorAll(".comprehension-answer").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var correct = button.getAttribute("data-correct") === "true";
+
+          answersEl.querySelectorAll(".comprehension-answer").forEach(function (item) {
+            item.classList.remove("is-correct", "is-try-again");
+          });
+
+          if (correct) {
+            button.classList.add("is-correct");
+            if (feedbackEl) {
+              feedbackEl.textContent = "Beautiful reading! You noticed the story so well.";
+            }
+            window.setTimeout(function () {
+              closeDialog(dialog);
+              markCurrentChapterComplete();
+            }, 900);
+          } else {
+            button.classList.add("is-try-again");
+            if (feedbackEl) {
+              feedbackEl.textContent = "Let's look again together — you can try another picture.";
+            }
+          }
+        });
+      });
+    }
+
+    if (typeof openDialog === "function") {
+      openDialog(dialog);
+    } else if (typeof dialog.showModal === "function") {
+      dialog.showModal();
+    }
+  }
+
   /* ------------------------------------------------------------------------
      Reader — completing a chapter
      ------------------------------------------------------------------------ */
@@ -2111,11 +2521,11 @@
      ------------------------------------------------------------------------ */
 
   document.addEventListener("click", function (event) {
-    var button = event.target.closest("[data-complete-chapter]");
+    var button = event.target.closest("[data-open-comprehension]");
 
     if (button) {
       event.preventDefault();
-      markCurrentChapterComplete();
+      showComprehension();
     }
   });
 

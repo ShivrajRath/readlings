@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261101-3">
+  <link rel="stylesheet" href="css/styles.css?v=20261101-4">
 </head>
 <body data-page="reader">
   <a class="skip-link" href="#main-content">Skip to the story</a>
@@ -274,14 +274,63 @@
     </div>
   </dialog>
 
+  <!-- Pre-reading primer modal: must be dismissed before reading begins -->
+  <dialog class="book-dialog primer-dialog" id="primer-dialog" aria-labelledby="primer-dialog-title" aria-modal="true">
+    <div class="book-dialog__panel primer-dialog__panel">
+      <div class="primer-hero">
+        <span class="primer-hero__icon" aria-hidden="true">🌟</span>
+        <div>
+          <p class="primer-kicker">Get ready to read</p>
+          <h2 id="primer-dialog-title">Get Ready!</h2>
+          <p class="primer-copy">Let's warm up a few words and sounds before the story begins.</p>
+        </div>
+      </div>
+      <div class="primer-section">
+        <h3>Sight words</h3>
+        <p class="primer-hint">Tap a word to hear it.</p>
+        <div class="primer-chip-row" id="primer-sight-words"></div>
+      </div>
+      <div class="primer-section">
+        <h3>Phonics rule</h3>
+        <p class="primer-hint">Listen for this sound pattern in the story.</p>
+        <div class="primer-rule" id="primer-phonics-rule"></div>
+      </div>
+      <div class="primer-actions">
+        <button class="btn btn--primary" id="primer-start-button" type="button">
+          Start Story
+          <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Post-reading comprehension modal -->
+  <dialog class="book-dialog comprehension-dialog" id="comprehension-dialog" aria-labelledby="comprehension-dialog-title" aria-modal="true">
+    <div class="book-dialog__panel comprehension-dialog__panel">
+      <button class="modal-close" id="comprehension-dialog-close" type="button" aria-label="Close comprehension check">
+        <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+      </button>
+      <div class="comprehension-hero">
+        <span class="comprehension-hero__icon" aria-hidden="true">📖</span>
+        <div>
+          <p class="comprehension-kicker">You finished the chapter!</p>
+          <h2 id="comprehension-dialog-title">One quick check</h2>
+          <p class="comprehension-copy" id="comprehension-question"></p>
+        </div>
+      </div>
+      <div class="comprehension-answers" id="comprehension-answers" role="group" aria-label="Choose the best answer"></div>
+      <p class="comprehension-feedback" id="comprehension-feedback" aria-live="polite"></p>
+    </div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <noscript>
     <div class="noscript-banner">Readlings needs JavaScript switched on to show the story, read-along audio, and progress.</div>
   </noscript>
 
-  <script src="data/curriculum.js?v=20261101-3"></script>
-  <script src="js/audio.js?v=20261101-3"></script>
-  <script src="js/app.js?v=20261101-3"></script>
+  <script src="data/curriculum.js?v=20261101-4"></script>
+  <script src="js/audio.js?v=20261101-4"></script>
+  <script src="js/app.js?v=20261101-4"></script>
 </body>
 </html>
