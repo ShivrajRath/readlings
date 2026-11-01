@@ -68,6 +68,7 @@
   var audio = null;
   var currentAudioState = "idle";
   var activeWordEl = null;
+  var focusedPageEl = null;
   var audioContent = { text: "", words: [] };
   var currentBook = null;
   var currentChapter = null;
@@ -976,6 +977,7 @@
     setupReaderControls();
     initReadAlong();
     setupWordTapToDecode();
+    setupPageFocus();
     rememberLastRead();
     showPrimer();
 
@@ -994,6 +996,49 @@
         audio.destroy();
       }
     });
+
+    var focusBandScrollFrame = null;
+    function scheduleFocusBandSync() {
+      if (focusBandScrollFrame !== null) {
+        return;
+      }
+      focusBandScrollFrame = window.requestAnimationFrame(function () {
+        focusBandScrollFrame = null;
+        syncFocusBandOnScroll();
+      });
+    }
+
+    window.addEventListener("scroll", scheduleFocusBandSync, { passive: true });
+    window.addEventListener("resize", function () {
+      if (document.body.classList.contains("line-focus-on")) {
+        if (activeWordEl && currentAudioState === "playing") {
+          focusBandVariables(activeWordEl);
+        } else if (focusedPageEl) {
+          focusBandVariables(focusedPageEl);
+        } else {
+          updateFocusBandToCenter();
+        }
+      }
+    });
+  }
+
+  function syncFocusBandOnScroll() {
+    if (!document.body.classList.contains("line-focus-on")) {
+      return;
+    }
+
+    if (activeWordEl && currentAudioState === "playing") {
+      focusBandVariables(activeWordEl);
+    } else if (focusedPageEl) {
+      focusBandVariables(focusedPageEl);
+    } else {
+      var target = focusBandTargetFromPoint();
+      if (target) {
+        focusBandVariables(target);
+      } else {
+        updateFocusBandToCenter();
+      }
+    }
   }
 
   function resolveReaderChapter() {
@@ -1462,7 +1507,7 @@
       toggle.setAttribute("aria-pressed", enabled ? "true" : "false");
       toggle.title = enabled
         ? "Turn off line focus"
-        : "Dim everything except the line you are reading";
+        : "Highlight one line at a time and dim the rest";
     }
 
     if (shouldSave) {
@@ -1470,17 +1515,88 @@
     }
 
     if (announce) {
-      showToast(enabled ? "Focus mode on — one calm line at a time." : "Focus mode off. The whole page is bright again.", 2400);
+      showToast(enabled ? "Line focus on — one calm line at a time." : "Line focus off. The whole page is bright again.", 2400);
     }
 
-    if (enabled && activeWordEl) {
-      window.setTimeout(function () {
-        activeWordEl.scrollIntoView({
-          block: "center",
-          behavior: prefersReducedMotion() ? "auto" : "smooth"
-        });
-      }, 80);
+    if (enabled) {
+      if (activeWordEl) {
+        window.setTimeout(function () {
+          activeWordEl.scrollIntoView({
+            block: "center",
+            behavior: prefersReducedMotion() ? "auto" : "smooth"
+          });
+          window.setTimeout(function () {
+            updateFocusBand(activeWordEl);
+          }, 90);
+        }, 80);
+      } else {
+        updateFocusBandToCenter();
+      }
+    } else {
+      focusedPageEl = null;
+      clearFocusBand();
     }
+  }
+
+  function focusBandVariables(element) {
+    if (!element) {
+      return;
+    }
+
+    var rect = element.getBoundingClientRect();
+    var padding = 6;
+    var top = Math.max(0, rect.top - padding);
+    var height = Math.max(24, rect.height + padding * 2);
+
+    document.documentElement.style.setProperty("--focus-top", top + "px");
+    document.documentElement.style.setProperty("--focus-height", height + "px");
+  }
+
+  function updateFocusBand(element) {
+    if (!document.body.classList.contains("line-focus-on")) {
+      return;
+    }
+
+    if (element) {
+      focusBandVariables(element);
+      return;
+    }
+
+    updateFocusBandToCenter();
+  }
+
+  function updateFocusBandToCenter() {
+    if (!document.body.classList.contains("line-focus-on")) {
+      return;
+    }
+
+    var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    var bandHeight = 4.8 * 16;
+    var top = Math.max(0, Math.round((viewportHeight - bandHeight) / 2));
+
+    document.documentElement.style.setProperty("--focus-top", top + "px");
+    document.documentElement.style.setProperty("--focus-height", bandHeight + "px");
+  }
+
+  function clearFocusBand() {
+    document.documentElement.style.removeProperty("--focus-top");
+    document.documentElement.style.removeProperty("--focus-height");
+  }
+
+  function focusBandTargetFromPoint() {
+    if (!document.body.classList.contains("line-focus-on")) {
+      return null;
+    }
+
+    var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    var center = viewportHeight / 2;
+    var element = document.elementFromPoint(window.innerWidth / 2, center);
+
+    if (!element) {
+      return null;
+    }
+
+    return element.closest ? element.closest(".word") : null;
   }
 
   /* ------------------------------------------------------------------------
@@ -1986,12 +2102,22 @@
     activeWordEl = record.element;
     activeWordEl.classList.add("speaking-highlight");
     keepWordInView(activeWordEl);
+
+    if (document.body.classList.contains("line-focus-on")) {
+      window.setTimeout(function () {
+        updateFocusBand(activeWordEl);
+      }, 90);
+    }
   }
 
   function clearActiveWord() {
     if (activeWordEl) {
       activeWordEl.classList.remove("speaking-highlight");
       activeWordEl = null;
+    }
+
+    if (document.body.classList.contains("line-focus-on")) {
+      updateFocusBandToCenter();
     }
   }
 
@@ -2314,6 +2440,32 @@
           wordEl.classList.remove("is-decoding");
         }, 900);
       }
+    });
+  }
+
+  function setupPageFocus() {
+    var body = document.getElementById("chapter-body");
+    if (!body) {
+      return;
+    }
+
+    body.addEventListener("click", function (event) {
+      if (!document.body.classList.contains("line-focus-on")) {
+        return;
+      }
+
+      var pageEl = event.target.closest(".story-page, .story-paragraph");
+      if (!pageEl || !body.contains(pageEl)) {
+        return;
+      }
+
+      focusedPageEl = pageEl;
+      focusBandVariables(pageEl);
+
+      pageEl.scrollIntoView({
+        block: "center",
+        behavior: prefersReducedMotion() ? "auto" : "smooth"
+      });
     });
   }
 

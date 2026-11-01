@@ -3594,9 +3594,10 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   right: 0;
   left: 0;
   height: var(--focus-height, var(--focus-band-height));
-  border-top: 1px solid rgba(255, 255, 255, 0.42);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.42);
-  box-shadow: 0 0 24px rgba(255, 226, 122, 0.08);
+  background: rgba(255, 244, 204, 0.12);
+  border-top: 2px solid rgba(255, 214, 102, 0.7);
+  border-bottom: 2px solid rgba(255, 214, 102, 0.7);
+  box-shadow: 0 0 32px rgba(255, 226, 122, 0.16);
   transition: top 140ms ease, height 140ms ease;
 }
 
