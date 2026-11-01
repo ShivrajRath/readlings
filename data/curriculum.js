@@ -845,6 +845,194 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "i-can-help",
+      level: 5,
+      title: "I Can Help",
+      kicker: "Helping hands",
+      blurb: "I can help at home and at school. Read the sight words that make helping easy.",
+      emoji: "🤝",
+      skills: ["sight words", "helping words", "confidence"],
+      chapters: [
+        {
+          id: "help-at-home",
+          title: "Help at Home",
+          summary: "Small jobs that make a big difference.",
+          minutes: 1,
+          paragraphs: [
+            "I can help at home.",
+            "I can put toys away.",
+            "I can feed the pet.",
+            "We work together."
+          ]
+        },
+        {
+          id: "help-at-school",
+          title: "Help at School",
+          summary: "Helping friends makes the day bright.",
+          minutes: 1,
+          paragraphs: [
+            "I can help at school.",
+            "I can share my book.",
+            "I can pick up pencils.",
+            "My friends say thank you."
+          ]
+        },
+        {
+          id: "i-am-proud",
+          title: "I Am Proud",
+          summary: "Helping feels good.",
+          minutes: 1,
+          paragraphs: [
+            "I am proud of me.",
+            "I can do it.",
+            "I can help again tomorrow.",
+            "We are a team."
+          ]
+        }
+      ]
+    },
+    {
+      id: "look-at-me",
+      level: 5,
+      title: "Look at Me",
+      kicker: "Show and tell",
+      blurb: "Look at me run, jump, and play. Every page is packed with everyday sight words.",
+      emoji: "🌟",
+      skills: ["sight words", "action words", "fluency"],
+      chapters: [
+        {
+          id: "i-can-run",
+          title: "I Can Run",
+          summary: "Running fast and feeling strong.",
+          minutes: 1,
+          paragraphs: [
+            "Look at me run.",
+            "I run and run.",
+            "I am fast.",
+            "I like to run."
+          ]
+        },
+        {
+          id: "i-can-jump",
+          title: "I Can Jump",
+          summary: "Jumping high with a smile.",
+          minutes: 1,
+          paragraphs: [
+            "Look at me jump.",
+            "I jump up high.",
+            "I jump down low.",
+            "I can jump again."
+          ]
+        },
+        {
+          id: "i-can-play",
+          title: "I Can Play",
+          summary: "Play with me and have fun.",
+          minutes: 1,
+          paragraphs: [
+            "Look at me play.",
+            "We play together.",
+            "We have fun.",
+            "I am happy."
+          ]
+        }
+      ]
+    },
+    {
+      id: "where-is-it",
+      level: 5,
+      title: "Where Is It?",
+      kicker: "A find-it game",
+      blurb: "Where is the toy? Where is the shoe? Hunt for sight words on every page.",
+      emoji: "🔍",
+      skills: ["sight words", "question words", "position words"],
+      chapters: [
+        {
+          id: "find-the-toy",
+          title: "Find the Toy",
+          summary: "The toy is hiding somewhere.",
+          minutes: 1,
+          paragraphs: [
+            "Where is the toy?",
+            "Is it in the box?",
+            "Is it under the bed?",
+            "Here it is!"
+          ]
+        },
+        {
+          id: "find-the-shoe",
+          title: "Find the Shoe",
+          summary: "A shoe is not where it should be.",
+          minutes: 1,
+          paragraphs: [
+            "Where is my shoe?",
+            "Is it by the door?",
+            "Is it in the bag?",
+            "Yes, here it is."
+          ]
+        },
+        {
+          id: "all-found",
+          title: "All Found",
+          summary: "Everything is back in place.",
+          minutes: 1,
+          paragraphs: [
+            "We found the toy.",
+            "We found the shoe.",
+            "Now we can play.",
+            "Good job!"
+          ]
+        }
+      ]
+    },
+    {
+      id: "my-family",
+      level: 5,
+      title: "My Family",
+      kicker: "People we love",
+      blurb: "Meet my family. These pages use the sight words we see every day.",
+      emoji: "👨‍👩‍👧",
+      skills: ["sight words", "family words", "belonging"],
+      chapters: [
+        {
+          id: "mom-and-dad",
+          title: "Mom and Dad",
+          summary: "Mom and Dad are here.",
+          minutes: 1,
+          paragraphs: [
+            "This is my mom.",
+            "This is my dad.",
+            "They love me.",
+            "We are a family."
+          ]
+        },
+        {
+          id: "brothers-and-sisters",
+          title: "Brothers and Sisters",
+          summary: "We play and learn together.",
+          minutes: 1,
+          paragraphs: [
+            "I have a brother.",
+            "I have a sister.",
+            "We play together.",
+            "We help each other."
+          ]
+        },
+        {
+          id: "family-day",
+          title: "Family Day",
+          summary: "A day with the people I love.",
+          minutes: 1,
+          paragraphs: [
+            "We go out today.",
+            "We eat together.",
+            "We laugh together.",
+            "I love my family."
+          ]
+        }
+      ]
     }
   ],
 
@@ -942,6 +1130,617 @@ window.READLINGS_CURRICULUM = {
             "The rain goes away.",
             "The snail and the goat play.",
             "We see them all day."
+          ]
+        }
+      ]
+    },
+    {
+      id: "pie-and-tie",
+      level: 6,
+      title: "Pie and Tie",
+      kicker: "The ie sound sings",
+      blurb: "A pie, a tie, and a try. Every page plays with the ie vowel team.",
+      emoji: "🥧",
+      skills: ["ie", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "a-pie-and-a-tie",
+          title: "A Pie and a Tie",
+          summary: "A pie on a plate and a tie on a coat.",
+          minutes: 1,
+          paragraphs: [
+            "I bake a pie.",
+            "I wear a tie.",
+            "The pie is on the plate.",
+            "The tie is on my coat."
+          ]
+        },
+        {
+          id: "flies-in-the-sky",
+          title: "Flies in the Sky",
+          summary: "Flies buzz near the pie.",
+          minutes: 1,
+          paragraphs: [
+            "Flies fly by the pie.",
+            "A fly sits on the tie.",
+            "I wave the fly away.",
+            "The pie is safe."
+          ]
+        },
+        {
+          id: "try-a-slice",
+          title: "Try a Slice",
+          summary: "A sweet slice and a tidy tie.",
+          minutes: 1,
+          paragraphs: [
+            "I try a slice of pie.",
+            "It is sweet and nice.",
+            "I tie my tie again.",
+            "What a day!"
+          ]
+        }
+      ]
+    },
+    {
+      id: "blue-glue-true",
+      level: 6,
+      title: "Blue Glue True",
+      kicker: "The ue sound sticks",
+      blurb: "Blue glue, a true clue, and a shoe. The ue team shines on every page.",
+      emoji: "🔵",
+      skills: ["ue", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "blue-glue",
+          title: "Blue Glue",
+          summary: "Blue glue and a true clue.",
+          minutes: 1,
+          paragraphs: [
+            "I have blue glue.",
+            "I glue a clue.",
+            "The clue is true.",
+            "I like blue glue."
+          ]
+        },
+        {
+          id: "glue-the-shoe",
+          title: "Glue the Shoe",
+          summary: "Blue glue fixes a shoe.",
+          minutes: 1,
+          paragraphs: [
+            "I glue the shoe.",
+            "The glue is blue.",
+            "It sticks like glue.",
+            "True!"
+          ]
+        },
+        {
+          id: "a-blue-clue",
+          title: "A Blue Clue",
+          summary: "Find the blue clue.",
+          minutes: 1,
+          paragraphs: [
+            "Find the blue clue.",
+            "The clue is true.",
+            "I knew it too.",
+            "Blue glue wins!"
+          ]
+        }
+      ]
+    },
+    {
+      id: "moon-and-spoon",
+      level: 6,
+      title: "Moon and Spoon",
+      kicker: "The long oo sound",
+      blurb: "Moon, spoon, soon, and room. Long oo glows on every page.",
+      emoji: "🌙",
+      skills: ["oo (long)", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "moon-and-spoon",
+          title: "Moon and Spoon",
+          summary: "A moon in the sky and a spoon in the room.",
+          minutes: 1,
+          paragraphs: [
+            "See the moon.",
+            "Use a spoon.",
+            "The spoon is in the room.",
+            "The moon is in the sky."
+          ]
+        },
+        {
+          id: "soon-the-bloom",
+          title: "Soon the Bloom",
+          summary: "A flower blooms soon.",
+          minutes: 1,
+          paragraphs: [
+            "Soon the flower will bloom.",
+            "The moon shines on the bloom.",
+            "I use my spoon.",
+            "I eat my soup soon."
+          ]
+        },
+        {
+          id: "room-for-two",
+          title: "Room for Two",
+          summary: "Room for two under the moon.",
+          minutes: 1,
+          paragraphs: [
+            "There is room for two.",
+            "The moon and I.",
+            "We sit in the room.",
+            "Good night, moon."
+          ]
+        }
+      ]
+    },
+    {
+      id: "book-and-cook",
+      level: 6,
+      title: "Book and Cook",
+      kicker: "The short oo sound",
+      blurb: "Book, cook, look, and took. Short oo pops up on every page.",
+      emoji: "📚",
+      skills: ["oo (short)", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "a-book-to-read",
+          title: "A Book to Read",
+          summary: "A good book to look at.",
+          minutes: 1,
+          paragraphs: [
+            "I read a book.",
+            "The book is good.",
+            "I look at the book.",
+            "I took the book home."
+          ]
+        },
+        {
+          id: "cook-the-food",
+          title: "Cook the Food",
+          summary: "Cooking with a look and a hook.",
+          minutes: 1,
+          paragraphs: [
+            "I cook the food.",
+            "I look in the pot.",
+            "I took a hook.",
+            "I hang the hook."
+          ]
+        },
+        {
+          id: "look-and-cook",
+          title: "Look and Cook",
+          summary: "Look, I cook!",
+          minutes: 1,
+          paragraphs: [
+            "Look, I cook!",
+            "The book says how.",
+            "I took my time.",
+            "The food is good."
+          ]
+        }
+      ]
+    },
+    {
+      id: "coin-and-toy",
+      level: 6,
+      title: "Coin and Toy",
+      kicker: "oi and oy joy",
+      blurb: "Coin, toy, and joy. oi and oy sparkle on every page.",
+      emoji: "🪙",
+      skills: ["oi / oy", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "a-coin-and-a-toy",
+          title: "A Coin and a Toy",
+          summary: "A coin and a toy to enjoy.",
+          minutes: 1,
+          paragraphs: [
+            "I have a coin.",
+            "I have a toy.",
+            "The coin is in my pocket.",
+            "The toy is in my hand."
+          ]
+        },
+        {
+          id: "join-the-joy",
+          title: "Join the Joy",
+          summary: "Join in the joy.",
+          minutes: 1,
+          paragraphs: [
+            "Boys and girls join in.",
+            "We point to the toy.",
+            "We enjoy the joy.",
+            "What a toy!"
+          ]
+        },
+        {
+          id: "point-to-the-coin",
+          title: "Point to the Coin",
+          summary: "Point and enjoy.",
+          minutes: 1,
+          paragraphs: [
+            "Point to the coin.",
+            "The coin joins the toy.",
+            "I enjoy my play.",
+            "Joy all day."
+          ]
+        }
+      ]
+    },
+    {
+      id: "cloud-and-cow",
+      level: 6,
+      title: "Cloud and Cow",
+      kicker: "ou and ow sounds",
+      blurb: "Cloud, cow, and how. ou and ow rumble on every page.",
+      emoji: "🐄",
+      skills: ["ou / ow", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "cloud-in-the-sky",
+          title: "Cloud in the Sky",
+          summary: "A loud cloud in the sky.",
+          minutes: 1,
+          paragraphs: [
+            "A cloud is in the sky.",
+            "The cloud is loud.",
+            "I found a cloud.",
+            "How big!"
+          ]
+        },
+        {
+          id: "the-cow-says-moo",
+          title: "The Cow Says Moo",
+          summary: "A cow says moo.",
+          minutes: 1,
+          paragraphs: [
+            "The cow says moo.",
+            "The cow is down now.",
+            "How does she do it?",
+            "Moo, moo, moo."
+          ]
+        },
+        {
+          id: "found-and-down",
+          title: "Found and Down",
+          summary: "Found the cow down low.",
+          minutes: 1,
+          paragraphs: [
+            "I found the cow.",
+            "She lies down now.",
+            "The cloud goes by.",
+            "How now, brown cow?"
+          ]
+        }
+      ]
+    },
+    {
+      id: "claw-and-saw",
+      level: 6,
+      title: "Claw and Saw",
+      kicker: "aw and au sounds",
+      blurb: "Claw, saw, and haul. aw and au roar on every page.",
+      emoji: "🐻",
+      skills: ["aw / au", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "claw-and-saw",
+          title: "Claw and Saw",
+          summary: "A claw and a saw.",
+          minutes: 1,
+          paragraphs: [
+            "The bear has a claw.",
+            "I use a saw.",
+            "I saw the wood.",
+            "The claw is sharp."
+          ]
+        },
+        {
+          id: "draw-and-haul",
+          title: "Draw and Haul",
+          summary: "Draw a paw and haul a log.",
+          minutes: 1,
+          paragraphs: [
+            "I draw a paw.",
+            "I haul the log.",
+            "The claw marks the tree.",
+            "I saw it fall."
+          ]
+        },
+        {
+          id: "caught-in-the-claw",
+          title: "Caught in the Claw",
+          summary: "Caught a ball in the claw.",
+          minutes: 1,
+          paragraphs: [
+            "The cat caught a ball.",
+            "The claw holds it all.",
+            "I saw it fall.",
+            "Draw a paw."
+          ]
+        }
+      ]
+    },
+    {
+      id: "car-and-star",
+      level: 6,
+      title: "Car and Star",
+      kicker: "The ar sound",
+      blurb: "Car, star, and far. The ar team drives on every page.",
+      emoji: "🚗",
+      skills: ["ar", "r-controlled", "decoding"],
+      chapters: [
+        {
+          id: "car-and-star",
+          title: "Car and Star",
+          summary: "A car and a star.",
+          minutes: 1,
+          paragraphs: [
+            "I drive a car.",
+            "I see a star.",
+            "The car goes far.",
+            "The star is far."
+          ]
+        },
+        {
+          id: "park-in-the-dark",
+          title: "Park in the Dark",
+          summary: "Park the car in the dark.",
+          minutes: 1,
+          paragraphs: [
+            "I park the car.",
+            "It is dark.",
+            "The star shines.",
+            "I start the car."
+          ]
+        },
+        {
+          id: "hard-and-far",
+          title: "Hard and Far",
+          summary: "A hard road, a far star.",
+          minutes: 1,
+          paragraphs: [
+            "The road is hard.",
+            "The star is far.",
+            "The car goes far.",
+            "We are a star."
+          ]
+        }
+      ]
+    },
+    {
+      id: "fork-and-corn",
+      level: 6,
+      title: "Fork and Corn",
+      kicker: "The or sound",
+      blurb: "Fork, corn, and born. The or team shines on every page.",
+      emoji: "🌽",
+      skills: ["or", "r-controlled", "decoding"],
+      chapters: [
+        {
+          id: "fork-and-corn",
+          title: "Fork and Corn",
+          summary: "A fork and some corn.",
+          minutes: 1,
+          paragraphs: [
+            "I use a fork.",
+            "I eat corn.",
+            "The fork is on the plate.",
+            "The corn is hot."
+          ]
+        },
+        {
+          id: "born-to-run",
+          title: "Born to Run",
+          summary: "A horse born to run.",
+          minutes: 1,
+          paragraphs: [
+            "A horse is born.",
+            "The horse runs for corn.",
+            "I hold the fork.",
+            "The corn is for the horse."
+          ]
+        },
+        {
+          id: "for-you-and-me",
+          title: "For You and Me",
+          summary: "For you and for me.",
+          minutes: 1,
+          paragraphs: [
+            "The fork is for you.",
+            "The corn is for me.",
+            "The horse eats corn.",
+            "We share."
+          ]
+        }
+      ]
+    },
+    {
+      id: "her-bird-turns",
+      level: 6,
+      title: "Her Bird Turns",
+      kicker: "er, ir, and ur",
+      blurb: "Her, bird, and turn. er, ir, and ur sing on every page.",
+      emoji: "🐦",
+      skills: ["er / ir / ur", "r-controlled", "decoding"],
+      chapters: [
+        {
+          id: "her-bird",
+          title: "Her Bird",
+          summary: "Her bird can sing.",
+          minutes: 1,
+          paragraphs: [
+            "Her bird can sing.",
+            "The bird has fur.",
+            "I turn the page.",
+            "The bird turns too."
+          ]
+        },
+        {
+          id: "turn-and-learn",
+          title: "Turn and Learn",
+          summary: "Turn and learn a word.",
+          minutes: 1,
+          paragraphs: [
+            "I turn the knob.",
+            "I learn a word.",
+            "The bird turns its head.",
+            "Her bird is first."
+          ]
+        },
+        {
+          id: "first-and-third",
+          title: "First and Third",
+          summary: "First and third.",
+          minutes: 1,
+          paragraphs: [
+            "First the bird, then the worm.",
+            "Third comes the turn.",
+            "The bird learns to fly.",
+            "Her bird is fine."
+          ]
+        }
+      ]
+    },
+    {
+      id: "day-and-play",
+      level: 6,
+      title: "Day and Play",
+      kicker: "The ay sound",
+      blurb: "Day, play, and may. The ay team brightens every page.",
+      emoji: "☀️",
+      skills: ["ay", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "day-and-play",
+          title: "Day and Play",
+          summary: "A bright day to play.",
+          minutes: 1,
+          paragraphs: [
+            "It is a new day.",
+            "We play all day.",
+            "The day is bright.",
+            "We play and play."
+          ]
+        },
+        {
+          id: "may-i-play",
+          title: "May I Play?",
+          summary: "May I play today?",
+          minutes: 1,
+          paragraphs: [
+            "May I play today?",
+            "Yes, you may.",
+            "We play in May.",
+            "What a day!"
+          ]
+        },
+        {
+          id: "stay-and-play",
+          title: "Stay and Play",
+          summary: "Stay and play today.",
+          minutes: 1,
+          paragraphs: [
+            "Stay and play today.",
+            "We stay all day.",
+            "The day is gay.",
+            "We play and play."
+          ]
+        }
+      ]
+    },
+    {
+      id: "leaf-and-read",
+      level: 6,
+      title: "Leaf and Read",
+      kicker: "The ea sound",
+      blurb: "Leaf, read, and team. The ea team greens every page.",
+      emoji: "🍃",
+      skills: ["ea", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "leaf-and-read",
+          title: "Leaf and Read",
+          summary: "A leaf and a book to read.",
+          minutes: 1,
+          paragraphs: [
+            "I read a book.",
+            "I see a leaf.",
+            "The leaf is green.",
+            "I read about leaves."
+          ]
+        },
+        {
+          id: "mean-and-clean",
+          title: "Mean and Clean",
+          summary: "Keep it clean and green.",
+          minutes: 1,
+          paragraphs: [
+            "Keep it clean.",
+            "The leaf is mean? No.",
+            "The leaf is green.",
+            "I read and read."
+          ]
+        },
+        {
+          id: "team-and-dream",
+          title: "Team and Dream",
+          summary: "A team that dreams.",
+          minutes: 1,
+          paragraphs: [
+            "We are a team.",
+            "We dream of leaves.",
+            "I read to my team.",
+            "Dream and read."
+          ]
+        }
+      ]
+    },
+    {
+      id: "night-and-light",
+      level: 6,
+      title: "Night and Light",
+      kicker: "The igh sound",
+      blurb: "Night, light, and sight. The igh team glows on every page.",
+      emoji: "✨",
+      skills: ["igh", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "night-and-light",
+          title: "Night and Light",
+          summary: "A light in the night.",
+          minutes: 1,
+          paragraphs: [
+            "It is night.",
+            "I turn on the light.",
+            "The light is bright.",
+            "The night is dark."
+          ]
+        },
+        {
+          id: "high-and-bright",
+          title: "High and Bright",
+          summary: "High and bright in the sky.",
+          minutes: 1,
+          paragraphs: [
+            "The light is high.",
+            "The stars are bright.",
+            "I see the night sky.",
+            "High up high."
+          ]
+        },
+        {
+          id: "sight-in-the-night",
+          title: "Sight in the Night",
+          summary: "Good sight in the night.",
+          minutes: 1,
+          paragraphs: [
+            "I have good sight.",
+            "I see in the night.",
+            "The light helps me.",
+            "Night and sight."
           ]
         }
       ]
