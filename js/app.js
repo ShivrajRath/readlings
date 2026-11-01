@@ -610,6 +610,10 @@
         if (selected) {
           selected.focus({ preventScroll: true });
         }
+        var librarySection = document.getElementById("library");
+        if (librarySection) {
+          librarySection.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
+        }
       }
     });
 
