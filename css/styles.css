@@ -3327,6 +3327,10 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   color: #3A2900;
   background: #FFE27A;
   box-shadow: 0 2px 0 #F2C94C;
+  text-decoration: underline;
+  text-decoration-color: #B8860B;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
 }
 
 .speaking-highlight:first-letter {
@@ -5019,6 +5023,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
     color: #000 !important;
     background: transparent !important;
     box-shadow: none !important;
+    text-decoration: none !important;
   }
 
   .print-book {

@@ -1154,7 +1154,7 @@
     var cursor = 0;
 
     if (!body) {
-      return { text: spokenText, words: words };
+      return { text: spokenText, words: words, chapterId: chapter.id, chapterKey: chapter.key, bookId: chapter.book.id };
     }
 
     body.innerHTML = "";
@@ -1193,7 +1193,7 @@
       cursor += text.length;
     });
 
-    return { text: spokenText, words: words };
+    return { text: spokenText, words: words, chapterId: chapter.id, chapterKey: chapter.key, bookId: chapter.book.id };
   }
 
   /**
@@ -1800,7 +1800,7 @@
       onVoicesChanged: handleVoicesChanged
     });
 
-    audio.setContent(audioContent.text, audioContent.words);
+    audio.setContent(audioContent.text, audioContent.words, audioContent.chapterKey);
 
     toggle.addEventListener("click", function () {
       if (!audio) {
@@ -1885,8 +1885,8 @@
     if (state === "playing") {
       label = "Pause";
       iconName = "pause";
-      statusText = "Reading aloud — follow the yellow word";
-      setReadingHint("Follow the <strong>yellow word</strong> as the story is read.");
+      statusText = "Reading aloud — follow the underlined word";
+      setReadingHint("Follow the <strong>underlined word</strong> as the story is read.");
     } else if (state === "paused") {
       label = "Resume";
       iconName = "play";
@@ -1908,7 +1908,7 @@
       setReadingHint("You can still enjoy reading the story yourself.");
     } else {
       statusText = voiceStatus();
-      setReadingHint("Tap <strong>Play</strong> to follow the yellow word.");
+      setReadingHint("Tap <strong>Play</strong> to follow the underlined word.");
     }
 
     if (toggleIcon) {

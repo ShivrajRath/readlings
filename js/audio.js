@@ -317,6 +317,7 @@
       this.text = "";
       this.words = [];
       this.currentWordIndex = -1;
+      this.chapterKey = "";
       this.rate = clamp(this.options.rate || DEFAULT_RATE, MIN_RATE, MAX_RATE);
       this.pitch = this.options.pitch || DEFAULT_PITCH;
       this.voice = null;
@@ -425,11 +426,12 @@
      * Keep the exact spoken text plus word records:
      * { start: 12, end: 16, element: <span> }
      */
-    setContent(text, words) {
+    setContent(text, words, chapterKey) {
       this.stop({ notify: false, keepContent: true });
       this.text = typeof text === "string" ? text : "";
       this.words = Array.isArray(words) ? words : [];
       this.currentWordIndex = -1;
+      this.chapterKey = typeof chapterKey === "string" ? chapterKey : (chapterKey == null ? "" : String(chapterKey));
       this.setState("idle", { reason: "content" });
     }
 
