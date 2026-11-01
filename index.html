@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Readlings — Step-by-step reading adventures for early learners</title>
+  <meta name="description" content="Readlings is a free, playful, step-by-step reading curriculum for early learners. Explore five reading levels, read-along audio, and cosy chapter books.">
+  <meta name="theme-color" content="#FFFDF7">
+  <meta property="og:title" content="Readlings — Little steps. Big reading adventures.">
+  <meta property="og:description" content="A warm, chapter-by-chapter reading curriculum for early learners. Free, private, and made for little readers.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=20261101-3">
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main-content">Skip to books and stories</a>
+
+  <!-- Shared line-icon sprite. Dynamic markup in app.js uses these symbols. -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-star" viewBox="0 0 24 24"><path d="M12 2.8l2.7 5.4 6 .9-4.3 4.2 1 5.9-5.4-2.8-5.4 2.8 1-5.9-4.3-4.2 6-.9L12 2.8Z" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M12 3.2c.6 4.2 2.6 6.2 6.8 6.8-4.2.6-6.2 2.6-6.8 6.8-.6-4.2-2.6-6.2-6.8-6.8 4.2-.6 6.2-2.6 6.8-6.8Z" fill="currentColor"/><path d="M19.2 16.2c.2 1.5.9 2.2 2.4 2.4-1.5.2-2.2.9-2.4 2.4-.2-1.5-.9-2.2-2.4-2.4 1.5-.2 2.2-.9 2.4-2.4Z" fill="currentColor"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M19.5 12h-15M11 5.5 4.5 12l6.5 6.5"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="m6.5 9 5.5 5.5L17.5 9"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8.2 5.6a1 1 0 0 1 1.5-.87l8.3 5.38a1.1 1.1 0 0 1 0 1.78l-8.3 5.38a1 1 0 0 1-1.5-.87V5.6Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/></symbol>
+    <symbol id="icon-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-focus" viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M3.5 12h17"/></symbol>
+    <symbol id="icon-print" viewBox="0 0 24 24"><path d="M7 9V4.5h10V9M7 18H5.5A2.5 2.5 0 0 1 3 15.5v-4A2.5 2.5 0 0 1 5.5 9h13a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-2.5 2.5H17"/><rect x="7" y="14" width="10" height="6.5" rx="1"/><path d="M17.2 12.2h.1"/></symbol>
+    <symbol id="icon-chapters" viewBox="0 0 24 24"><path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11"/><path d="M4 5.5h.1M4 11h.1M4 16.5h.1"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M3.5 5.5c3.3-1.5 6-1.4 8.5.5 2.5-1.9 5.2-2 8.5-.5v13.6c-3.3-1.5-6-1.4-8.5.5-2.5-1.9-5.2-2-8.5-.5V5.5Z"/><path d="M12 6v13.9"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3.5 10.6 8.5-7 8.5 7M5.5 9.5v9h13v-9M9.5 18.5v-5h5v5"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2M12 19.8v2M4.1 4.1l1.4 1.4M18.5 18.5l1.4 1.4M2.2 12h2M19.8 12h2M4.1 19.9l1.4-1.4M18.5 5.5l1.4-1.4"/></symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M19.5 4.5C12 4.7 5.4 7.3 5.4 13.1a5 5 0 0 0 5 5c5.9 0 8.4-6.6 9.1-13.6Z"/><path d="M4.2 20.2c1.5-4.2 4.3-7 8.2-8.8"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M19.3 15.6A8.4 8.4 0 0 1 8.4 4.7a8.4 8.4 0 1 0 10.9 10.9Z"/><path d="M17.4 5.2v2.1M16.3 6.2h2.2"/></symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="m15.4 8.6-2 4.8-4.8 2 2-4.8 4.8-2Z"/><path d="M12 3.5v1.4M12 19.1v1.4M3.5 12h1.4M19.1 12h1.4"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m4.8 12.5 4.5 4.5L19.4 6.8"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 20s-7.8-4.6-8.7-9.3A4.7 4.7 0 0 1 12 7.1a4.7 4.7 0 0 1 8.7 3.6C19.8 15.4 12 20 12 20Z"/></symbol>
+    <symbol id="icon-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.4L12 5.7v12.6L7.4 14.5H4v-5Z"/><path d="M15.4 9a4.4 4.4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="icon-glasses" viewBox="0 0 24 24"><circle cx="7" cy="14" r="3.2"/><circle cx="17" cy="14" r="3.2"/><path d="M10.2 13.5c1.2-.9 2.4-.9 3.6 0M3.8 12.5l1.4-4.2h3M20.2 12.5l-1.4-4.2h-3"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <img class="brand__mark" src="assets/logo-mark.svg" alt="" width="48" height="48">
+        <span class="brand__copy">
+          <span class="brand__name">Readlings</span>
+          <span class="brand__tagline">Little steps. Big adventures.</span>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#levels">Reading levels</a>
+        <a href="#library">The book nook</a>
+        <a href="#grown-ups">For grown-ups</a>
+      </nav>
+
+      <a class="star-pill" href="#progress">
+        <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+        <span><strong data-completed-count>0</strong> <span class="star-pill__word">stars</span></span>
+        <span class="sr-only">— view your reading progress</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Homepage hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__doodle hero__doodle--one" aria-hidden="true">a</div>
+      <div class="hero__doodle hero__doodle--two" aria-hidden="true">B</div>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow eyebrow--pill">
+            <svg class="icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg>
+            Free reading adventures, always
+          </p>
+          <h1 id="hero-title">Little steps.<br><span class="marker-highlight">Big reading</span> adventures.</h1>
+          <p class="hero__lead">Step-by-step reading adventures for early learners. From first sounds to full chapter books, every page is a reason to cheer.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#levels">
+              Find my reading level
+              <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+            </a>
+            <a class="btn btn--ghost" href="#library">Browse the books</a>
+          </div>
+          <ul class="hero__trust" aria-label="What makes Readlings special">
+            <li><span class="trust-dot trust-dot--teal"><svg class="icon" aria-hidden="true"><use href="#icon-speaker"></use></svg></span>Read-along audio</li>
+            <li><span class="trust-dot trust-dot--pink"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg></span>No ads, ever</li>
+            <li><span class="trust-dot trust-dot--green"><svg class="icon" aria-hidden="true"><use href="#icon-glasses"></use></svg></span>Dyslexia-friendly fonts</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero-art-card">
+            <span class="hero-art-card__pill">Made for little readers</span>
+            <svg class="hero-illustration" viewBox="0 0 560 486" role="img" aria-label="A cheerful bookworm reading an open book beneath a smiling sun, surrounded by floating letters and stars.">
+              <defs>
+                <linearGradient id="bookCover" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#06B6D4"/>
+                  <stop offset="1" stop-color="#0891B2"/>
+                </linearGradient>
+                <filter id="softShadow" x="-20%" y="-20%" width="140%" height="160%">
+                  <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#7C5B16" flood-opacity=".18"/>
+                </filter>
+              </defs>
+
+              <path d="M55 225C51 107 141 34 278 37c149 3 232 78 228 207-4 125-98 205-241 200C128 439 59 349 55 225Z" fill="#FFF1C4"/>
+              <path d="M100 344c68 34 131 47 206 39 56-6 108-27 149-59" fill="none" stroke="#FFE39A" stroke-width="18" stroke-linecap="round" opacity=".65"/>
+
+              <g opacity=".5" fill="#E7BB4D">
+                <circle cx="102" cy="135" r="4"/><circle cx="475" cy="229" r="4"/><circle cx="120" cy="307" r="3"/><circle cx="451" cy="75" r="3"/><circle cx="362" cy="401" r="3.5"/>
+              </g>
+
+              <g class="art-float art-float--sun" transform="translate(430 111)">
+                <circle r="55" fill="#FFB800"/>
+                <g stroke="#FFB800" stroke-width="7" stroke-linecap="round">
+                  <path d="M0-75v14M0 61v14M-75 0h14M61 0h14M-53-53l10 10M43 43l10 10M-53 53l10-10M43-43l10-10"/>
+                </g>
+                <circle cx="-17" cy="-5" r="4.5" fill="#1E293B"/>
+                <circle cx="17" cy="-5" r="4.5" fill="#1E293B"/>
+                <path d="M-16 15c9 10 23 10 32 0" fill="none" stroke="#1E293B" stroke-width="4" stroke-linecap="round"/>
+                <circle cx="-27" cy="11" r="7" fill="#FF8D8D" opacity=".8"/>
+                <circle cx="28" cy="11" r="7" fill="#FF8D8D" opacity=".8"/>
+              </g>
+
+              <g class="art-float art-float--one" filter="url(#softShadow)">
+                <rect x="54" y="137" width="68" height="68" rx="18" fill="#FFFDF7" stroke="#1E293B" stroke-width="3" transform="rotate(-9 88 171)"/>
+                <text x="88" y="182" text-anchor="middle" font-family="Lexend, sans-serif" font-size="39" font-weight="800" fill="#FF6B6B" transform="rotate(-9 88 171)">A</text>
+              </g>
+              <g class="art-float art-float--two" filter="url(#softShadow)">
+                <rect x="461" y="290" width="61" height="61" rx="17" fill="#FFFDF7" stroke="#1E293B" stroke-width="3" transform="rotate(10 491 320)"/>
+                <text x="491" y="332" text-anchor="middle" font-family="Lexend, sans-serif" font-size="35" font-weight="800" fill="#06B6D4" transform="rotate(10 491 320)">b</text>
+              </g>
+              <g class="art-float art-float--three" filter="url(#softShadow)">
+                <rect x="87" y="366" width="52" height="52" rx="14" fill="#FFFDF7" stroke="#1E293B" stroke-width="3" transform="rotate(8 113 392)"/>
+                <text x="113" y="401" text-anchor="middle" font-family="Lexend, sans-serif" font-size="30" font-weight="800" fill="#10B981" transform="rotate(8 113 392)">c</text>
+              </g>
+
+              <g class="art-float art-float--star">
+                <path d="M145 96l5.4 10.7 11.8 1.7-8.6 8.3 2 11.8-10.6-5.6-10.7 5.6 2-11.8-8.5-8.3 11.7-1.7L145 96Z" fill="#FF6B6B" stroke="#1E293B" stroke-width="2.5" stroke-linejoin="round" transform="rotate(-8 145 112)"/>
+              </g>
+              <path d="M370 69l3.2 6.3 7 .9-5.1 4.9 1.2 6.9-6.3-3.3-6.2 3.3 1.2-6.9-5-4.9 7-.9 3-6.3Z" fill="#FFFDF7" opacity=".9"/>
+
+              <ellipse cx="283" cy="413" rx="178" ry="25" fill="#D7AE4A" opacity=".2"/>
+
+              <g filter="url(#softShadow)">
+                <path d="M112 246c51-27 105-23 170 16v145c-60-36-115-40-170-12V246Z" fill="url(#bookCover)" stroke="#1E293B" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M452 246c-51-27-105-23-169 16v145c59-36 114-40 169-12V246Z" fill="#0E9BB5" stroke="#1E293B" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M282 262v145" stroke="#155E6B" stroke-width="6" stroke-linecap="round"/>
+                <path d="M100 236c55-31 112-26 182 19 69-45 127-50 181-19v148c-53-28-110-24-181 20-70-44-128-48-182-20V236Z" fill="#FFFDF7" stroke="#1E293B" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M282 255c-51-36-104-41-162-17v128c58-23 112-17 162 16V255Z" fill="#FFFDF7" stroke="#E7DDC8" stroke-width="2"/>
+                <path d="M282 255c50-36 103-41 161-17v128c-58-23-111-17-161 16V255Z" fill="#FFFDF7" stroke="#E7DDC8" stroke-width="2"/>
+                <path d="M282 255v127" stroke="#D9CFBB" stroke-width="2"/>
+                <path d="M154 279c33-12 63-10 94 4M154 301c33-12 63-10 94 4M154 323c27-10 52-8 78 3M154 345c22-8 44-6 64 2" fill="none" stroke="#FFB800" stroke-width="5" stroke-linecap="round"/>
+                <path d="M316 280c33-14 65-16 98-4M316 302c33-14 65-16 98-4M316 324c27-11 53-12 79-3M316 346c22-9 43-10 64-2" fill="none" stroke="#B8E8EE" stroke-width="5" stroke-linecap="round"/>
+                <path d="M314 366l4.8 9.4 10.4 1.5-7.6 7.3 1.8 10.3-9.4-4.9-9.3 4.9 1.8-10.3-7.5-7.3 10.4-1.5L314 366Z" fill="#FFB800" stroke="#1E293B" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M235 207v106l19-14 18 14V199c-14-4-26-1-37 8Z" fill="#FF6B6B" stroke="#1E293B" stroke-width="3" stroke-linejoin="round"/>
+              </g>
+
+              <g class="art-float art-float--worm" transform="translate(373 197) rotate(8)">
+                <path d="M-26 102c-28 18-45-15-22-31 24-16 53-9 63 11" fill="none" stroke="#FF6B6B" stroke-width="24" stroke-linecap="round"/>
+                <path d="M-22 82c-12 4-19-9-10-17 9-8 22-5 27 3" fill="none" stroke="#FF8D8D" stroke-width="8" stroke-linecap="round" opacity=".7"/>
+                <circle cx="7" cy="38" r="35" fill="#FF6B6B" stroke="#1E293B" stroke-width="3"/>
+                <circle cx="-5" cy="33" r="5.5" fill="#1E293B"/>
+                <circle cx="20" cy="33" r="5.5" fill="#1E293B"/>
+                <circle cx="-5" cy="31" r="1.7" fill="#FFFDF7"/>
+                <circle cx="20" cy="31" r="1.7" fill="#FFFDF7"/>
+                <path d="M0 50c5 5 13 5 18 0" fill="none" stroke="#1E293B" stroke-width="3.2" stroke-linecap="round"/>
+                <circle cx="-14" cy="45" r="5" fill="#FFB2B2"/>
+                <circle cx="29" cy="45" r="5" fill="#FFB2B2"/>
+                <path d="M-23 11c2-13 11-21 24-22" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                <path d="M29 12c-3-12-9-18-20-22" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="1" cy="0" r="7" fill="#FFB800" stroke="#1E293B" stroke-width="2.5"/>
+              </g>
+
+              <g opacity=".9">
+                <path d="M396 105l3 6 6 .8-4.5 4.3 1.1 6-5.6-3-5.6 3 1.1-6-4.4-4.3 6-.8 3-6Z" fill="#06B6D4"/>
+                <path d="M76 276l2.4 4.8 5.3.8-3.8 3.7.9 5.2-4.8-2.5-4.7 2.5.9-5.2-3.8-3.7 5.3-.8 2.3-4.8Z" fill="#10B981"/>
+                <path d="M496 206l2 4 4.4.7-3.2 3.1.8 4.4-4-2.1-4 2.1.8-4.4-3.2-3.1 4.4-.7 2-4Z" fill="#FF6B6B"/>
+              </g>
+            </svg>
+
+            <div class="hero-art-stat" aria-hidden="true">
+              <span class="hero-art-stat__icon"><svg class="icon"><use href="#icon-star"></use></svg></span>
+              <span><strong><span data-completed-count>0</span> stars</strong><small>collected so far</small></span>
+            </div>
+            <span class="hero-scribble hero-scribble--left" aria-hidden="true">★</span>
+            <span class="hero-scribble hero-scribble--right" aria-hidden="true">✦</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personal progress trail -->
+    <section class="trail-section" id="progress" aria-labelledby="trail-title">
+      <div class="container">
+        <div class="trail-card">
+          <div class="trail-card__main">
+            <div class="trail-badge" aria-hidden="true">
+              <svg class="icon"><use href="#icon-star"></use></svg>
+              <span class="trail-badge__ring"></span>
+            </div>
+            <div class="trail-card__copy">
+              <p class="eyebrow">Your reading trail</p>
+              <h2 id="trail-title">Ready for your first story?</h2>
+              <p id="trail-copy">Finish a chapter to collect a star. Every star is a little “I did it!”</p>
+              <div class="trail-progress">
+                <div class="trail-progress__track" role="progressbar" aria-labelledby="trail-title" aria-valuemin="0" aria-valuemax="25" aria-valuenow="0" id="trail-progressbar">
+                  <span class="trail-progress__fill" id="trail-progress-fill"></span>
+                </div>
+                <span class="trail-progress__label"><strong data-completed-count>0</strong> of <span data-total-chapters>25</span> chapters</span>
+              </div>
+            </div>
+          </div>
+          <div class="trail-next">
+            <span class="trail-next__eyebrow">Up next</span>
+            <strong class="trail-next__book" id="trail-next-book">Pip and the Red Ball</strong>
+            <span class="trail-next__chapter" id="trail-next-chapter">The Red Ball</span>
+            <a class="btn btn--ink btn--small" id="trail-continue" href="reader.html?book=pip-and-the-red-ball&amp;chapter=the-red-ball">
+              Start reading
+              <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reading level selector -->
+    <section class="section levels-section" id="levels" aria-labelledby="levels-title">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#icon-compass"></use></svg> Pick your path</p>
+            <h2 id="levels-title">Five happy steps from sounds to stories.</h2>
+          </div>
+          <p class="section-heading__note">Start where your reader feels comfy. Tap a level to see its books — there is no wrong door.</p>
+        </div>
+        <div class="level-grid" id="level-grid" aria-label="Choose a reading level"></div>
+        <p class="filter-hint" id="filter-hint"><svg class="icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> Tap a level card to filter the book nook.</p>
+      </div>
+    </section>
+
+    <!-- Book catalogue -->
+    <section class="section library-section" id="library" aria-labelledby="library-title">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#icon-book-open"></use></svg> The book nook</p>
+            <h2 id="library-title">A story for every reading step.</h2>
+          </div>
+          <p class="section-heading__note">Short, complete stories with gentle challenges and plenty of chances to shine.</p>
+        </div>
+        <div class="catalog-bar">
+          <p class="catalog-status" id="catalog-status" aria-live="polite">Showing all 8 books</p>
+          <button class="chip-button" id="clear-level-filter" type="button" hidden>
+            All levels
+            <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+          </button>
+        </div>
+        <div class="book-grid" id="book-grid"></div>
+      </div>
+    </section>
+
+    <!-- Grown-up guidance -->
+    <section class="section grownups-section" id="grown-ups" aria-labelledby="grownups-title">
+      <div class="container grownups-grid">
+        <div class="grownups-copy">
+          <p class="eyebrow eyebrow--dark"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg> A note for grown-ups</p>
+          <h2 id="grownups-title">A cosy reading routine, minus the pressure.</h2>
+          <p>Readlings is built around tiny wins. Ten calm minutes, a story your child chooses, and a happy “we did it” at the end is plenty.</p>
+          <ul class="grownups-list">
+            <li><span><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg></span>Progress lives privately in this browser.</li>
+            <li><span><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg></span>Read-along audio, dyslexia-friendly type, and print-friendly pages.</li>
+            <li><span><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg></span>No ads, accounts, or streaks to keep alive.</li>
+          </ul>
+        </div>
+        <div class="grownups-cards">
+          <article class="tip-card tip-card--yellow">
+            <span class="tip-card__number">01</span>
+            <span class="tip-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+            <h3>Little and often</h3>
+            <p>Ten minutes a day beats one long session. Stop while it still feels fun.</p>
+          </article>
+          <article class="tip-card tip-card--teal">
+            <span class="tip-card__number">02</span>
+            <span class="tip-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg></span>
+            <h3>Let them lead</h3>
+            <p>Let your child pick the book and tap the buttons. Ownership builds confidence.</p>
+          </article>
+          <article class="tip-card tip-card--pink">
+            <span class="tip-card__number">03</span>
+            <span class="tip-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg></span>
+            <h3>Cheer the tries</h3>
+            <p>Celebrate sounded-out words and brave guesses, not just perfect reading.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-cta">
+      <div class="container">
+        <div class="closing-cta__inner">
+          <span class="closing-cta__sparkle closing-cta__sparkle--one" aria-hidden="true">✦</span>
+          <span class="closing-cta__sparkle closing-cta__sparkle--two" aria-hidden="true">★</span>
+          <div>
+            <p class="eyebrow eyebrow--dark">Your next little adventure</p>
+            <h2>One story can start a reading habit.</h2>
+          </div>
+          <a class="btn btn--light" href="#library">
+            Find a story
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__main">
+      <div>
+        <a class="brand brand--footer" href="index.html">
+          <img class="brand__mark" src="assets/logo-mark.svg" alt="" width="44" height="44">
+          <span class="brand__copy">
+            <span class="brand__name">Readlings</span>
+            <span class="brand__tagline">Step-by-step reading adventures for early learners</span>
+          </span>
+        </a>
+        <p class="site-footer__note">Made with care for small readers and their grown-ups.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#levels">Reading levels</a>
+        <a href="#library">The book nook</a>
+        <a href="#grown-ups">For grown-ups</a>
+        <a href="reader.html?book=pip-and-the-red-ball&amp;chapter=the-red-ball">Read a story</a>
+      </nav>
+    </div>
+    <div class="container site-footer__bottom">
+      <span>© <span data-current-year>2026</span> Readlings. Free to read, share, and enjoy.</span>
+      <span class="site-footer__made">Made for curious kids <svg class="icon" aria-hidden="true"><use href="#icon-heart"></use></svg></span>
+    </div>
+  </footer>
+
+  <!-- Chapter navigator dialog (filled by app.js) -->
+  <dialog class="book-dialog" id="book-dialog" aria-labelledby="book-dialog-title">
+    <div class="book-dialog__panel">
+      <button class="modal-close" id="book-dialog-close" type="button" aria-label="Close chapter list">
+        <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+      </button>
+      <div id="book-dialog-content"></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <noscript>
+    <div class="noscript-banner">Readlings needs JavaScript switched on to show the stories and save reading progress.</div>
+  </noscript>
+
+  <script src="data/curriculum.js?v=20261101-3"></script>
+  <script src="js/audio.js?v=20261101-3"></script>
+  <script src="js/app.js?v=20261101-3"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Readlings open book logo">
+  <rect width="64" height="64" rx="19" fill="#FFB800"/>
+  <path d="M15 25.5c6.3-3.2 11.7-2.7 17 1.2v21.6c-5.3-3.8-10.7-4.3-17-1.1V25.5Z" fill="#FFFDF7" stroke="#1E293B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M49 25.5c-6.3-3.2-11.7-2.7-17 1.2v21.6c5.3-3.8 10.7-4.3 17-1.1V25.5Z" fill="#FFFDF7" stroke="#1E293B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 26.7v21.6" fill="none" stroke="#1E293B" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M32 9.2l1.7 3.5 3.9.6-2.8 2.7.7 3.8-3.5-1.8-3.5 1.8.7-3.8-2.8-2.7 3.9-.6L32 9.2Z" fill="#FF6B6B" stroke="#1E293B" stroke-width="1.7" stroke-linejoin="round"/>
+  <path d="M21 34.2c2.3-.8 4.5-.6 6.7.6M21 39c2.3-.8 4.5-.6 6.7.6M36.3 34.2c2.2-.8 4.4-.6 6.7.6M36.3 39c2.2-.8 4.4-.6 6.7.6" fill="none" stroke="#FFB800" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

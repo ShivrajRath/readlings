@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Read a story — Readlings</title>
+  <meta name="description" content="Read a Readlings chapter with gentle read-along audio, dyslexia-friendly fonts, line focus, and printable pages.">
+  <meta name="theme-color" content="#FFFDF7">
+  <meta property="og:title" content="Read a story — Readlings">
+  <meta property="og:description" content="A cosy, read-along chapter reader for early learners.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=20261101-3">
+</head>
+<body data-page="reader">
+  <a class="skip-link" href="#main-content">Skip to the story</a>
+
+  <!-- Shared line-icon sprite. Dynamic markup in app.js uses these symbols. -->
+  <svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-star" viewBox="0 0 24 24"><path d="M12 2.8l2.7 5.4 6 .9-4.3 4.2 1 5.9-5.4-2.8-5.4 2.8 1-5.9-4.3-4.2 6-.9L12 2.8Z" fill="currentColor" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M12 3.2c.6 4.2 2.6 6.2 6.8 6.8-4.2.6-6.2 2.6-6.8 6.8-.6-4.2-2.6-6.2-6.8-6.8 4.2-.6 6.2-2.6 6.8-6.8Z" fill="currentColor"/><path d="M19.2 16.2c.2 1.5.9 2.2 2.4 2.4-1.5.2-2.2.9-2.4 2.4-.2-1.5-.9-2.2-2.4-2.4 1.5-.2 2.2-.9 2.4-2.4Z" fill="currentColor"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4.5 12h15M13 5.5l6.5 6.5-6.5 6.5"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path d="M19.5 12h-15M11 5.5 4.5 12l6.5 6.5"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="m6.5 9 5.5 5.5L17.5 9"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="M8.2 5.6a1 1 0 0 1 1.5-.87l8.3 5.38a1.1 1.1 0 0 1 0 1.78l-8.3 5.38a1 1 0 0 1-1.5-.87V5.6Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.4" fill="currentColor"/></symbol>
+    <symbol id="icon-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="icon-focus" viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M3.5 12h17"/></symbol>
+    <symbol id="icon-print" viewBox="0 0 24 24"><path d="M7 9V4.5h10V9M7 18H5.5A2.5 2.5 0 0 1 3 15.5v-4A2.5 2.5 0 0 1 5.5 9h13a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-2.5 2.5H17"/><rect x="7" y="14" width="10" height="6.5" rx="1"/><path d="M17.2 12.2h.1"/></symbol>
+    <symbol id="icon-chapters" viewBox="0 0 24 24"><path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11"/><path d="M4 5.5h.1M4 11h.1M4 16.5h.1"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M3.5 5.5c3.3-1.5 6-1.4 8.5.5 2.5-1.9 5.2-2 8.5-.5v13.6c-3.3-1.5-6-1.4-8.5.5-2.5-1.9-5.2-2-8.5-.5V5.5Z"/><path d="M12 6v13.9"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3.5 10.6 8.5-7 8.5 7M5.5 9.5v9h13v-9M9.5 18.5v-5h5v5"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2M12 19.8v2M4.1 4.1l1.4 1.4M18.5 18.5l1.4 1.4M2.2 12h2M19.8 12h2M4.1 19.9l1.4-1.4M18.5 5.5l1.4-1.4"/></symbol>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M19.5 4.5C12 4.7 5.4 7.3 5.4 13.1a5 5 0 0 0 5 5c5.9 0 8.4-6.6 9.1-13.6Z"/><path d="M4.2 20.2c1.5-4.2 4.3-7 8.2-8.8"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M19.3 15.6A8.4 8.4 0 0 1 8.4 4.7a8.4 8.4 0 1 0 10.9 10.9Z"/><path d="M17.4 5.2v2.1M16.3 6.2h2.2"/></symbol>
+    <symbol id="icon-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="m15.4 8.6-2 4.8-4.8 2 2-4.8 4.8-2Z"/><path d="M12 3.5v1.4M12 19.1v1.4M3.5 12h1.4M19.1 12h1.4"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m4.8 12.5 4.5 4.5L19.4 6.8"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M12 20s-7.8-4.6-8.7-9.3A4.7 4.7 0 0 1 12 7.1a4.7 4.7 0 0 1 8.7 3.6C19.8 15.4 12 20 12 20Z"/></symbol>
+    <symbol id="icon-speaker" viewBox="0 0 24 24"><path d="M4 9.5h3.4L12 5.7v12.6L7.4 14.5H4v-5Z"/><path d="M15.4 9a4.4 4.4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="icon-glasses" viewBox="0 0 24 24"><circle cx="7" cy="14" r="3.2"/><circle cx="17" cy="14" r="3.2"/><path d="M10.2 13.5c1.2-.9 2.4-.9 3.6 0M3.8 12.5l1.4-4.2h3M20.2 12.5l-1.4-4.2h-3"/></symbol>
+  </svg>
+
+  <header class="site-header site-header--reader">
+    <div class="container site-header__inner">
+      <a class="brand" href="index.html">
+        <img class="brand__mark" src="assets/logo-mark.svg" alt="" width="48" height="48">
+        <span class="brand__copy">
+          <span class="brand__name">Readlings</span>
+          <span class="brand__tagline">Little steps. Big adventures.</span>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="index.html#levels">Reading levels</a>
+        <a href="index.html#library">The book nook</a>
+        <a href="index.html#grown-ups">For grown-ups</a>
+      </nav>
+
+      <a class="star-pill" href="index.html#progress">
+        <svg class="icon" aria-hidden="true"><use href="#icon-star"></use></svg>
+        <span><strong data-completed-count>0</strong> <span class="star-pill__word">stars</span></span>
+        <span class="sr-only">— view your reading progress</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="reader-main" id="main-content">
+    <div class="container">
+      <div class="reader-topline">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">
+            <svg class="icon" aria-hidden="true"><use href="#icon-home"></use></svg>
+            Library
+          </a>
+          <span class="breadcrumbs__divider" aria-hidden="true">/</span>
+          <a href="index.html#library" id="breadcrumb-book">The book</a>
+          <span class="breadcrumbs__divider" aria-hidden="true">/</span>
+          <span aria-current="page" id="breadcrumb-chapter">Chapter</span>
+        </nav>
+        <button class="tool-btn tool-btn--compact" id="chapters-menu-button" type="button" aria-haspopup="dialog">
+          <svg class="icon" aria-hidden="true"><use href="#icon-chapters"></use></svg>
+          <span>All chapters</span>
+        </button>
+      </div>
+
+      <!-- Sticky reader toolbar -->
+      <div class="reading-toolbar" id="reading-toolbar" aria-label="Reading tools">
+        <div class="toolbar-audio">
+          <div class="sound-wave" id="sound-wave" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="toolbar-audio__copy">
+            <span class="toolbar-audio__title">Read to me</span>
+            <span class="toolbar-audio__status" id="audio-status" aria-live="polite">Warming up the voice…</span>
+          </div>
+          <button class="audio-toggle" id="audio-toggle" type="button" aria-label="Play the read-along">
+            <svg class="icon audio-toggle__icon" aria-hidden="true"><use id="audio-toggle-icon" href="#icon-play"></use></svg>
+            <span id="audio-toggle-label">Play</span>
+          </button>
+          <button class="icon-btn icon-btn--stop" id="audio-stop" type="button" aria-label="Stop the read-along" disabled>
+            <svg class="icon" aria-hidden="true"><use href="#icon-stop"></use></svg>
+          </button>
+          <label class="speed-select">
+            <span class="sr-only">Reading speed</span>
+            <select id="audio-rate" aria-label="Reading speed">
+              <option value="0.7">0.70× slow</option>
+              <option value="0.75">0.75×</option>
+              <option value="0.8">0.80×</option>
+              <option value="0.85" selected>0.85× cosy</option>
+              <option value="0.9">0.90×</option>
+              <option value="0.95">0.95×</option>
+              <option value="1">1.00×</option>
+            </select>
+            <svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+          </label>
+        </div>
+
+        <div class="toolbar-divider" aria-hidden="true"></div>
+
+        <div class="toolbar-tools" aria-label="Reading appearance">
+          <div class="popover" id="font-picker">
+            <button class="tool-btn" id="font-picker-button" type="button" aria-expanded="false" aria-controls="font-menu" aria-haspopup="true">
+              <span class="font-swatch" aria-hidden="true">Aa</span>
+              <span id="font-picker-label">Lexend</span>
+              <svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+            </button>
+            <div class="popover__menu font-menu" id="font-menu" hidden>
+              <p class="popover__label">Choose a reading font</p>
+              <button class="font-option font-option--lexend" type="button" role="menuitemradio" aria-checked="true" data-font="lexend">
+                <span aria-hidden="true">Aa</span>
+                <span><strong>Lexend</strong><small>Clear &amp; comfy</small></span>
+                <svg class="icon font-option__check" aria-hidden="true"><use href="#icon-check"></use></svg>
+              </button>
+              <button class="font-option font-option--comic" type="button" role="menuitemradio" aria-checked="false" data-font="comic">
+                <span aria-hidden="true">Aa</span>
+                <span><strong>Comic Neue</strong><small>Playful &amp; light</small></span>
+                <svg class="icon font-option__check" aria-hidden="true"><use href="#icon-check"></use></svg>
+              </button>
+              <button class="font-option font-option--dyslexic" type="button" role="menuitemradio" aria-checked="false" data-font="dyslexic">
+                <span aria-hidden="true">Aa</span>
+                <span><strong>OpenDyslexic</strong><small>Extra letter clarity</small></span>
+                <svg class="icon font-option__check" aria-hidden="true"><use href="#icon-check"></use></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="size-stepper" role="group" aria-label="Text size">
+            <button class="icon-btn size-btn" id="font-decrease" type="button" aria-label="Make text smaller">
+              <svg class="icon" aria-hidden="true"><use href="#icon-minus"></use></svg>
+            </button>
+            <span class="sr-only" id="font-size-live" aria-live="polite">Standard text size</span>
+            <button class="icon-btn size-btn" id="font-increase" type="button" aria-label="Make text bigger">
+              <svg class="icon" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            </button>
+          </div>
+
+          <button class="tool-btn" id="line-focus-toggle" type="button" aria-pressed="false" title="Dim everything except the line you are reading">
+            <svg class="icon" aria-hidden="true"><use href="#icon-focus"></use></svg>
+            <span>Focus</span>
+          </button>
+        </div>
+
+        <div class="toolbar-divider" aria-hidden="true"></div>
+
+        <div class="toolbar-actions" aria-label="More reading options">
+          <button class="tool-btn tool-btn--chapters" id="chapters-toolbar-button" type="button" aria-haspopup="dialog">
+            <svg class="icon" aria-hidden="true"><use href="#icon-chapters"></use></svg>
+            <span>Chapters</span>
+          </button>
+          <div class="popover" id="print-picker">
+            <button class="tool-btn" id="print-menu-button" type="button" aria-expanded="false" aria-controls="print-menu" aria-haspopup="true">
+              <svg class="icon" aria-hidden="true"><use href="#icon-print"></use></svg>
+              <span>Print</span>
+              <svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+            </button>
+            <div class="popover__menu print-menu" id="print-menu" hidden>
+              <p class="popover__label">Print &amp; share</p>
+              <button class="menu-option" id="print-chapter-button" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-book-open"></use></svg>
+                <span><strong>This chapter</strong><small>One clean reading page</small></span>
+              </button>
+              <button class="menu-option" id="print-book-button" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-print"></use></svg>
+                <span><strong>The whole book</strong><small>Every chapter, page breaks included</small></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reader-layout">
+        <aside class="chapter-sidebar" id="chapter-sidebar" aria-label="Chapters in this book"></aside>
+
+        <div class="reader-content" id="reader-content">
+          <header class="chapter-hero" id="chapter-hero">
+            <div class="chapter-hero__cover" id="chapter-cover" aria-hidden="true"></div>
+            <div class="chapter-hero__copy">
+              <div class="chapter-badges" id="chapter-badges"></div>
+              <h1 id="chapter-title">Loading your story…</h1>
+              <p class="chapter-summary" id="chapter-summary"></p>
+              <div class="chapter-meta" id="chapter-meta"></div>
+            </div>
+          </header>
+
+          <article class="reading-card" id="reading-card" aria-labelledby="chapter-title">
+            <div class="print-running-header print-only" id="print-running-header"></div>
+            <div class="reading-card__topline">
+              <p class="reading-guide">
+                <span class="reading-guide__icon"><svg class="icon" aria-hidden="true"><use href="#icon-speaker"></use></svg></span>
+                Read to me, or read it yourself
+              </p>
+              <span class="reading-hint" id="reading-hint">Tap <strong>Play</strong> to follow the yellow word.</span>
+            </div>
+
+            <div class="chapter-body" id="chapter-body"></div>
+
+            <div class="completion-zone" id="completion-zone"></div>
+          </article>
+
+          <nav class="chapter-pager" id="chapter-pager" aria-label="Move between chapters"></nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full-book print edition, generated by app.js. Hidden on screen. -->
+    <section class="print-book print-only" id="print-book" aria-hidden="true"></section>
+  </main>
+
+  <footer class="reader-footer">
+    <div class="container reader-footer__inner">
+      <a class="brand brand--footer" href="index.html">
+        <img class="brand__mark" src="assets/logo-mark.svg" alt="" width="40" height="40">
+        <span class="brand__copy">
+          <span class="brand__name">Readlings</span>
+          <span class="brand__tagline">Step-by-step reading adventures for early learners</span>
+        </span>
+      </a>
+      <p>Free to read. Progress stays on this device. <a href="index.html#library">Back to the book nook</a></p>
+    </div>
+  </footer>
+
+  <div class="line-focus-mask" id="line-focus-mask" aria-hidden="true">
+    <div class="line-focus-mask__shade line-focus-mask__shade--top"></div>
+    <div class="line-focus-mask__band">
+      <span class="line-focus-mask__notch line-focus-mask__notch--start"></span>
+      <span class="line-focus-mask__notch line-focus-mask__notch--end"></span>
+    </div>
+    <div class="line-focus-mask__shade line-focus-mask__shade--bottom"></div>
+  </div>
+
+  <div class="celebration-layer" id="celebration-layer" aria-hidden="true"></div>
+
+  <dialog class="book-dialog" id="chapters-dialog" aria-labelledby="chapters-dialog-title">
+    <div class="book-dialog__panel">
+      <button class="modal-close" id="chapters-dialog-close" type="button" aria-label="Close chapter list">
+        <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+      </button>
+      <div id="chapters-dialog-content"></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <noscript>
+    <div class="noscript-banner">Readlings needs JavaScript switched on to show the story, read-along audio, and progress.</div>
+  </noscript>
+
+  <script src="data/curriculum.js?v=20261101-3"></script>
+  <script src="js/audio.js?v=20261101-3"></script>
+  <script src="js/app.js?v=20261101-3"></script>
+</body>
+</html>
