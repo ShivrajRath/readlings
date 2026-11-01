@@ -2402,37 +2402,14 @@
       var decodable = isDecodableWord(word);
 
       if (decodable) {
-        var chunks = splitPhonemes(word);
-        wordEl.textContent = chunks.join(" - ");
         wordEl.classList.add("is-decoding");
 
-        /* Sound it out, phoneme by phoneme, then the whole word. */
-        if (window.speechSynthesis) {
-          try {
-            window.speechSynthesis.cancel();
-            chunks.forEach(function (chunk) {
-              var u = new window.SpeechSynthesisUtterance(chunk);
-              u.rate = 0.6;
-              u.pitch = 1.05;
-              u.volume = 1;
-              u.lang = "en-US";
-              window.speechSynthesis.speak(u);
-            });
-            var full = new window.SpeechSynthesisUtterance(word);
-            full.rate = 0.75;
-            full.pitch = 1.05;
-            full.volume = 1;
-            full.lang = "en-US";
-            window.speechSynthesis.speak(full);
-          } catch (error) {
-            /* Ignore speech errors. */
-          }
-        }
+        /* Focus on pronunciation: say the whole word clearly. */
+        speakText(word);
 
         window.setTimeout(function () {
-          wordEl.textContent = original;
           wordEl.classList.remove("is-decoding");
-        }, 1800);
+        }, 900);
       } else {
         speakText(word);
         wordEl.classList.add("is-decoding");
