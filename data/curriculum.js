@@ -87,6 +87,32 @@ window.READLINGS_CURRICULUM = {
       description: "Richer vocabulary and four-chapter stories for readers ready to live inside a book.",
       focus: ["Rich vocabulary", "Inference", "Chapter books"],
       guidance: "After a chapter, ask your reader to retell the story in three quick words or pictures."
+    },
+    {
+      id: 5,
+      category: "Sight Words",
+      name: "Sight Word Stars",
+      shortName: "Sight Word Stars",
+      color: "#F59E0B",
+      soft: "#FEF3C7",
+      ink: "#78350F",
+      icon: "glasses",
+      description: "High-frequency words that appear again and again, taught through short, joyful, repeated sentences.",
+      focus: ["Sight words", "High-frequency words", "Fluency"],
+      guidance: "Point to each word, say it together, then let your child read it alone. Celebrate instant recognition."
+    },
+    {
+      id: 6,
+      category: "Phonics Patterns",
+      name: "Pattern Pioneers",
+      shortName: "Pattern Pioneers",
+      color: "#EC4899",
+      soft: "#FCE7F3",
+      ink: "#831843",
+      icon: "sparkle",
+      description: "Common vowel teams and sound patterns (ee, ai, oa and friends) practised inside tiny stories.",
+      focus: ["Vowel teams", "ee / ai / oa", "Decoding"],
+      guidance: "Stretch the target sound together, then blend the whole word. Hunt for the pattern on every page."
     }
   ],
 
@@ -716,6 +742,206 @@ window.READLINGS_CURRICULUM = {
           paragraphs: [
             "They folded new rivers, new fields, new homes.",
             "And the smallest paper citizen folded a door just big enough for a story."
+          ]
+        }
+      ]
+    }
+  ],
+
+  /* ------------------------------------------------------------------------
+     Level 5 — Sight Words
+     --------------------------------------------------------------------- */
+  booksAtLevel5: [
+    {
+      id: "sam-and-the-big-red-box",
+      level: 5,
+      title: "Sam and the Big Red Box",
+      kicker: "Sight words in a cosy box",
+      blurb: "Sam finds a big red box. What is inside? Read along and spot the words we see every day.",
+      emoji: "📦",
+      skills: ["sight words", "high-frequency words", "repetition"],
+      chapters: [
+        {
+          id: "the-big-box",
+          title: "The Big Box",
+          summary: "Sam has a big red box and a very good look inside.",
+          minutes: 1,
+          paragraphs: [
+            "Sam has a big red box.",
+            "The box is in the room.",
+            "Sam can see the box.",
+            "What is in the box?"
+          ]
+        },
+        {
+          id: "what-is-inside",
+          title: "What Is Inside?",
+          summary: "A toy car makes Sam smile.",
+          minutes: 1,
+          paragraphs: [
+            "Sam opens the box.",
+            "A toy is in the box.",
+            "The toy is a car.",
+            "Sam and the car go vroom."
+          ]
+        },
+        {
+          id: "play-time",
+          title: "Play Time",
+          summary: "Sam and a friend play all day.",
+          minutes: 1,
+          paragraphs: [
+            "Sam and I play.",
+            "We play all day.",
+            "The car goes up and down.",
+            "Sam has fun!"
+          ]
+        }
+      ]
+    },
+    {
+      id: "we-go-to-the-park",
+      level: 5,
+      title: "We Go to the Park",
+      kicker: "A day of play",
+      blurb: "We run, jump, and play. Every page is full of the words we meet most often.",
+      emoji: "🌳",
+      skills: ["sight words", "repetition", "confidence"],
+      chapters: [
+        {
+          id: "ready-to-go",
+          title: "Ready to Go",
+          summary: "A sunny day and a walk to the park.",
+          minutes: 1,
+          paragraphs: [
+            "We go to the park.",
+            "It is a sunny day.",
+            "I can see the trees.",
+            "The trees are big."
+          ]
+        },
+        {
+          id: "play-and-play",
+          title: "Play and Play",
+          summary: "Running, jumping, and a blue ball.",
+          minutes: 1,
+          paragraphs: [
+            "We run and jump.",
+            "We play with a ball.",
+            "The ball is blue.",
+            "I like to play."
+          ]
+        },
+        {
+          id: "home-again",
+          title: "Home Again",
+          summary: "A tired, happy walk home.",
+          minutes: 1,
+          paragraphs: [
+            "We go home.",
+            "I am tired.",
+            "I had fun.",
+            "See you again!"
+          ]
+        }
+      ]
+    }
+  ],
+
+  /* ------------------------------------------------------------------------
+     Level 6 — Common Patterns (ee, ai, oa, …)
+     --------------------------------------------------------------------- */
+  booksAtLevel6: [
+    {
+      id: "the-green-tree-and-the-bee",
+      level: 6,
+      title: "The Green Tree and the Bee",
+      kicker: "The ee sound sings",
+      blurb: "See the green tree, the deep sea, and a sleepy bee. Every page hums with the ee sound.",
+      emoji: "🐝",
+      skills: ["ee", "long e", "vowel teams"],
+      chapters: [
+        {
+          id: "the-green-tree",
+          title: "The Green Tree",
+          summary: "A bee sits in a green tree.",
+          minutes: 1,
+          paragraphs: [
+            "See the green tree.",
+            "A bee is in the tree.",
+            "The bee can see me.",
+            "I see the bee."
+          ]
+        },
+        {
+          id: "the-deep-sea",
+          title: "The Deep Sea",
+          summary: "A free fish in the deep green sea.",
+          minutes: 1,
+          paragraphs: [
+            "The bee and I go to the sea.",
+            "The sea is deep and green.",
+            "We see a fish.",
+            "The fish is free."
+          ]
+        },
+        {
+          id: "sleepy-bee",
+          title: "Sleepy Bee",
+          summary: "The bee sleeps in the tree.",
+          minutes: 1,
+          paragraphs: [
+            "The bee is sleepy.",
+            "It sleeps in the tree.",
+            "I see it sleep.",
+            "Good night, bee."
+          ]
+        }
+      ]
+    },
+    {
+      id: "rain-snail-and-goat",
+      level: 6,
+      title: "Rain, Snail and Goat",
+      kicker: "ai and oa in action",
+      blurb: "Rain on the trail, a snail on the rail, a boat and a goat. ai and oa shine on every page.",
+      emoji: "🐌",
+      skills: ["ai", "oa", "vowel teams"],
+      chapters: [
+        {
+          id: "rain-on-the-trail",
+          title: "Rain on the Trail",
+          summary: "Rain falls on a snail on the rail.",
+          minutes: 1,
+          paragraphs: [
+            "The rain falls on the trail.",
+            "A snail is on the rail.",
+            "The rain is on the snail.",
+            "The snail has a tail."
+          ]
+        },
+        {
+          id: "the-boat-and-the-goat",
+          title: "The Boat and the Goat",
+          summary: "A goat rides a boat in a coat.",
+          minutes: 1,
+          paragraphs: [
+            "A boat floats on the lake.",
+            "A goat rides in the boat.",
+            "The goat wears a coat.",
+            "The boat is in the moat."
+          ]
+        },
+        {
+          id: "all-day-play",
+          title: "All Day Play",
+          summary: "A bright day of play for all.",
+          minutes: 1,
+          paragraphs: [
+            "The day is bright.",
+            "The rain goes away.",
+            "The snail and the goat play.",
+            "We see them all day."
           ]
         }
       ]

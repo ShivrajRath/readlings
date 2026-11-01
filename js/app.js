@@ -32,7 +32,9 @@
     1: "#F4C7C7",
     2: "#A9E5EF",
     3: "#A9E8CE",
-    4: "#DCCBFA"
+    4: "#DCCBFA",
+    5: "#FDE68A",
+    6: "#FBCFE8"
   };
 
   var DEFAULT_PREFS = {
