@@ -582,7 +582,7 @@
 
       var currentWord = currentIndex >= 0 ? this.words[currentIndex] : null;
       var wordText = currentWord ? currentWord.text : (this.words[0] ? this.words[0].text : "a");
-      var delay = Math.max(90, Math.round(((0.16 + 0.045 * wordText.length) / this.rate) * 1000));
+      var delay = Math.max(90, Math.round(((0.18 + 0.055 * wordText.length) / this.rate) * 1000));
 
       window.clearTimeout(this._fallbackTimer);
       this._fallbackTimer = window.setTimeout(function () {
