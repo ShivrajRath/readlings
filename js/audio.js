@@ -651,18 +651,17 @@
         self.startedOnce = true;
         self.setState("playing");
 
-        if (self.words && self.words.length) {
-          self.emitWord(0);
-        }
-
         window.clearTimeout(self._fallbackTimer);
         self._fallbackTimer = window.setTimeout(function () {
           if (self.cancelled || self.sessionId !== session || self._boundarySeen) {
             return;
           }
+          if (self.words && self.words.length) {
+            self.emitWord(0);
+          }
           self._useFallback = true;
           self.scheduleFallback(session);
-        }, 400);
+        }, 180);
       };
 
       /**
