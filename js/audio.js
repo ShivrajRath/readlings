@@ -401,7 +401,9 @@
       this.startedOnce = false;
       this.sessionId = 0;
       this._voiceTimer = null;
-
+      this._fallbackTimer = null;
+      this._boundarySeen = false;
+      this._useFallback = false;
       if (!this.supported) {
         return;
       }
@@ -566,6 +568,32 @@
       }
     }
 
+    scheduleFallback(session) {
+      var self = this;
+      if (!this._useFallback || this.cancelled || this.sessionId !== session || this.state !== "playing") {
+        return;
+      }
+
+      var currentIndex = this.currentWordIndex;
+      var nextIndex = currentIndex + 1;
+      if (nextIndex >= this.words.length) {
+        return;
+      }
+
+      var currentWord = currentIndex >= 0 ? this.words[currentIndex] : null;
+      var wordText = currentWord ? currentWord.text : (this.words[0] ? this.words[0].text : "a");
+      var delay = Math.max(120, Math.round(((wordText.length * 0.07 + 0.18) / this.rate) * 1000));
+
+      window.clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = window.setTimeout(function () {
+        if (self.cancelled || self.sessionId !== session || self.state !== "playing" || !self._useFallback) {
+          return;
+        }
+        self.emitWord(nextIndex);
+        self.scheduleFallback(session);
+      }, delay);
+    }
+
     play() {
       if (!this.supported) {
         this.setState("error", { code: "unsupported" });
@@ -595,6 +623,10 @@
       /* Cancel any lingering queued speech before starting a fresh reading.
          A session id keeps late events from an old utterance out of the UI. */
       this.cancelled = false;
+      this._boundarySeen = false;
+      this._useFallback = false;
+      window.clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = null;
       this.sessionId += 1;
       var session = this.sessionId;
       window.speechSynthesis.cancel();
@@ -618,6 +650,16 @@
         }
         self.startedOnce = true;
         self.setState("playing");
+
+        window.clearTimeout(self._fallbackTimer);
+        self._fallbackTimer = window.setTimeout(function () {
+          if (self.cancelled || self.sessionId !== session || self._boundarySeen) {
+            return;
+          }
+          self._useFallback = true;
+          self.emitWord(0);
+          self.scheduleFallback(session);
+        }, 900);
       };
 
       /**
@@ -629,6 +671,15 @@
       utterance.onboundary = function (event) {
         if (self.cancelled || self.sessionId !== session) {
           return;
+        }
+
+        self._boundarySeen = true;
+        window.clearTimeout(self._fallbackTimer);
+        self._fallbackTimer = null;
+
+        /* If fallback timing was active, switch back to exact boundaries. */
+        if (self._useFallback) {
+          self._useFallback = false;
         }
 
         /* Safari and some Android engines omit event.name; treat those
@@ -644,6 +695,8 @@
       };
 
       utterance.onpause = function () {
+        window.clearTimeout(self._fallbackTimer);
+        self._fallbackTimer = null;
         if (!self.cancelled && self.sessionId === session && self.state === "playing") {
           self.setState("paused");
         }
@@ -652,6 +705,9 @@
       utterance.onresume = function () {
         if (!self.cancelled && self.sessionId === session && self.state === "paused") {
           self.setState("playing");
+          if (self._useFallback) {
+            self.scheduleFallback(session);
+          }
         }
       };
 
@@ -659,6 +715,10 @@
         if (self.cancelled || self.sessionId !== session) {
           return;
         }
+
+        window.clearTimeout(self._fallbackTimer);
+        self._fallbackTimer = null;
+        self._useFallback = false;
 
         self.startedOnce = false;
         self.emitWord(-1);
@@ -671,6 +731,9 @@
       };
 
       utterance.onerror = function (event) {
+        window.clearTimeout(self._fallbackTimer);
+        self._fallbackTimer = null;
+        self._useFallback = false;
         var errorCode = (event && event.error) || "unknown";
 
         /* Cancelling speech to leave a page or restart is not an error worth
@@ -704,6 +767,8 @@
         return;
       }
 
+      window.clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = null;
       window.speechSynthesis.pause();
       this.setState("paused");
     }
@@ -715,6 +780,9 @@
 
       window.speechSynthesis.resume();
       this.setState("playing");
+      if (this._useFallback) {
+        this.scheduleFallback(this.sessionId);
+      }
     }
 
     toggle() {
@@ -730,6 +798,9 @@
     stop(options) {
       var settings = options || {};
       this.cancelled = true;
+      window.clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = null;
+      this._useFallback = false;
       this.sessionId += 1;
 
       if (this.supported) {
@@ -755,6 +826,8 @@
       }
 
       window.clearTimeout(this._voiceTimer);
+      window.clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = null;
       window.speechSynthesis.cancel();
 
       if (typeof window.speechSynthesis.removeEventListener === "function") {
