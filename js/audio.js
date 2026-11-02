@@ -15,9 +15,9 @@
 (function () {
   "use strict";
 
-  var DEFAULT_RATE = 0.65;
+  var DEFAULT_RATE = 0.5;
   var DEFAULT_PITCH = 1.05;
-  var MIN_RATE = 0.65;
+  var MIN_RATE = 0.25;
   var MAX_RATE = 1.0;
 
   var ENGLISH_LANGUAGE = /^en($|[-_])/i;
