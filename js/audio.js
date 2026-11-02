@@ -582,7 +582,7 @@
 
       var currentWord = currentIndex >= 0 ? this.words[currentIndex] : null;
       var wordText = currentWord ? currentWord.text : (this.words[0] ? this.words[0].text : "a");
-      var delay = Math.max(120, Math.round(((wordText.length * 0.07 + 0.18) / this.rate) * 1000));
+      var delay = Math.max(90, Math.round(((0.16 + 0.045 * wordText.length) / this.rate) * 1000));
 
       window.clearTimeout(this._fallbackTimer);
       this._fallbackTimer = window.setTimeout(function () {
@@ -651,15 +651,18 @@
         self.startedOnce = true;
         self.setState("playing");
 
+        if (self.words && self.words.length) {
+          self.emitWord(0);
+        }
+
         window.clearTimeout(self._fallbackTimer);
         self._fallbackTimer = window.setTimeout(function () {
           if (self.cancelled || self.sessionId !== session || self._boundarySeen) {
             return;
           }
           self._useFallback = true;
-          self.emitWord(0);
           self.scheduleFallback(session);
-        }, 900);
+        }, 400);
       };
 
       /**
