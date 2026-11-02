@@ -3330,6 +3330,53 @@ body[data-reader-font="dyslexic"] .chapter-body {
   text-transform: uppercase;
 }
 
+.focus-mode-toggle {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 28px;
+  padding: 0.2rem 0.55rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  z-index: 2;
+}
+
+.focus-mode-toggle:hover {
+  color: var(--ink);
+  background: var(--paper);
+  border-color: var(--line-strong);
+}
+
+.focus-mode-toggle.is-active,
+.focus-mode-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--sunny-soft);
+  border-color: #EFD587;
+}
+
+.focus-mode-toggle .icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.focus-mode-toggle--paragraph {
+  position: static;
+  display: inline-flex;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
 .story-page .story-paragraph {
   font-size: calc(var(--reader-font-size) * 1.12);
   font-weight: 500;
@@ -3580,7 +3627,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
    12. Reader: line focus & celebrations
    -------------------------------------------------------------------------- */
 
-.line-focus-mask {
+.focus-mode-mask {
   position: fixed;
   inset: 0;
   z-index: 45;
@@ -3588,11 +3635,11 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   pointer-events: none;
 }
 
-.line-focus-on .line-focus-mask {
+.focus-mode-on .focus-mode-mask {
   display: block;
 }
 
-.line-focus-mask__shade {
+.focus-mode-mask__shade {
   position: absolute;
   right: 0;
   left: 0;
@@ -3600,17 +3647,17 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   transition: height 140ms ease, top 140ms ease;
 }
 
-.line-focus-mask__shade--top {
+.focus-mode-mask__shade--top {
   top: 0;
   height: var(--focus-top, calc(50vh - 4.8rem));
 }
 
-.line-focus-mask__shade--bottom {
+.focus-mode-mask__shade--bottom {
   top: calc(var(--focus-top, calc(50vh - 4.8rem)) + var(--focus-height, var(--focus-band-height)));
   bottom: 0;
 }
 
-.line-focus-mask__band {
+.focus-mode-mask__band {
   position: absolute;
   top: var(--focus-top, calc(50vh - 4.8rem));
   right: 0;
@@ -3623,7 +3670,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   transition: top 140ms ease, height 140ms ease;
 }
 
-.line-focus-mask__notch {
+.focus-mode-mask__notch {
   position: absolute;
   top: 50%;
   width: 13px;
@@ -3634,11 +3681,11 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   transform: translateY(-50%);
 }
 
-.line-focus-mask__notch--start {
+.focus-mode-mask__notch--start {
   left: 0.65rem;
 }
 
-.line-focus-mask__notch--end {
+.focus-mode-mask__notch--end {
   right: 0.65rem;
 }
 
@@ -4427,11 +4474,11 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
     padding: 1.1rem 1.3rem;
   }
 
-  .line-focus-mask__notch--start {
+  .focus-mode-mask__notch--start {
     left: 0.4rem;
   }
 
-  .line-focus-mask__notch--end {
+  .focus-mode-mask__notch--end {
     right: 0.4rem;
   }
 }
@@ -4758,9 +4805,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
     order: 1;
   }
 
-  #line-focus-toggle {
-    order: 3;
-  }
+
 
   .toolbar-tools {
     justify-content: space-between;
@@ -4951,7 +4996,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   .chapter-pager,
   .completion-zone,
   .reading-card__topline,
-  .line-focus-mask,
+  .focus-mode-mask,
   .celebration-layer,
   .book-dialog,
   .toast,

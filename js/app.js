@@ -41,7 +41,7 @@
     font: "lexend",
     sizeIndex: 2,
     rate: 0.65,
-    lineFocus: false,
+    focusMode: false,
     voiceName: ""
   };
 
@@ -69,6 +69,7 @@
   var currentAudioState = "idle";
   var activeWordEl = null;
   var focusedPageEl = null;
+  var focusButtons = [];
   var audioContent = { text: "", words: [] };
   var currentBook = null;
   var currentChapter = null;
@@ -235,7 +236,7 @@
       font: DEFAULT_PREFS.font,
       sizeIndex: DEFAULT_PREFS.sizeIndex,
       rate: DEFAULT_PREFS.rate,
-      lineFocus: false,
+      focusMode: false,
       voiceName: ""
     };
 
@@ -255,7 +256,7 @@
       clean.rate = nearestRate(Number(raw.rate));
     }
 
-    clean.lineFocus = Boolean(raw.lineFocus);
+    clean.focusMode = Boolean(raw.focusMode != null ? raw.focusMode : raw.lineFocus);
 
     if (typeof raw.voiceName === "string") {
       clean.voiceName = raw.voiceName;
@@ -1012,9 +1013,14 @@
 
     window.addEventListener("scroll", scheduleFocusBandSync, { passive: true });
     window.addEventListener("resize", function () {
-      if (document.body.classList.contains("line-focus-on")) {
+      if (document.body.classList.contains("focus-mode-on")) {
         if (activeWordEl && currentAudioState === "playing") {
-          focusBandVariables(activeWordEl);
+          var pageEl3 = activeWordEl.closest ? activeWordEl.closest(".story-page, .story-paragraph") : null;
+          if (pageEl3) {
+            focusBandVariables(pageEl3);
+          } else {
+            focusBandVariables(activeWordEl);
+          }
         } else if (focusedPageEl) {
           focusBandVariables(focusedPageEl);
         } else {
@@ -1025,12 +1031,17 @@
   }
 
   function syncFocusBandOnScroll() {
-    if (!document.body.classList.contains("line-focus-on")) {
+    if (!document.body.classList.contains("focus-mode-on")) {
       return;
     }
 
     if (activeWordEl && currentAudioState === "playing") {
-      focusBandVariables(activeWordEl);
+      var pageEl = activeWordEl.closest ? activeWordEl.closest(".story-page, .story-paragraph") : null;
+      if (pageEl) {
+        focusBandVariables(pageEl);
+      } else {
+        focusBandVariables(activeWordEl);
+      }
     } else if (focusedPageEl) {
       focusBandVariables(focusedPageEl);
     } else {
@@ -1111,7 +1122,7 @@
   function applyPreferences() {
     setReaderFont(prefs.font, false);
     setReaderSize(prefs.sizeIndex, false);
-    setLineFocus(prefs.lineFocus, false, false);
+    setFocusMode(prefs.focusMode, null, false, false);
 
     var rateSelect = document.getElementById("audio-rate");
     if (rateSelect) {
@@ -1205,6 +1216,7 @@
     }
 
     body.innerHTML = "";
+    focusButtons = [];
 
     paragraphs.forEach(function (text, index) {
       if (index > 0) {
@@ -1226,6 +1238,20 @@
 
         page.appendChild(pageNumber);
         page.appendChild(paragraph);
+
+        var pageFocusButton = document.createElement("button");
+        pageFocusButton.type = "button";
+        pageFocusButton.className = "focus-mode-toggle";
+        pageFocusButton.setAttribute("aria-pressed", "false");
+        pageFocusButton.setAttribute("aria-label", "Focus this page");
+        pageFocusButton.innerHTML = icon("focus") + " Focus";
+        page.appendChild(pageFocusButton);
+        focusButtons.push({ button: pageFocusButton, target: page });
+        pageFocusButton.addEventListener("click", function (event) {
+          event.stopPropagation();
+          toggleFocusFor(page);
+        });
+
         body.appendChild(page);
       } else {
         if (index === 0) {
@@ -1233,6 +1259,19 @@
           wrapper.className = "story-text";
           body.appendChild(wrapper);
         }
+
+        var paragraphFocusButton = document.createElement("button");
+        paragraphFocusButton.type = "button";
+        paragraphFocusButton.className = "focus-mode-toggle focus-mode-toggle--paragraph";
+        paragraphFocusButton.setAttribute("aria-pressed", "false");
+        paragraphFocusButton.setAttribute("aria-label", "Focus this paragraph");
+        paragraphFocusButton.innerHTML = icon("focus") + " Focus";
+        paragraph.appendChild(paragraphFocusButton);
+        focusButtons.push({ button: paragraphFocusButton, target: paragraph });
+        paragraphFocusButton.addEventListener("click", function (event) {
+          event.stopPropagation();
+          toggleFocusFor(paragraph);
+        });
 
         body.querySelector(".story-text").appendChild(paragraph);
       }
@@ -1500,30 +1539,25 @@
     }
   }
 
-  function setLineFocus(on, shouldSave, announce) {
+  function setFocusMode(on, element, shouldSave, announce) {
     var enabled = Boolean(on);
-    var toggle = document.getElementById("line-focus-toggle");
 
-    prefs.lineFocus = enabled;
-    document.body.classList.toggle("line-focus-on", enabled);
-
-    if (toggle) {
-      toggle.setAttribute("aria-pressed", enabled ? "true" : "false");
-      toggle.title = enabled
-        ? "Turn off line focus"
-        : "Highlight one line at a time and dim the rest";
-    }
+    prefs.focusMode = enabled;
+    document.body.classList.toggle("focus-mode-on", enabled);
 
     if (shouldSave) {
       savePrefs();
     }
 
     if (announce) {
-      showToast(enabled ? "Line focus on — one calm line at a time." : "Line focus off. The whole page is bright again.", 2400);
+      showToast(enabled ? "Focus mode on — one calm page at a time." : "Focus mode off. The whole page is bright again.", 2400);
     }
 
     if (enabled) {
-      if (activeWordEl) {
+      focusedPageEl = element || focusedPageEl;
+      if (focusedPageEl) {
+        focusBandVariables(focusedPageEl);
+      } else if (activeWordEl) {
         window.setTimeout(function () {
           activeWordEl.scrollIntoView({
             block: "center",
@@ -1536,10 +1570,28 @@
       } else {
         updateFocusBandToCenter();
       }
+      updateFocusButtons();
     } else {
       focusedPageEl = null;
       clearFocusBand();
+      updateFocusButtons();
     }
+  }
+
+  function toggleFocusFor(element) {
+    if (document.body.classList.contains("focus-mode-on") && focusedPageEl === element) {
+      setFocusMode(false, null, false, false);
+    } else {
+      setFocusMode(true, element, false, false);
+    }
+  }
+
+  function updateFocusButtons() {
+    focusButtons.forEach(function (entry) {
+      var active = document.body.classList.contains("focus-mode-on") && focusedPageEl === entry.target;
+      entry.button.setAttribute("aria-pressed", active ? "true" : "false");
+      entry.button.classList.toggle("is-active", active);
+    });
   }
 
   function focusBandVariables(element) {
@@ -1557,7 +1609,7 @@
   }
 
   function updateFocusBand(element) {
-    if (!document.body.classList.contains("line-focus-on")) {
+    if (!document.body.classList.contains("focus-mode-on")) {
       return;
     }
 
@@ -1570,7 +1622,7 @@
   }
 
   function updateFocusBandToCenter() {
-    if (!document.body.classList.contains("line-focus-on")) {
+    if (!document.body.classList.contains("focus-mode-on")) {
       return;
     }
 
@@ -1588,7 +1640,7 @@
   }
 
   function focusBandTargetFromPoint() {
-    if (!document.body.classList.contains("line-focus-on")) {
+    if (!document.body.classList.contains("focus-mode-on")) {
       return null;
     }
 
@@ -1614,7 +1666,6 @@
     var printMenu = document.getElementById("print-menu");
     var fontDecrease = document.getElementById("font-decrease");
     var fontIncrease = document.getElementById("font-increase");
-    var lineFocusToggle = document.getElementById("line-focus-toggle");
     var rateSelect = document.getElementById("audio-rate");
     var chaptersDialog = document.getElementById("chapters-dialog");
     var chaptersDialogContent = document.getElementById("chapters-dialog-content");
@@ -1653,12 +1704,6 @@
     if (fontIncrease) {
       fontIncrease.addEventListener("click", function () {
         setReaderSize(prefs.sizeIndex + 1, true);
-      });
-    }
-
-    if (lineFocusToggle) {
-      lineFocusToggle.addEventListener("click", function () {
-        setLineFocus(!prefs.lineFocus, true, true);
       });
     }
 
@@ -2107,9 +2152,16 @@
     activeWordEl.classList.add("speaking-highlight");
     keepWordInView(activeWordEl);
 
-    if (document.body.classList.contains("line-focus-on")) {
+    if (document.body.classList.contains("focus-mode-on")) {
       window.setTimeout(function () {
-        updateFocusBand(activeWordEl);
+        var pageEl = activeWordEl.closest ? activeWordEl.closest(".story-page, .story-paragraph") : null;
+        if (pageEl) {
+          focusedPageEl = pageEl;
+          focusBandVariables(pageEl);
+          updateFocusButtons();
+        } else {
+          updateFocusBand(activeWordEl);
+        }
       }, 90);
     }
   }
@@ -2120,8 +2172,12 @@
       activeWordEl = null;
     }
 
-    if (document.body.classList.contains("line-focus-on")) {
-      updateFocusBandToCenter();
+    if (document.body.classList.contains("focus-mode-on")) {
+      if (focusedPageEl) {
+        focusBandVariables(focusedPageEl);
+      } else {
+        updateFocusBandToCenter();
+      }
     }
   }
 
@@ -2131,7 +2187,7 @@
     var toolbar = document.getElementById("reading-toolbar");
     var toolbarRect = toolbar ? toolbar.getBoundingClientRect() : null;
     var topLimit = toolbarRect && toolbarRect.bottom > 0 ? toolbarRect.bottom + 26 : 90;
-    var focusOn = document.body.classList.contains("line-focus-on");
+    var focusOn = document.body.classList.contains("focus-mode-on");
     var outsideBand = focusOn
       ? rect.top < viewportHeight * 0.34 || rect.bottom > viewportHeight * 0.66
       : rect.top < topLimit || rect.bottom > viewportHeight - 48;
@@ -2431,7 +2487,7 @@
     }
 
     body.addEventListener("click", function (event) {
-      if (!document.body.classList.contains("line-focus-on")) {
+      if (!document.body.classList.contains("focus-mode-on")) {
         return;
       }
 
@@ -2442,6 +2498,7 @@
 
       focusedPageEl = pageEl;
       focusBandVariables(pageEl);
+      updateFocusButtons();
 
       pageEl.scrollIntoView({
         block: "center",
@@ -2680,6 +2737,10 @@
     }
 
     closeAllPopovers();
+
+    if (document.body.classList.contains("focus-mode-on")) {
+      setFocusMode(false, null, false, false);
+    }
 
     document.querySelectorAll("dialog[open]").forEach(function (dialog) {
       closeDialog(dialog);

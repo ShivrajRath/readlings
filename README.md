@@ -2,7 +2,7 @@
 
 **Step-by-step reading adventures for early learners.**
 
-Readlings is a free, standalone reading curriculum website for young children. It pairs a five-level curriculum with gentle read-along audio, dyslexia-friendly typography, line focus, star progress, and clean printable chapter pages. There is no build step, backend, account system, or tracking.
+Readlings is a free, standalone reading curriculum website for young children. It pairs a five-level curriculum with gentle read-along audio, dyslexia-friendly typography, focus mode, star progress, and clean printable chapter pages. There is no build step, backend, account system, or tracking.
 
 ## What is included
 
@@ -52,7 +52,7 @@ Edit `data/curriculum.js` to add or change levels, books, or chapters. Each chap
 Reader preferences use these storage keys:
 
 - `readlings.progress.v1` — `{ completed, lastRead }`
-- `readlings.prefs.v1` — `{ font, sizeIndex, rate, lineFocus, voiceName }` (`voiceName` is the chosen read-along voice, empty for automatic.)
+- `readlings.prefs.v1` — `{ font, sizeIndex, rate, focusMode, voiceName }` (`voiceName` is the chosen read-along voice, empty for automatic.)
 
 ## Printing tips
 

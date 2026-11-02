@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Read a story — Readlings</title>
-  <meta name="description" content="Read a Readlings chapter with gentle read-along audio, dyslexia-friendly fonts, line focus, and printable pages.">
+  <meta name="description" content="Read a Readlings chapter with gentle read-along audio, dyslexia-friendly fonts, focus mode, and printable pages.">>
   <meta name="theme-color" content="#FFFDF7">
   <meta property="og:title" content="Read a story — Readlings">
   <meta property="og:description" content="A cosy, read-along chapter reader for early learners.">
@@ -169,10 +169,7 @@
             </button>
           </div>
 
-          <button class="tool-btn" id="line-focus-toggle" type="button" aria-pressed="false" aria-label="Line focus: dim the page to highlight the line being read" title="Highlight one line at a time and dim the rest">
-            <svg class="icon" aria-hidden="true"><use href="#icon-focus"></use></svg>
-            <span>Line focus</span>
-          </button>
+
         </div>
 
         <div class="toolbar-divider" aria-hidden="true"></div>
@@ -254,13 +251,13 @@
     </div>
   </footer>
 
-  <div class="line-focus-mask" id="line-focus-mask" aria-hidden="true">
-    <div class="line-focus-mask__shade line-focus-mask__shade--top"></div>
-    <div class="line-focus-mask__band">
-      <span class="line-focus-mask__notch line-focus-mask__notch--start"></span>
-      <span class="line-focus-mask__notch line-focus-mask__notch--end"></span>
+  <div class="focus-mode-mask" id="focus-mode-mask" aria-hidden="true">
+    <div class="focus-mode-mask__shade focus-mode-mask__shade--top"></div>
+    <div class="focus-mode-mask__band">
+      <span class="focus-mode-mask__notch focus-mode-mask__notch--start"></span>
+      <span class="focus-mode-mask__notch focus-mode-mask__notch--end"></span>
     </div>
-    <div class="line-focus-mask__shade line-focus-mask__shade--bottom"></div>
+    <div class="focus-mode-mask__shade focus-mode-mask__shade--bottom"></div>
   </div>
 
   <div class="celebration-layer" id="celebration-layer" aria-hidden="true"></div>
