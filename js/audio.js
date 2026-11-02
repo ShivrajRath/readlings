@@ -93,7 +93,17 @@
     "gabriela", "hazel", "june", "katie", "krystal", "lea", "madeline", "maya", "nina",
     "olive", "paige", "quinn", "rebecca", "sienna", "skyler", "taylor", "tina", "valentina",
     "violet", "wanda", "xena", "yara", "yasmine", "alice", "amelia", "annie", "anna", "aurora",
-    "jane", "jade", "joy", "ruby", "sadie", "sky"
+    "jane", "jade", "joy", "ruby", "sadie", "sky",
+    "zira", "hazel", "heather", "susan", "victoria", "karen", "samantha", "serena",
+    "moira", "tessa", "kate", "michelle", "zoe", "jenny", "natasha", "emma", "aria",
+    "sonia", "libby", "allison", "fiona", "nora", "pauline", "rachel", "alina", "carol",
+    "chandler", "dakota", "ivy", "jana", "kendra", "kimberly", "leslie", "luna", "patty",
+    "piper", "sally", "selena", "sheila", "sophia", "terri", "vicki", "willow", "loria",
+    "melissa", "mia", "mona", "olly", "rosa", "rosie", "vera", "viola", "vivian", "zelda",
+    "jessica", "isabella", "elizabeth", "elise", "erin", "freya", "gabriela", "june",
+    "katie", "krystal", "lea", "madeline", "maya", "nina", "olive", "paige", "rebecca",
+    "sienna", "skyler", "taylor", "tina", "valentina", "violet", "wanda", "xena", "yara",
+    "yasmine", "alice", "amelia", "annie", "anna", "aurora", "brittany", "heather"
   ];
 
   var MALE_VOICE_HINTS = [
@@ -102,7 +112,12 @@
     "robert", "william", "charles", "josiah", "gabriel", "ethan", "noah", "asher", "leo",
     "miles", "owen", "theo", "ryan", "caleb", "connor", "dylan", "evan", "gavin", "hunter",
     "isaac", "kayden", "mason", "nathan", "oscar", "parker", "quinn", "reed", "rowan", "silas",
-    "wyatt"
+    "wyatt", "david", "mark", "james", "richard", "joseph", "paul", "steve", "brian",
+    "kevin", "eric", "jason", "justin", "chris", "christopher", "robert", "michael",
+    "john", "william", "charles", "george", "frank", "josh", "liam", "matthew", "jack",
+    "tom", "carlos", "oliver", "samuel", "karl", "andrew", "lawrence", "gary", "tim",
+    "noah", "asher", "leo", "miles", "owen", "theo", "ryan", "caleb", "connor", "dylan",
+    "evan", "gavin", "hunter", "alex", "thomas", "henry", "sebastian", "lucas", "brian"
   ];
 
   function clamp(value, min, max) {
@@ -191,10 +206,18 @@
       return null;
     }
 
-    return voices
-      .filter(function (voice) {
+    var pool = (voices || []).filter(isCommonEnglishVoice);
+    if (!pool.length) {
+      pool = englishNonNoveltyVoices(voices);
+    }
+    if (!pool.length) {
+      pool = (voices || []).filter(function (voice) {
         return ENGLISH_LANGUAGE.test(voice.lang || "");
-      })
+      });
+    }
+
+    /* voices already filtered above */
+    return pool
       .map(function (voice, index) {
         return {
           voice: voice,
@@ -233,6 +256,16 @@
     }
 
     var lowered = cleaned.toLowerCase();
+    var rawName = String((voice && voice.name) || "").toLowerCase();
+
+    /* Generic gender words spoken by many platform voices. */
+    if (/\bfemale\b|\bwoman\b|\bgirl\b/i.test(lowered) || /\bfemale\b|\bwoman\b/i.test(rawName)) {
+      return "female";
+    }
+    if (/\bmale\b|\bman\b|\bboy\b/i.test(lowered) || /\bmale\b|\bman\b/i.test(rawName)) {
+      return "male";
+    }
+
     var first = lowered.split(/[\s\-_]+/).filter(Boolean)[0] || lowered;
     var isFemale =
       FEMALE_VOICE_HINTS.indexOf(first) !== -1 ||
@@ -245,6 +278,12 @@
         return hint && lowered.indexOf(hint) !== -1;
       });
 
+    if (isFemale && !isMale) {
+      return "female";
+    }
+    if (isMale && !isFemale) {
+      return "male";
+    }
     if (isFemale) {
       return "female";
     }
@@ -262,6 +301,34 @@
     return cleaned + suffix;
   }
 
+  function isNoveltyVoice(voice) {
+    var name = String((voice && voice.name) || "").toLowerCase();
+    return NOVELTY_NAMES.some(function (noveltyName) {
+      return name.indexOf(noveltyName) !== -1;
+    });
+  }
+
+  /**
+   * Common English voices that speak with a male or female voice. Fancy or
+   * novelty voices are excluded so the picker only offers natural readers.
+   */
+  function isCommonEnglishVoice(voice) {
+    if (!voice || !ENGLISH_LANGUAGE.test(voice.lang || "")) {
+      return false;
+    }
+    if (isNoveltyVoice(voice)) {
+      return false;
+    }
+    var gender = inferVoiceGender(voice);
+    return gender === "male" || gender === "female";
+  }
+
+  function englishNonNoveltyVoices(voices) {
+    return (voices || []).filter(function (voice) {
+      return ENGLISH_LANGUAGE.test(voice.lang || "") && !isNoveltyVoice(voice);
+    });
+  }
+
   /**
    * Every English voice the device can produce, warmest first, so the reader
    * can offer a manual pick alongside the automatic favourite.
@@ -271,10 +338,16 @@
       return [];
     }
 
-    return getAvailableVoices()
-      .filter(function (voice) {
+    var available = getAvailableVoices();
+    var common = available.filter(isCommonEnglishVoice);
+    var pool = common.length ? common : englishNonNoveltyVoices(available);
+    if (!pool.length) {
+      pool = available.filter(function (voice) {
         return ENGLISH_LANGUAGE.test(voice.lang || "");
-      })
+      });
+    }
+
+    return pool
       .sort(function (a, b) {
         var scoreDifference = scoreVoice(b) - scoreVoice(a);
         if (scoreDifference !== 0) {
@@ -720,6 +793,9 @@
     getAvailableVoices: getAvailableVoices,
     getEnglishVoices: getEnglishVoices,
     getVoiceOptions: getVoiceOptions,
+    getCommonEnglishVoices: getEnglishVoices,
+    isCommonEnglishVoice: isCommonEnglishVoice,
+    isNoveltyVoice: isNoveltyVoice,
     cleanVoiceName: cleanVoiceName,
     inferVoiceGender: inferVoiceGender,
     speechIsSupported: speechIsSupported

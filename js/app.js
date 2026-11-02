@@ -1957,6 +1957,7 @@
 
     audio = new window.ReadlingsAudio({
       rate: prefs.rate,
+      voiceName: prefs.voiceName || "",
       pitch: 1.05,
       onStateChange: handleAudioState,
       onWord: handleSpokenWord,
@@ -2315,7 +2316,16 @@
       utterance.rate = 0.75;
       utterance.pitch = 1.05;
       utterance.volume = 1;
-      utterance.lang = "en-US";
+
+      /* Keep the individually spoken words in the same voice as the whole-chapter
+         read-along so the two never disagree. */
+      var selectedVoice = (typeof audio !== "undefined" && audio) ? audio.voice : null;
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        utterance.lang = selectedVoice.lang || "en-US";
+      } else {
+        utterance.lang = "en-US";
+      }
       window.speechSynthesis.speak(utterance);
     } catch (error) {
       /* Speech is a progressive enhancement; never block reading. */
