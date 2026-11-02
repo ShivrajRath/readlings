@@ -2164,14 +2164,9 @@
     keepSectionInView(activeSectionEl);
 
     if (document.body.classList.contains("focus-mode-on")) {
-      window.setTimeout(function () {
-        var pageEl = activeSectionEl;
-        if (pageEl) {
-          focusedPageEl = pageEl;
-          focusBandVariables(pageEl);
-          updateFocusButtons();
-        }
-      }, 90);
+      focusedPageEl = activeSectionEl;
+      focusBandVariables(activeSectionEl);
+      updateFocusButtons();
     }
   }
 
