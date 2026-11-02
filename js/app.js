@@ -68,6 +68,7 @@
   var audio = null;
   var currentAudioState = "idle";
   var activeWordEl = null;
+  var activeSectionEl = null;
   var focusedPageEl = null;
   var focusButtons = [];
   var audioContent = { text: "", words: [] };
@@ -2140,6 +2141,10 @@
   }
 
   function handleSpokenWord(record) {
+    if (activeSectionEl) {
+      activeSectionEl.classList.remove("speaking-section");
+      activeSectionEl = null;
+    }
     if (activeWordEl) {
       activeWordEl.classList.remove("speaking-highlight");
       activeWordEl = null;
@@ -2149,25 +2154,32 @@
       return;
     }
 
-    activeWordEl = record.element;
-    activeWordEl.classList.add("speaking-highlight");
-    keepWordInView(activeWordEl);
+    var section = record.element.closest ? record.element.closest(".story-page, .story-paragraph") : null;
+    if (!section) {
+      section = record.element;
+    }
+
+    activeSectionEl = section;
+    activeSectionEl.classList.add("speaking-section");
+    keepSectionInView(activeSectionEl);
 
     if (document.body.classList.contains("focus-mode-on")) {
       window.setTimeout(function () {
-        var pageEl = activeWordEl.closest ? activeWordEl.closest(".story-page, .story-paragraph") : null;
+        var pageEl = activeSectionEl;
         if (pageEl) {
           focusedPageEl = pageEl;
           focusBandVariables(pageEl);
           updateFocusButtons();
-        } else {
-          updateFocusBand(activeWordEl);
         }
       }, 90);
     }
   }
 
   function clearActiveWord() {
+    if (activeSectionEl) {
+      activeSectionEl.classList.remove("speaking-section");
+      activeSectionEl = null;
+    }
     if (activeWordEl) {
       activeWordEl.classList.remove("speaking-highlight");
       activeWordEl = null;
@@ -2182,7 +2194,7 @@
     }
   }
 
-  function keepWordInView(element) {
+  function keepSectionInView(element) {
     var rect = element.getBoundingClientRect();
     var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
     var toolbar = document.getElementById("reading-toolbar");
@@ -2197,7 +2209,7 @@
       return;
     }
 
-    var target = window.scrollY + rect.top - viewportHeight * 0.42;
+    var target = window.scrollY + rect.top - viewportHeight * 0.3;
 
     window.scrollTo({
       top: Math.max(0, target),

@@ -3407,6 +3407,14 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   color: #3A2900;
 }
 
+.speaking-section {
+  background: rgba(255, 226, 122, 0.28);
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px rgba(242, 201, 76, 0.45);
+  padding: 0.35rem 0.5rem;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
 .completion-zone {
   margin-top: clamp(2.5rem, 5vw, 4rem);
 }
