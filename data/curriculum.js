@@ -19,7 +19,7 @@ window.READLINGS_CURRICULUM = {
     name: "Readlings",
     tagline: "Step-by-step reading adventures for early learners",
     version: 1,
-    updated: "2026-10-31"
+    updated: "2026-11-09"
   },
 
   levels: [
@@ -260,6 +260,159 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "tam-and-the-jam",
+      level: 0,
+      title: "Tam and the Jam",
+      kicker: "A sticky little tale",
+      blurb: "Tam finds a pot of sweet red jam. One big dip turns into a happy, sticky mess.",
+      emoji: "🍓",
+      skills: ["short a", "CVC words", "sight words"],
+      chapters: [
+        {
+          id: "the-jam-pot",
+          title: "The Jam Pot",
+          summary: "Tam finds a pot of sweet red jam.",
+          minutes: 1,
+          paragraphs: [
+            "Tam has a pot.",
+            "The pot has jam.",
+            "The jam is red.",
+            "Tam dips a bun."
+          ]
+        },
+        {
+          id: "a-sticky-mess",
+          title: "A Sticky Mess",
+          summary: "One big dip sends jam everywhere.",
+          minutes: 1,
+          paragraphs: [
+            "Tam dips and dips.",
+            "The jam tips out.",
+            "Jam lands on the cat.",
+            "The cat licks its paw."
+          ]
+        },
+        {
+          id: "a-nap-for-two",
+          title: "A Nap for Two",
+          summary: "A sticky cat, a clean rag, and a cosy nap.",
+          minutes: 1,
+          paragraphs: [
+            "Tam gets a rag.",
+            "Tam wipes the cat.",
+            "The cat licks the rag.",
+            "Tam and the cat nap."
+          ]
+        }
+      ]
+    },
+    {
+      id: "bens-red-pen",
+      level: 0,
+      title: "Ben’s Red Pen",
+      kicker: "A drawing adventure",
+      blurb: "Ben draws with a red pen. A real hen wants to join the fun.",
+      emoji: "🖊️",
+      skills: ["short e", "CVC words", "rhythm"],
+      chapters: [
+        {
+          id: "a-red-pen",
+          title: "A Red Pen",
+          summary: "Ben has a red pen and a big idea.",
+          minutes: 1,
+          paragraphs: [
+            "Ben has a red pen.",
+            "Ben draws a hen.",
+            "The hen is red.",
+            "Ben grins."
+          ]
+        },
+        {
+          id: "ten-red-dots",
+          title: "Ten Red Dots",
+          summary: "Ten little dots make the page bright.",
+          minutes: 1,
+          paragraphs: [
+            "Ben draws ten dots.",
+            "The dots are red.",
+            "Ben draws a jet.",
+            "The jet has ten dots."
+          ]
+        },
+        {
+          id: "the-hen-helps",
+          title: "The Hen Helps",
+          summary: "A real hen adds the best red dot of all.",
+          minutes: 1,
+          paragraphs: [
+            "A hen hops in.",
+            "The hen sees the pen.",
+            "The hen pecks the pen.",
+            "Ben gets a red dot!"
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-hot-pot",
+      level: 0,
+      title: "The Hot Pot",
+      kicker: "Soup, steam, and a careful cook",
+      blurb: "Mum’s pot is hot. Dot wants to help, but soup can splash.",
+      emoji: "🍲",
+      skills: ["short o", "CVC words", "safety"],
+      chapters: [
+        {
+          id: "the-hot-pot",
+          title: "The Hot Pot",
+          summary: "A red pot sits on the hob.",
+          minutes: 1,
+          paragraphs: [
+            "Mum has a hot pot.",
+            "The pot is red.",
+            "The pot has a lid.",
+            "The lid is hot."
+          ]
+        },
+        {
+          id: "stir-and-sniff",
+          title: "Stir and Sniff",
+          summary: "Dot stirs the pot and takes a big sniff.",
+          minutes: 1,
+          paragraphs: [
+            "Mum stirs the pot.",
+            "Dot stirs it too.",
+            "Sniff, sniff!",
+            "The pot smells good."
+          ]
+        },
+        {
+          id: "mop-the-top",
+          title: "Mop the Top",
+          summary: "A drip on the hob means two helpers with mops.",
+          minutes: 1,
+          paragraphs: [
+            "Soup drips on the top.",
+            "Mum gets a mop.",
+            "Mum mops the top.",
+            "Dot gets a mop too."
+          ]
+        },
+        {
+          id: "a-hot-bun",
+          title: "A Hot Bun",
+          summary: "A bun, a dip, and a happy Dot.",
+          minutes: 1,
+          paragraphs: [
+            "Mum fills a bun.",
+            "Dot gets one too.",
+            "Dot dips the bun.",
+            "Dip, dip, dip!"
+          ]
+        }
+      ]
     }
   ],
 
@@ -398,6 +551,149 @@ window.READLINGS_CURRICULUM = {
             "Wren slides down the hill.",
             "The snow goes swish, swish.",
             "Warm cocoa waits inside."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-snack-shack",
+      level: 1,
+      title: "The Snack Shack",
+      kicker: "A little stand with a big line",
+      blurb: "Mia and Sal open a snack shack. When the buns go missing, a small customer has a clue.",
+      emoji: "🧃",
+      skills: ["blends", "short vowels", "story sense"],
+      chapters: [
+        {
+          id: "the-snack-shack",
+          title: "The Snack Shack",
+          summary: "Mia and Sal set up a stand at the end of the lane.",
+          minutes: 2,
+          paragraphs: [
+            "Mia and Sal set up a snack shack at the end of the lane. They stack buns, jam, and crisp red apples on a small table.",
+            "Sal paints a sign: SNACKS! Mia finds a tin for the coins. The first customer is already waiting.",
+            "“What will you have?” asks Mia. The customer points at the buns and grins."
+          ]
+        },
+        {
+          id: "the-missing-buns",
+          title: "The Missing Buns",
+          summary: "A trail of crumbs leads away from the stall.",
+          minutes: 2,
+          paragraphs: [
+            "Mia turns to fetch the jam. When she looks back, the bun basket is empty.",
+            "“Did you eat them?” asks Sal. Mia shakes her head. They hunt under the table and behind the sign.",
+            "A trail of crumbs leads past the gate. At the end of the trail sits a small brown dog with a very full tum."
+          ]
+        },
+        {
+          id: "open-for-business",
+          title: "Open for Business",
+          summary: "The thief becomes the shack’s best customer.",
+          minutes: 2,
+          paragraphs: [
+            "The little dog belongs to the neighbour. She laughs and pays for two buns.",
+            "Mia and Sal make a new sign: ONE BUN FOR THE DOG. Soon there is a line at the shack.",
+            "By noon, the tin is full of coins and the dog has a bun of his own. “Best snack shack ever,” says Sal."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-lost-sock",
+      level: 1,
+      title: "The Lost Sock",
+      kicker: "A match-day mystery",
+      blurb: "Ash needs his lucky sock before the big match. A smelly search turns up a bumpy surprise.",
+      emoji: "🧦",
+      skills: ["digraphs", "blends", "story sense"],
+      chapters: [
+        {
+          id: "sock-hunt",
+          title: "Sock Hunt",
+          summary: "Ash has one boot, one sock, and a match to reach.",
+          minutes: 2,
+          paragraphs: [
+            "Ash is ready for the soccer match. He has his boots, his shorts, and one red sock.",
+            "The other sock is missing. “We have to find it!” says Ash. He hops on one foot and checks the clock.",
+            "Mum joins the hunt. They look in the wash basket and under the bed."
+          ]
+        },
+        {
+          id: "under-the-bed",
+          title: "Under the Bed",
+          summary: "A ball, a book, and a brush — but no sock.",
+          minutes: 2,
+          paragraphs: [
+            "Under the bed, Ash finds a ball, a book, and a brush. No sock.",
+            "They check the bag by the door. They check the box of toys. Still no sock.",
+            "“Try the dog’s bed,” says Mum. Ash peeks inside and spots something red."
+          ]
+        },
+        {
+          id: "the-sock-in-the-bed",
+          title: "The Sock in the Bed",
+          summary: "A sleepy pup has made a nest of the lucky sock.",
+          minutes: 2,
+          paragraphs: [
+            "The missing sock is curled up in the dog’s bed. A sleepy pup is chewing the toe.",
+            "“That is my lucky sock!” Ash laughs. The toe has a small hole, but he pulls it on.",
+            "Ash scores a goal with his lucky sock, and one very happy dog watches from the side."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-backyard-boat",
+      level: 1,
+      title: "The Backyard Boat",
+      kicker: "Setting sail on a rainy day",
+      blurb: "A big box, a broom, and a rainy garden make the perfect voyage.",
+      emoji: "⛵",
+      skills: ["blends", "short vowels", "dialogue"],
+      chapters: [
+        {
+          id: "a-box-and-a-plan",
+          title: "A Box and a Plan",
+          summary: "Jade and Leo find the perfect boat in the shed.",
+          minutes: 2,
+          paragraphs: [
+            "Jade and Leo find a big box in the shed. It is just right for a boat.",
+            "They tape a broom to the box for a mast. Leo adds a paper sail with a bright red stripe.",
+            "“Ready, captain?” asks Jade. Leo grins. “Ready when the rain comes.”"
+          ]
+        },
+        {
+          id: "the-rainy-river",
+          title: "The Rainy River",
+          summary: "The garden path becomes a rushing river.",
+          minutes: 2,
+          paragraphs: [
+            "The rain comes after lunch. Water rushes down the garden path and past the shed.",
+            "Jade and Leo set the boat in the stream. The box bobs and spins.",
+            "“Hold on tight!” shouts Leo. They race along the path after the little boat."
+          ]
+        },
+        {
+          id: "the-leaky-boat",
+          title: "The Leaky Boat",
+          summary: "A soggy box starts to sink.",
+          minutes: 2,
+          paragraphs: [
+            "The boat drifts toward the fence. Water starts to seep through the soggy box.",
+            "“It is sinking!” cries Jade. Leo grabs a flat stone and plugs the gap.",
+            "The patch holds. The boat wobbles on, but it is losing speed."
+          ]
+        },
+        {
+          id: "a-safe-harbour",
+          title: "A Safe Harbour",
+          summary: "One quick hook saves the voyage.",
+          minutes: 2,
+          paragraphs: [
+            "The boat stops by the garden gate. Jade hooks it with a stick before it can slip under.",
+            "They carry the soggy box back to the shed and set it by the wall to dry.",
+            "“We will fix it tomorrow,” says Leo. Jade nods. “A good captain always dries the boat first.”"
           ]
         }
       ]

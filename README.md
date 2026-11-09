@@ -7,7 +7,7 @@ Readlings is a free, standalone reading curriculum website for young children. I
 ## What is included
 
 - **Seven reading levels (0–6):** from first CVC words to short chapter books, plus dedicated sight-word and common-pattern levels.
-- **Thirteen illustrated storybooks / 41 chapters:** three books each at Levels 0–2, two three-chapter books at Level 3, and two four-chapter books at Level 4.
+- **Forty illustrated storybooks / 124 chapters:** six books each at Levels 0, 1, and 5; three at Level 2; two each at Levels 3 and 4; and fifteen phonics pattern books at Level 6.
 - **Read-along narration:** automatic natural English voice selection, optional manual voice picker (US English and other English voices, male or female), 0.5× default speed, adjustable 0.25×–1.0× speed, synchronized word highlighting (underlined as it is read), automatic scrolling, and Play / Pause / Resume / Stop controls.
 - **Reader comfort tools:** Lexend, Comic Neue, and OpenDyslexic fonts; five text sizes; a toggleable line-focus mask.
 - **Progress:** stars and last-read position are saved in `localStorage` on the device.
