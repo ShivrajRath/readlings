@@ -38,11 +38,12 @@ All asset paths are relative, so the site works at a project URL such as `https:
 ├── index.html              # Homepage: reading trail, level picker, book catalog
 ├── reader.html             # Chapter reader, toolbars, dialogs, print containers
 ├── 404.html                # Friendly not-found page
+├── site.webmanifest        # App icons and install metadata
 ├── css/styles.css          # Design system, components, responsive + print rules
 ├── js/audio.js             # Web Speech API controller and voice selection
 ├── js/app.js               # Curriculum setup, catalog, reader behaviour, print
 ├── data/curriculum.js      # Levels, books, chapters, summaries, guidance
-└── assets/                 # Logo mark and favicon
+└── assets/                 # Logo mark and favicon set (SVG, PNG, ICO, touch icon)
 ```
 
 ## Customizing the curriculum
