@@ -18,8 +18,8 @@ window.READLINGS_CURRICULUM = {
   meta: {
     name: "Readlings",
     tagline: "Step-by-step reading adventures for early learners",
-    version: 1,
-    updated: "2026-11-09"
+    version: 2,
+    updated: "2026-11-11"
   },
 
   levels: [
@@ -413,6 +413,53 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "nat-and-the-big-pig",
+      level: 0,
+      title: "Nat and the Big Pig",
+      kicker: "A muddy little friend",
+      blurb: "Nat meets a big pig with a muddy snout and a very happy oink.",
+      emoji: "🐷",
+      skills: ["short a", "short i", "CVC words"],
+      chapters: [
+        {
+          id: "a-big-pig",
+          title: "A Big Pig",
+          summary: "A big pig sits in the mud.",
+          minutes: 1,
+          paragraphs: [
+            "Nat sees a pig.",
+            "The pig is big.",
+            "The pig is in the mud.",
+            "Nat grins at the pig."
+          ]
+        },
+        {
+          id: "mud-on-the-hat",
+          title: "Mud on the Hat",
+          summary: "One happy kick sends mud flying.",
+          minutes: 1,
+          paragraphs: [
+            "The pig kicks mud.",
+            "Mud lands on Nat.",
+            "Mud is on his hat.",
+            "“Oh no!” says Nat."
+          ]
+        },
+        {
+          id: "a-dip-for-nat",
+          title: "A Dip for Nat",
+          summary: "Nat joins the pig in the soft, squishy mud.",
+          minutes: 1,
+          paragraphs: [
+            "Nat sits in the mud.",
+            "The mud is soft.",
+            "The pig oinks at Nat.",
+            "Nat and the pig dig."
+          ]
+        }
+      ]
     }
   ],
 
@@ -697,6 +744,50 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "the-kite-in-the-tree",
+      level: 1,
+      title: "The Kite in the Tree",
+      kicker: "A windy rescue",
+      blurb: "Kit’s new kite soars high, until a gust sends it into the tallest tree in the park.",
+      emoji: "🪁",
+      skills: ["blends", "short vowels", "story sense"],
+      chapters: [
+        {
+          id: "a-kite-for-kit",
+          title: "A Kite for Kit",
+          summary: "A flat box hides a bright red kite.",
+          minutes: 2,
+          paragraphs: [
+            "Kit finds a flat box by the shed. Inside is a red kite with a long ribbon tail.",
+            "She runs to the hill with her dog, Pip. The wind is fresh and strong.",
+            "Kit holds the string tight and lets the kite go."
+          ]
+        },
+        {
+          id: "up-up-away",
+          title: "Up, Up, Away",
+          summary: "A gust lifts the kite high above the grass.",
+          minutes: 2,
+          paragraphs: [
+            "A gust of wind grabs the kite and lifts it high. It dips and spins above the trees.",
+            "Kit runs across the grass and lets out more string. Pip barks and races beside her.",
+            "Then the wind stops. The kite drops toward the park."
+          ]
+        },
+        {
+          id: "stuck-in-the-tree",
+          title: "Stuck in the Tree",
+          summary: "A tall oak catches the kite, and Dad brings a long stick.",
+          minutes: 2,
+          paragraphs: [
+            "The kite lands in the top of a tall oak. Kit can see its red tail waving.",
+            "Dad brings a long stick and hooks the string. He pulls, and the kite slips free.",
+            "Kit runs back up the hill and sails it again. This time, she keeps it close."
+          ]
+        }
+      ]
     }
   ],
 
@@ -832,6 +923,47 @@ window.READLINGS_CURRICULUM = {
           ]
         }
       ]
+    },
+    {
+      id: "june-and-the-blue-flute",
+      level: 2,
+      title: "June and the Blue Flute",
+      kicker: "A lake-light melody",
+      blurb: "A dusty blue flute in the attic carries one small request: play me by the lake at sunset.",
+      emoji: "🎶",
+      skills: ["long vowels", "silent e", "imagery"],
+      chapters: [
+        {
+          id: "the-flute-in-the-attic",
+          title: "The Flute in the Attic",
+          summary: "A slim blue flute hides a folded note.",
+          minutes: 3,
+          paragraphs: [
+            "June found a slim blue flute in a dusty attic case. A folded note inside said: Play me by the lake at sunset.",
+            "She polished the silver keys until they shone. At dinner she told no one about the flute. She tucked it under her coat and waited for the sun to slide low."
+          ]
+        },
+        {
+          id: "a-tune-for-the-lake",
+          title: "A Tune for the Lake",
+          summary: "The notes rise like pale fireflies over the water.",
+          minutes: 3,
+          paragraphs: [
+            "June sat on a smooth flat stone and played a slow tune. The notes rose over the lake like pale fireflies.",
+            "The water rippled, and a silver fish rose to listen. It hummed back in a voice like glass. June played again, and the whole lake seemed to hold its breath."
+          ]
+        },
+        {
+          id: "the-moonlight-song",
+          title: "The Moonlight Song",
+          summary: "A path of light opens across the water.",
+          minutes: 3,
+          paragraphs: [
+            "The moon climbed above the pines, and the lake turned bright as a mirror. June played one last note, and a path of light opened across the water.",
+            "The fish sang until the sky grew pale. June walked home with the flute warm in her pocket. Every evening after that, she played by the lake."
+          ]
+        }
+      ]
     }
   ],
 
@@ -925,6 +1057,50 @@ window.READLINGS_CURRICULUM = {
             "“Okay, real launch,” said Sam. “Three, two, one.”",
             "Jo held the box tight. The rocket rose over the sandbox.",
             "“We did it!” they shouted. The backyard cheered in cardboard."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-treehouse-team",
+      level: 3,
+      title: "The Treehouse Team",
+      kicker: "A backyard build",
+      blurb: "A pile of old planks and a toolbox become the best treehouse in the neighbourhood.",
+      emoji: "🌳",
+      skills: ["compound words", "dialogue", "teamwork"],
+      chapters: [
+        {
+          id: "the-backyard-plan",
+          title: "The Backyard Plan",
+          summary: "Milo and Ruby draw a plan on the back of a cereal box.",
+          minutes: 4,
+          paragraphs: [
+            "“We could build a treehouse,” said Milo. He pointed at the old oak in the backyard. Ruby looked at the pile of planks behind the shed.",
+            "“Do we have a toolbox?” asked Ruby. Milo lifted a tin box and rattled it. “Hammer, nails, and one very bent screwdriver,” he said.",
+            "“Then we have everything we need,” said Ruby. They drew a plan on the back of a cereal box and taped it to the trunk."
+          ]
+        },
+        {
+          id: "up-in-the-branches",
+          title: "Up in the Branches",
+          summary: "Planks, wind, and a little help from Gran.",
+          minutes: 4,
+          paragraphs: [
+            "Ruby held the ladder while Milo climbed. They passed planks up one by one and nailed them across the strongest branches.",
+            "“Hold that corner!” called Milo. The wind took the plank and wobbled it. Ruby caught it just in time.",
+            "Gran came out with lemonade and a longer ladder. “A good treehouse needs three builders,” she said. They raised the last wall together."
+          ]
+        },
+        {
+          id: "supper-in-the-treetops",
+          title: "Supper in the Treetops",
+          summary: "A picnic under the fireflies, with one job left for tomorrow.",
+          minutes: 4,
+          paragraphs: [
+            "At sunset, the treehouse had a floor, three walls, and a roof that nearly fit. They carried up a picnic blanket and a basket of buns.",
+            "“Best treehouse ever,” said Ruby. Milo looked at the wobbly rail. “It still needs a door,” he said.",
+            "Fireflies blinked in the branches as they ate. Below them, the kitchen light glowed. “Tomorrow,” said Gran, “we build the door.”"
           ]
         }
       ]
@@ -1038,6 +1214,61 @@ window.READLINGS_CURRICULUM = {
           paragraphs: [
             "They folded new rivers, new fields, new homes.",
             "And the smallest paper citizen folded a door just big enough for a story."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-museum-of-lost-sounds",
+      level: 4,
+      title: "The Museum of Lost Sounds",
+      kicker: "A house of borrowed voices",
+      blurb: "Elio finds a brass key that opens a museum where forgotten sounds are kept in glass jars.",
+      emoji: "🔑",
+      skills: ["rich vocabulary", "inference", "chapter book"],
+      chapters: [
+        {
+          id: "the-key-in-the-dust",
+          title: "The Key in the Dust",
+          summary: "A warm brass key waits in a shoebox of buttons.",
+          minutes: 5,
+          paragraphs: [
+            "Elio found the key in a shoebox of buttons and bottle caps. It was brass and warm, as if someone had just put it down, and its tag read: Sounds, Lost & Found.",
+            "His grandmother said the box had been in the attic for years. She did not look at the key when she said it. Elio slipped it into his pocket and climbed the narrow stairs after supper.",
+            "At the back of the attic, behind a curtain of cobwebs, he found a door with a small brass lock. The key turned without a sound."
+          ]
+        },
+        {
+          id: "the-quiet-hall",
+          title: "The Quiet Hall",
+          summary: "Glass jars line the hall, each holding a shimmer of sound.",
+          minutes: 5,
+          paragraphs: [
+            "Beyond the door stretched a long hall of glass jars. Each jar held a faint shimmer: a kettle whistling, a bicycle bell, a baby’s first laugh. Labels were written in careful ink.",
+            "Elio lifted one jar and heard his own name, spoken by a voice he could not place. He set it down quickly. The shelves went on and on, and every jar seemed to be waiting.",
+            "At the far end, a woman in a grey coat sat at a desk. “Visitors bring back what was lost,” she said. “But lately, the sounds have been fading.”"
+          ]
+        },
+        {
+          id: "the-empty-jar",
+          title: "The Empty Jar",
+          summary: "One jar is dark, and its label reads: The sound of home.",
+          minutes: 5,
+          paragraphs: [
+            "The woman led Elio to a shelf where the jars were dim as old lamps. One jar was completely dark. Its label read: The sound of home.",
+            "“No one has found that one,” she said. “Most people look in places. Home is not a place you can point to.”",
+            "Elio thought of his grandmother’s kitchen, the radio humming, the back door clicking shut. He thought of the way she said his name when she was glad to see him."
+          ]
+        },
+        {
+          id: "a-sound-for-the-shelf",
+          title: "A Sound for the Shelf",
+          summary: "A hum fills the dark jar and lights the whole shelf.",
+          minutes: 5,
+          paragraphs: [
+            "Elio ran home and found his grandmother at the kitchen table. “Hum the song you used to sing,” he said. She laughed, then hummed it softly, and the room seemed to grow warmer.",
+            "Back in the museum, he opened the dark jar and let the hum drift inside. Light spread across the shelf like sunrise. The grey-coated woman smiled for the first time.",
+            "“You found it,” she said. Elio looked at the key in his hand. “It was never lost,” he said. “I just had to bring it back.”"
           ]
         }
       ]
@@ -1326,6 +1557,53 @@ window.READLINGS_CURRICULUM = {
             "We eat together.",
             "We laugh together.",
             "I love my family."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-big-blue-bus",
+      level: 5,
+      title: "The Big Blue Bus",
+      kicker: "A ride to anywhere",
+      blurb: "The bus is big and blue. We get on, sit down, and ride to see our friends.",
+      emoji: "🚌",
+      skills: ["sight words", "high-frequency words", "repetition"],
+      chapters: [
+        {
+          id: "the-bus-is-here",
+          title: "The Bus Is Here",
+          summary: "A big blue bus stops for us.",
+          minutes: 1,
+          paragraphs: [
+            "The bus is here.",
+            "It is big and blue.",
+            "We get on the bus.",
+            "We sit down."
+          ]
+        },
+        {
+          id: "on-the-bus",
+          title: "On the Bus",
+          summary: "We look out and wave to a dog.",
+          minutes: 1,
+          paragraphs: [
+            "We look out the window.",
+            "We see a dog.",
+            "The dog can run.",
+            "We wave to the dog."
+          ]
+        },
+        {
+          id: "here-we-are",
+          title: "Here We Are",
+          summary: "The bus stops and our friends are waiting.",
+          minutes: 1,
+          paragraphs: [
+            "The bus stops here.",
+            "We get off the bus.",
+            "We see our friends.",
+            "We are happy!"
           ]
         }
       ]
@@ -2037,6 +2315,53 @@ window.READLINGS_CURRICULUM = {
             "I see in the night.",
             "The light helps me.",
             "Night and sight."
+          ]
+        }
+      ]
+    },
+    {
+      id: "new-news-and-dew",
+      level: 6,
+      title: "New News and Dew",
+      kicker: "The ew sound is new",
+      blurb: "New, few, dew, and grew. The ew team sprouts on every page.",
+      emoji: "🌱",
+      skills: ["ew", "vowel teams", "decoding"],
+      chapters: [
+        {
+          id: "new-news",
+          title: "New News",
+          summary: "New news and a few friends on a new bench.",
+          minutes: 1,
+          paragraphs: [
+            "I have new news.",
+            "A few friends came.",
+            "We sat on the new bench.",
+            "The wind blew and blew."
+          ]
+        },
+        {
+          id: "the-dew-grew",
+          title: "The Dew Grew",
+          summary: "Dew grows on a leaf in the new sun.",
+          minutes: 1,
+          paragraphs: [
+            "The sun is new.",
+            "The dew grew on the leaf.",
+            "A few drops fell.",
+            "I drew the dew."
+          ]
+        },
+        {
+          id: "the-crew-chews",
+          title: "The Crew Chews",
+          summary: "The crew chews a few buns and knows they are good.",
+          minutes: 1,
+          paragraphs: [
+            "The crew sat down.",
+            "Each one chewed a few buns.",
+            "We knew they were good.",
+            "What new news!"
           ]
         }
       ]
