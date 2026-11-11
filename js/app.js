@@ -632,6 +632,18 @@
      Homepage
      ------------------------------------------------------------------------ */
 
+  function getFeaturedBooks() {
+    var featured = books.filter(function (book) { return book.featured; });
+
+    if (!featured.length) {
+      featured = DATA.levels.map(function (level) {
+        return level.books[0];
+      }).filter(Boolean);
+    }
+
+    return featured;
+  }
+
   function initHome() {
     var levelGrid = document.getElementById("level-grid");
     var bookGrid = document.getElementById("book-grid");
@@ -689,12 +701,16 @@
     }
 
     function renderCatalog() {
+      var featured = getFeaturedBooks();
+
       if (catalogStatus) {
-        catalogStatus.innerHTML = 'Showing <strong>all ' + books.length + '</strong> books';
+        var storyLabel = featured.length === 1 ? "story" : "stories";
+        catalogStatus.innerHTML = 'Showing <strong>' + featured.length + '</strong> featured ' +
+          storyLabel + ' across all levels';
       }
 
-      bookGrid.innerHTML = books.length
-        ? books.map(renderBookCard).join("")
+      bookGrid.innerHTML = featured.length
+        ? featured.map(renderBookCard).join("")
         : '<p class="empty-state">No books just yet. Try another reading step!</p>';
     }
 

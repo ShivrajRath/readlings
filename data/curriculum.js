@@ -9,6 +9,7 @@
 
    Book:
      id, title, kicker, blurb, emoji, skills, chapters[]
+     (optional featured: true to show the book on the homepage)
 
    Chapter:
      id, title, summary, minutes, paragraphs[]
@@ -18,7 +19,7 @@ window.READLINGS_CURRICULUM = {
   meta: {
     name: "Readlings",
     tagline: "Step-by-step reading adventures for early learners",
-    version: 2,
+    version: 3,
     updated: "2026-11-11"
   },
 
@@ -127,6 +128,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A bouncy little adventure",
       blurb: "Pip’s bright red ball gets a big kick. Can a new pup help bring it home?",
       emoji: "🔴",
+      featured: true,
       skills: ["short i", "CVC words", "sight words"],
       chapters: [
         {
@@ -474,6 +476,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "Boots on, umbrellas up!",
       blurb: "Tess and Finn start a very muddy club on a very rainy day.",
       emoji: "🥾",
+      featured: true,
       skills: ["blends", "short vowels", "dialogue"],
       chapters: [
         {
@@ -802,6 +805,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A midnight mystery",
       blurb: "A tiny silver seed grows into a garden that only blooms under the moon.",
       emoji: "🌙",
+      featured: true,
       skills: ["long vowels", "silent e", "imagery"],
       chapters: [
         {
@@ -978,6 +982,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A rainy-day rescue",
       blurb: "A shoebox, a spoon, and two brave buttons set sail down Gutter River.",
       emoji: "⛵",
+      featured: true,
       skills: ["compound words", "dialogue", "expression"],
       chapters: [
         {
@@ -1068,6 +1073,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A backyard build",
       blurb: "A pile of old planks and a toolbox become the best treehouse in the neighbourhood.",
       emoji: "🌳",
+      featured: true,
       skills: ["compound words", "dialogue", "teamwork"],
       chapters: [
         {
@@ -1101,6 +1107,94 @@ window.READLINGS_CURRICULUM = {
             "At sunset, the treehouse had a floor, three walls, and a roof that nearly fit. They carried up a picnic blanket and a basket of buns.",
             "“Best treehouse ever,” said Ruby. Milo looked at the wobbly rail. “It still needs a door,” he said.",
             "Fireflies blinked in the branches as they ate. Below them, the kitchen light glowed. “Tomorrow,” said Gran, “we build the door.”"
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-midnight-market",
+      level: 3,
+      title: "The Midnight Market",
+      kicker: "A moonlit treasure trade",
+      blurb: "Milo and Aunt Bea follow a trail of lanterns to a market that only opens after dark.",
+      emoji: "🏮",
+      skills: ["compound words", "dialogue", "expression"],
+      chapters: [
+        {
+          id: "the-lantern-trail",
+          title: "The Lantern Trail",
+          summary: "A trail of tiny lanterns leads past the garden gate.",
+          minutes: 4,
+          paragraphs: [
+            "Milo could not sleep. A trail of tiny lanterns glowed across the backyard.",
+            "“Aunt Bea,” he whispered, “the garden is full of lights.” Aunt Bea pulled on her coat. “Then we had better follow them,” she said. “Moonlight markets do not wait.”",
+            "They followed the lanterns past the gatepost and down a winding footpath. At the end stood a wooden stall stacked with paper stars."
+          ]
+        },
+        {
+          id: "the-paper-star",
+          title: "The Paper Star",
+          summary: "The stallkeeper asks for something Milo no longer needs.",
+          minutes: 4,
+          paragraphs: [
+            "The stallkeeper had a wide smile and a telescope. “One paper star,” she said, “for something you no longer need.”",
+            "Milo dug in his pocket. He found a smooth blue marble, a bottle cap, and a stub of chalk. “The marble,” he said. “I have outgrown it.”",
+            "The stallkeeper nodded and handed him a folded paper star. “Keep it dry,” she said, “and it will light your way home.”"
+          ]
+        },
+        {
+          id: "home-before-sunrise",
+          title: "Home Before Sunrise",
+          summary: "A paper star guides two night travellers home.",
+          minutes: 4,
+          paragraphs: [
+            "The star glowed brighter with every step. Milo and Aunt Bea hurried past the sleeping houses and through the back gate.",
+            "At sunrise, the star folded itself into a tiny paper boat. Milo set it on the windowsill, where it caught the light.",
+            "“Same time next month?” asked Aunt Bea. Milo grinned. “Only if we bring more marbles.”"
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-garden-detective",
+      level: 3,
+      title: "The Garden Detective",
+      kicker: "A berry mystery",
+      blurb: "Ruby’s strawberries keep disappearing, so she sets a trap and finds a feathery thief.",
+      emoji: "🍓",
+      skills: ["compound words", "dialogue", "story sense"],
+      chapters: [
+        {
+          id: "something-is-missing",
+          title: "Something Is Missing",
+          summary: "Three berries vanish, then five more.",
+          minutes: 4,
+          paragraphs: [
+            "Ruby checked the strawberry patch every morning. On Monday, three berries were gone. On Tuesday, five more had vanished.",
+            "“A snail?” asked Dad. Ruby shook her head. “Snails do not leave feathers.”",
+            "She found a black feather beside the watering can. “A garden detective needs a notebook,” she said, and she began to write down every clue."
+          ]
+        },
+        {
+          id: "the-strawberry-trap",
+          title: "The Strawberry Trap",
+          summary: "A scarecrow with shiny spoons keeps watch.",
+          minutes: 4,
+          paragraphs: [
+            "Ruby built a scarecrow from a broomstick and Dad’s old shirt. She tied a shiny spoon to each sleeve.",
+            "That evening, she hid behind the shed and waited. The sky turned pink, then purple, then dark.",
+            "A rustle came from the hedge. A blackbird hopped onto the scarecrow’s hat, then dropped down beside the berries."
+          ]
+        },
+        {
+          id: "a-fair-trade",
+          title: "A Fair Trade",
+          summary: "Ruby decides a hungry thief deserves a snack of his own.",
+          minutes: 4,
+          paragraphs: [
+            "Ruby jumped up. “Caught you!” The blackbird flew to the fence and squawked.",
+            "Dad laughed. “He has been eating well.” Ruby looked at the half-eaten berry in the bird’s beak. “Maybe he is hungry,” she said.",
+            "They built a small berry basket on the fence post. The next morning, the strawberries were safe, and the blackbird was singing."
           ]
         }
       ]
@@ -1225,6 +1319,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A house of borrowed voices",
       blurb: "Elio finds a brass key that opens a museum where forgotten sounds are kept in glass jars.",
       emoji: "🔑",
+      featured: true,
       skills: ["rich vocabulary", "inference", "chapter book"],
       chapters: [
         {
@@ -1269,6 +1364,116 @@ window.READLINGS_CURRICULUM = {
             "Elio ran home and found his grandmother at the kitchen table. “Hum the song you used to sing,” he said. She laughed, then hummed it softly, and the room seemed to grow warmer.",
             "Back in the museum, he opened the dark jar and let the hum drift inside. Light spread across the shelf like sunrise. The grey-coated woman smiled for the first time.",
             "“You found it,” she said. Elio looked at the key in his hand. “It was never lost,” he said. “I just had to bring it back.”"
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-map-that-wouldnt-stay-still",
+      level: 4,
+      title: "The Map That Wouldn’t Stay Still",
+      kicker: "A town that moves at dusk",
+      blurb: "Every evening, the streets on Iris’s map rearrange themselves. The town is trying to tell her something.",
+      emoji: "🗺️",
+      skills: ["rich vocabulary", "inference", "chapter book"],
+      chapters: [
+        {
+          id: "the-unruly-map",
+          title: "The Unruly Map",
+          summary: "A lane curls on its own and points toward the river.",
+          minutes: 5,
+          paragraphs: [
+            "Iris inherited the map from her grandfather, along with his brass compass and a warning: Never trust the streets after sunset.",
+            "The map showed the town of Bellwether in careful ink. On the first evening, a lane curled like a question mark and pointed toward the river.",
+            "By morning it was straight again. Iris told herself she had imagined it."
+          ]
+        },
+        {
+          id: "a-street-without-a-name",
+          title: "A Street Without a Name",
+          summary: "A new street leads from the bakery to the clock tower.",
+          minutes: 5,
+          paragraphs: [
+            "On the second evening, the map grew a street that did not exist. It began at the bakery and ended at the old clock tower.",
+            "Iris followed it at dusk. The bakery was closed, but a warm light burned in the tower window.",
+            "She climbed the spiral stairs. At the top sat her grandfather’s empty chair, still turned toward the town."
+          ]
+        },
+        {
+          id: "the-clockmakers-riddle",
+          title: "The Clockmaker’s Riddle",
+          summary: "A note explains why Bellwether will not sit still.",
+          minutes: 5,
+          paragraphs: [
+            "A note lay on the chair: The town moves because someone forgot to wind the clock.",
+            "Iris found the clock mechanism behind a loose panel. One gear was missing, and the hands had stopped at a quarter past seven.",
+            "She searched her pockets and found the brass compass. Its back plate was held by three tiny screws. Inside lay a small brass gear, wrapped in a scrap of paper that read: For the clock."
+          ]
+        },
+        {
+          id: "a-town-held-still",
+          title: "A Town Held Still",
+          summary: "Iris winds the clock and the streets settle home.",
+          minutes: 5,
+          paragraphs: [
+            "Iris wound the clock with trembling hands. Below her, the streets settled into their proper places, one by one.",
+            "The map in her pocket grew warm. When she unfolded it, a new line had appeared: You found the way.",
+            "She walked home beneath steady lamps. Bellwether was still, but Iris no longer felt lost."
+          ]
+        }
+      ]
+    },
+    {
+      id: "the-orchard-at-the-edge-of-winter",
+      level: 4,
+      title: "The Orchard at the Edge of Winter",
+      kicker: "A frost, a promise, and a garden",
+      blurb: "When an early frost threatens Grandma’s orchard, Tomas must find a way to keep the blossoms warm.",
+      emoji: "🍎",
+      skills: ["rich vocabulary", "inference", "chapter book"],
+      chapters: [
+        {
+          id: "the-first-frost",
+          title: "The First Frost",
+          summary: "Pale blossoms curl as a hard frost approaches.",
+          minutes: 5,
+          paragraphs: [
+            "Tomas spent every spring at Grandma’s orchard. The trees stood in long, orderly rows, and the air smelled of blossoms and rain.",
+            "One morning, the grass sparkled with frost. The apple trees had opened their flowers early, and the pale petals were already curling at the edges.",
+            "Grandma studied the sky. “A hard frost is coming,” she said. “If it takes the blossoms, there will be no apples this autumn.”"
+          ]
+        },
+        {
+          id: "a-blanket-for-the-trees",
+          title: "A Blanket for the Trees",
+          summary: "Every sheet in the house becomes a coat for the smallest trees.",
+          minutes: 5,
+          paragraphs: [
+            "Tomas and Grandma gathered every sheet and blanket in the house. They wrapped the smallest trees like sleepy children.",
+            "The wind pulled the corners loose. Tomas tied them with twine while Grandma hauled the ladder from the barn.",
+            "By evening, the orchard looked like a patchwork quilt. “It may not be enough,” Grandma said quietly."
+          ]
+        },
+        {
+          id: "the-smudge-pots",
+          title: "The Smudge Pots",
+          summary: "Old pots and warm smoke hold the frost at bay.",
+          minutes: 5,
+          paragraphs: [
+            "Tomas remembered the old smudge pots in the barn. Grandpa had used them to keep the frost away.",
+            "They filled the pots with dry wood and set them between the rows. Smoke drifted through the branches and hung there like a warm gray blanket.",
+            "All night, Tomas and Grandma took turns tending the fires. The frost crept close, then hesitated, then retreated."
+          ]
+        },
+        {
+          id: "an-orchard-of-apples",
+          title: "An Orchard of Apples",
+          summary: "Autumn arrives heavy with red and gold fruit.",
+          minutes: 5,
+          paragraphs: [
+            "When summer arrived, the orchard was thick with leaves. By autumn, the branches hung heavy with red and gold apples.",
+            "Grandma cut two slices of pie and sat with Tomas beneath the oldest tree. “The frost taught us something,” she said.",
+            "“What?” asked Tomas. “That a little warmth can be shared,” she said. The orchard rustled in the breeze."
           ]
         }
       ]
@@ -1568,6 +1773,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "A ride to anywhere",
       blurb: "The bus is big and blue. We get on, sit down, and ride to see our friends.",
       emoji: "🚌",
+      featured: true,
       skills: ["sight words", "high-frequency words", "repetition"],
       chapters: [
         {
@@ -1621,6 +1827,7 @@ window.READLINGS_CURRICULUM = {
       kicker: "The ee sound sings",
       blurb: "See the green tree, the deep sea, and a sleepy bee. Every page hums with the ee sound.",
       emoji: "🐝",
+      featured: true,
       skills: ["ee", "long e", "vowel teams"],
       chapters: [
         {

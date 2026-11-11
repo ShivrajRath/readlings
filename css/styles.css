@@ -1611,6 +1611,7 @@ fieldset {
 
 .catalog-bar {
   display: flex;
+  flex-wrap: wrap;
   min-height: 38px;
   align-items: center;
   justify-content: space-between;
