@@ -47,17 +47,6 @@
 
   var WORD_PATTERN = /[A-Za-z0-9]+(?:[’'\-][A-Za-z0-9]+)*/g;
 
-  /* A small, research-informed high-frequency (sight) word list used to
-     build the pre-reading primer. These are the words early readers meet
-     most often, so practising them first lowers cognitive load. */
-  var SIGHT_WORDS = [
-    "a", "and", "away", "big", "blue", "can", "come", "down", "find", "for",
-    "funny", "go", "help", "here", "i", "in", "is", "it", "jump", "little",
-    "look", "make", "me", "my", "not", "one", "play", "red", "run", "said",
-    "see", "the", "three", "to", "two", "up", "we", "where", "yellow", "you",
-    "has", "have", "like", "no", "so", "was", "with", "he", "she", "they"
-  ];
-
   /* Shared state */
   var books = [];
   var chapters = [];
@@ -1172,7 +1161,6 @@
     setupWordTapToDecode();
     setupPageFocus();
     rememberLastRead();
-    showPrimer();
 
     window.addEventListener("storage", function (event) {
       if (!event.key || event.key === STORAGE_PROGRESS) {
@@ -1991,13 +1979,6 @@
       });
     }
 
-    var primerStartButton = document.getElementById("primer-start-button");
-    if (primerStartButton) {
-      primerStartButton.addEventListener("click", function () {
-        closePrimer();
-      });
-    }
-
     var comprehensionClose = document.getElementById("comprehension-dialog-close");
     if (comprehensionClose) {
       comprehensionClose.addEventListener("click", function () {
@@ -2620,84 +2601,6 @@
     }
   }
 
-  /* -----------------------------------------------------------------------
-     Pre-reading primer
-     ----------------------------------------------------------------------- */
-  function extractSightWords(chapter) {
-    var text = ((chapter && chapter.paragraphs) || []).join(" ").toLowerCase();
-    var found = [];
-    var seen = Object.create(null);
-
-    SIGHT_WORDS.forEach(function (word) {
-      var pattern = new RegExp("\\b" + word.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&") + "\\b", "i");
-      if (pattern.test(text) && !seen[word]) {
-        seen[word] = true;
-        found.push(word);
-      }
-    });
-
-    /* Fall back to the first short words in the chapter so we always have 3. */
-    if (found.length < 3) {
-      var tokens = text.match(WORD_PATTERN) || [];
-      tokens.forEach(function (token) {
-        var lower = token.toLowerCase();
-        if (found.length >= 3) {
-          return;
-        }
-        if (lower.length <= 6 && SIGHT_WORDS.indexOf(lower) === -1 && !seen[lower]) {
-          seen[lower] = true;
-          found.push(lower);
-        }
-      });
-    }
-
-    while (found.length < 3) {
-      var fallback = SIGHT_WORDS[found.length % SIGHT_WORDS.length];
-      if (!seen[fallback]) {
-        seen[fallback] = true;
-        found.push(fallback);
-      } else {
-        break;
-      }
-    }
-
-    return found.slice(0, 3);
-  }
-
-  function extractPhonicsRule(chapter, book) {
-    var skills = (book && Array.isArray(book.skills)) ? book.skills : [];
-    var level = chapter ? chapter.levelData : null;
-    var focus = (level && Array.isArray(level.focus)) ? level.focus : [];
-    var candidates = skills.concat(focus);
-
-    for (var i = 0; i < candidates.length; i += 1) {
-      var skill = String(candidates[i] || "").toLowerCase();
-      if (!skill) {
-        continue;
-      }
-      if (skill.indexOf("short") !== -1) {
-        return "Short vowel sound: " + skill;
-      }
-      if (skill.indexOf("long") !== -1) {
-        return "Long vowel sound: " + skill;
-      }
-      if (skill.indexOf("blend") !== -1) {
-        return "Consonant blends: " + skill;
-      }
-      if (skill.indexOf("silent") !== -1) {
-        return "Silent letters: " + skill;
-      }
-      if (skill.indexOf("compound") !== -1) {
-        return "Compound words: " + skill;
-      }
-      if (skill.indexOf("cvc") !== -1) {
-        return "CVC words: sound out consonant-vowel-consonant";
-      }
-    }
-
-    return focus.length ? String(focus[0]) : "Sound out each word slowly";
-  }
-
   function speakText(text) {
     if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== "function") {
       return;
@@ -2725,83 +2628,6 @@
     } catch (error) {
       /* Speech is a progressive enhancement; never block reading. */
     }
-  }
-
-  function showPrimer() {
-    var dialog = document.getElementById("primer-dialog");
-    var sightContainer = document.getElementById("primer-sight-words");
-    var ruleContainer = document.getElementById("primer-phonics-rule");
-
-    if (!dialog || !currentChapter) {
-      return;
-    }
-
-    var sightWords = extractSightWords(currentChapter);
-    var phonicsRule = extractPhonicsRule(currentChapter, currentBook);
-
-    if (sightContainer) {
-      sightContainer.innerHTML = sightWords.map(function (word) {
-        return (
-          '<button class="primer-chip" type="button" data-primer-speak="' + escapeHtml(word) + '">' +
-            escapeHtml(word) +
-            '<span class="primer-chip__audio" aria-hidden="true">' + icon("speaker") + '</span>' +
-          '</button>'
-        );
-      }).join("");
-
-      sightContainer.querySelectorAll("[data-primer-speak]").forEach(function (button) {
-        button.addEventListener("click", function () {
-          speakText(button.getAttribute("data-primer-speak"));
-        });
-      });
-    }
-
-    if (ruleContainer) {
-      ruleContainer.innerHTML =
-        '<button class="primer-rule__audio" type="button" data-primer-speak="' + escapeHtml(phonicsRule) + '" aria-label="Play phonics rule">' +
-          icon("speaker") +
-        '</button>' +
-        '<span>' + escapeHtml(phonicsRule) + '</span>';
-
-      var ruleAudio = ruleContainer.querySelector("[data-primer-speak]");
-      if (ruleAudio) {
-        ruleAudio.addEventListener("click", function () {
-          speakText(ruleAudio.getAttribute("data-primer-speak"));
-        });
-      }
-    }
-
-    document.body.classList.add("primer-open");
-
-    if (typeof openDialog === "function") {
-      openDialog(dialog);
-    } else if (typeof dialog.showModal === "function") {
-      dialog.showModal();
-    }
-
-    /* Prevent closing via backdrop or escape until Start Story is pressed. */
-    dialog.addEventListener("cancel", function (event) {
-      event.preventDefault();
-    });
-
-    var startButton = document.getElementById("primer-start-button");
-    if (startButton) {
-      startButton.focus({ preventScroll: true });
-    }
-  }
-
-  function closePrimer() {
-    var dialog = document.getElementById("primer-dialog");
-
-    if (dialog) {
-      if (typeof closeDialog === "function") {
-        closeDialog(dialog);
-      } else if (typeof dialog.close === "function" && dialog.open) {
-        dialog.close();
-      }
-    }
-
-    document.body.classList.remove("primer-open");
   }
 
   /* -----------------------------------------------------------------------

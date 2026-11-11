@@ -5586,7 +5586,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
 }
 
 /* ==========================================================================
-   Readlings — Science of Reading upgrades (primer, tap-to-decode, comprehension)
+   Readlings — Science of Reading upgrades (tap-to-decode, comprehension)
    ========================================================================== */
 
 /* Tappable words for tap-to-decode */
@@ -5608,132 +5608,6 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
 .chapter-body .word:focus-visible {
   outline: 3px solid #0E9DB8;
   outline-offset: 2px;
-}
-
-/* Primer modal */
-.primer-dialog__panel {
-  padding: 0;
-  overflow: hidden;
-}
-.primer-hero {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.6rem 1.7rem 1.2rem;
-  background:
-    radial-gradient(circle at 95% 10%, var(--level-color, var(--sunny)), transparent 34%),
-    var(--level-soft, var(--sunny-soft));
-}
-.primer-hero__icon {
-  display: grid;
-  width: 64px;
-  height: 64px;
-  flex: 0 0 64px;
-  place-items: center;
-  font-size: 2rem;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 18px;
-  box-shadow: var(--shadow-sm);
-  transform: rotate(-4deg);
-}
-.primer-kicker {
-  margin-bottom: 0.2rem;
-  color: var(--level-ink, var(--sunny-deep));
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.primer-hero h2 {
-  margin-bottom: 0.3rem;
-  color: var(--level-ink, var(--sunny-deep));
-  font-size: clamp(1.5rem, 4vw, 2rem);
-}
-.primer-copy {
-  color: var(--level-ink, var(--sunny-deep));
-  font-size: 0.8rem;
-  line-height: 1.5;
-  opacity: 0.82;
-}
-.primer-section {
-  padding: 1.2rem 1.7rem 0.4rem;
-}
-.primer-section h3 {
-  margin-bottom: 0.25rem;
-  font-size: 0.95rem;
-}
-.primer-hint {
-  margin-bottom: 0.7rem;
-  color: var(--ink-muted);
-  font-size: 0.68rem;
-}
-.primer-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.primer-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-height: 46px;
-  padding: 0.5rem 0.85rem;
-  color: var(--ink);
-  background: var(--paper);
-  border: 1.5px solid var(--line);
-  border-radius: 14px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
-}
-.primer-chip:hover {
-  border-color: var(--level-color, var(--sunny));
-  background: var(--level-soft, var(--sunny-soft));
-  transform: translateY(-2px);
-}
-.primer-chip .primer-chip__audio {
-  display: inline-grid;
-  width: 26px;
-  height: 26px;
-  place-items: center;
-  color: var(--level-ink, var(--sunny-deep));
-  background: var(--level-soft, var(--sunny-soft));
-  border-radius: 8px;
-}
-.primer-chip .primer-chip__audio .icon {
-  width: 0.85rem;
-  height: 0.85rem;
-}
-.primer-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.9rem 1rem;
-  color: var(--level-ink, var(--sunny-deep));
-  background: var(--level-soft, var(--sunny-soft));
-  border: 1.5px dashed var(--level-line, #F0D988);
-  border-radius: 14px;
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-.primer-rule__audio {
-  display: inline-grid;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  place-items: center;
-  color: var(--paper);
-  background: var(--level-ink, var(--sunny-deep));
-  border-radius: 10px;
-}
-.primer-rule__audio .icon {
-  width: 0.95rem;
-  height: 0.95rem;
-}
-.primer-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1.2rem 1.7rem 1.6rem;
 }
 
 /* Comprehension modal */
@@ -5828,23 +5702,8 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   text-align: center;
 }
 
-/* Story hidden while primer is open */
-body.primer-open .reading-card {
-  filter: blur(8px);
-  opacity: 0.35;
-  pointer-events: none;
-  user-select: none;
-}
-body.primer-open #completion-zone {
-  opacity: 0;
-  pointer-events: none;
-}
-
 @media (max-width: 720px) {
   .comprehension-answers {
     grid-template-columns: 1fr;
-  }
-  .primer-chip {
-    font-size: 0.95rem;
   }
 }
