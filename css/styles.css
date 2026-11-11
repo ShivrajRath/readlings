@@ -3377,6 +3377,67 @@ body[data-reader-font="dyslexic"] .chapter-body {
   vertical-align: middle;
 }
 
+.story-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 2;
+}
+
+.story-page .story-tools {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.85rem;
+}
+
+.story-tools--inline {
+  display: inline-flex;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.story-tools .focus-mode-toggle {
+  position: static;
+  margin-left: 0;
+}
+
+.listen-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 28px;
+  padding: 0.2rem 0.55rem;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.listen-toggle:hover {
+  color: var(--ink);
+  background: var(--paper);
+  border-color: var(--line-strong);
+}
+
+.listen-toggle.is-active,
+.listen-toggle[aria-pressed="true"] {
+  color: var(--ink);
+  background: var(--sunny-soft);
+  border-color: #EFD587;
+}
+
+.listen-toggle .icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
 .story-page .story-paragraph {
   font-size: calc(var(--reader-font-size) * 1.12);
   font-weight: 500;
@@ -5006,6 +5067,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   .completion-zone,
   .reading-card__topline,
   .focus-mode-mask,
+  .story-tools,
   .celebration-layer,
   .book-dialog,
   .toast,

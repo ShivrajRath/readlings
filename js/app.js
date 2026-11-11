@@ -71,6 +71,7 @@
   var activeSectionEl = null;
   var focusedPageEl = null;
   var focusButtons = [];
+  var blockPlayback = null;
   var audioContent = { text: "", words: [] };
   var currentBook = null;
   var currentChapter = null;
@@ -1246,7 +1247,12 @@
         pageFocusButton.setAttribute("aria-pressed", "false");
         pageFocusButton.setAttribute("aria-label", "Focus this page");
         pageFocusButton.innerHTML = icon("focus") + " Focus";
-        page.appendChild(pageFocusButton);
+
+        var pageTools = document.createElement("div");
+        pageTools.className = "story-tools";
+        pageTools.appendChild(createListenButton(text, page, "page"));
+        pageTools.appendChild(pageFocusButton);
+        page.appendChild(pageTools);
         focusButtons.push({ button: pageFocusButton, target: page });
         pageFocusButton.addEventListener("click", function (event) {
           event.stopPropagation();
@@ -1267,7 +1273,12 @@
         paragraphFocusButton.setAttribute("aria-pressed", "false");
         paragraphFocusButton.setAttribute("aria-label", "Focus this paragraph");
         paragraphFocusButton.innerHTML = icon("focus") + " Focus";
-        paragraph.appendChild(paragraphFocusButton);
+
+        var paragraphTools = document.createElement("span");
+        paragraphTools.className = "story-tools story-tools--inline";
+        paragraphTools.appendChild(createListenButton(text, paragraph, "paragraph"));
+        paragraphTools.appendChild(paragraphFocusButton);
+        paragraph.appendChild(paragraphTools);
         focusButtons.push({ button: paragraphFocusButton, target: paragraph });
         paragraphFocusButton.addEventListener("click", function (event) {
           event.stopPropagation();
@@ -1281,6 +1292,30 @@
     });
 
     return { text: spokenText, words: words, chapterId: chapter.id, chapterKey: chapter.key, bookId: chapter.book.id };
+  }
+
+  /**
+   * A small play button for one page or paragraph, sitting beside Focus.
+   * It reads just that block so a child can hear a tricky part again
+   * without restarting the whole-chapter read-along.
+   */
+  function createListenButton(text, target, kind) {
+    var button = document.createElement("button");
+    var label = kind === "page" ? "Listen to this page" : "Listen to this paragraph";
+
+    button.type = "button";
+    button.className = "listen-toggle";
+    button.setAttribute("aria-pressed", "false");
+    button.setAttribute("aria-label", label);
+    button.setAttribute("data-idle-label", label);
+    button.innerHTML = icon("speaker") + '<span class="listen-toggle__label">Listen</span>';
+
+    button.addEventListener("click", function (event) {
+      event.stopPropagation();
+      toggleBlockPlayback(button, target, text);
+    });
+
+    return button;
   }
 
   /**
@@ -1302,6 +1337,7 @@
       var span = document.createElement("span");
       span.className = "word";
       span.setAttribute("data-word-index", String(words.length));
+      span.setAttribute("data-local-start", String(match.index));
       span.textContent = match[0];
 
       paragraph.appendChild(span);
@@ -1838,6 +1874,8 @@
       return;
     }
 
+    stopBlockPlayback();
+
     if (audio && (audio.state === "playing" || audio.state === "paused")) {
       audio.stop();
     }
@@ -1862,6 +1900,8 @@
     if (!currentBook) {
       return;
     }
+
+    stopBlockPlayback();
 
     if (audio && (audio.state === "playing" || audio.state === "paused")) {
       audio.stop();
@@ -1974,6 +2014,7 @@
         return;
       }
 
+      stopBlockPlayback();
       audio.toggle();
     });
 
@@ -1983,6 +2024,7 @@
           return;
         }
 
+        stopBlockPlayback();
         audio.stop();
         clearActiveWord();
       });
@@ -2235,6 +2277,162 @@
   }
 
   /* -----------------------------------------------------------------------
+     Per-page and per-paragraph listening
+     ----------------------------------------------------------------------- */
+
+  function toggleBlockPlayback(button, target, text) {
+    if (blockPlayback && blockPlayback.button === button) {
+      stopBlockPlayback();
+      return;
+    }
+
+    stopBlockPlayback();
+
+    if (!text) {
+      return;
+    }
+
+    if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== "function") {
+      showToast("Read-along audio is not available in this browser.", 3600);
+      return;
+    }
+
+    /* One voice at a time: the whole-chapter read-along steps aside. */
+    if (audio && (audio.state === "playing" || audio.state === "paused")) {
+      audio.stop();
+    }
+
+    var utterance = new window.SpeechSynthesisUtterance(text);
+    var spans = Array.prototype.slice.call(target.querySelectorAll(".word"));
+    var session = {
+      button: button,
+      target: target,
+      utterance: utterance,
+      word: null,
+      spans: spans.map(function (span) {
+        return {
+          start: Number(span.getAttribute("data-local-start") || 0),
+          element: span
+        };
+      })
+    };
+
+    utterance.rate = audio ? audio.rate : (prefs.rate || 0.5);
+    utterance.pitch = audio ? audio.pitch : 1.05;
+    utterance.volume = 1;
+
+    if (audio && audio.voice) {
+      utterance.voice = audio.voice;
+      utterance.lang = audio.voice.lang || "en-US";
+    } else {
+      utterance.lang = "en-US";
+    }
+
+    blockPlayback = session;
+    setBlockButtonState(button, true);
+
+    utterance.onboundary = function (event) {
+      if (blockPlayback !== session) {
+        return;
+      }
+
+      if (event.name && event.name !== "word") {
+        return;
+      }
+
+      var position = event.charIndex || 0;
+      var match = null;
+
+      for (var i = 0; i < session.spans.length; i += 1) {
+        if (session.spans[i].start <= position) {
+          match = session.spans[i];
+        } else {
+          break;
+        }
+      }
+
+      if (!match || match.element === session.word) {
+        return;
+      }
+
+      if (session.word) {
+        session.word.classList.remove("speaking-highlight");
+      }
+
+      session.word = match.element;
+      session.word.classList.add("speaking-highlight");
+      target.classList.add("speaking-section");
+    };
+
+    utterance.onend = function () {
+      endBlockPlayback(session);
+    };
+
+    utterance.onerror = function () {
+      endBlockPlayback(session);
+    };
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function endBlockPlayback(session) {
+    if (blockPlayback !== session) {
+      return;
+    }
+
+    blockPlayback = null;
+    clearBlockHighlight(session);
+    setBlockButtonState(session.button, false);
+  }
+
+  function stopBlockPlayback() {
+    var session = blockPlayback;
+
+    if (!session) {
+      return;
+    }
+
+    blockPlayback = null;
+    clearBlockHighlight(session);
+    setBlockButtonState(session.button, false);
+
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  }
+
+  function clearBlockHighlight(session) {
+    if (session.word) {
+      session.word.classList.remove("speaking-highlight");
+      session.word = null;
+    }
+
+    if (session.target) {
+      session.target.classList.remove("speaking-section");
+    }
+  }
+
+  function setBlockButtonState(button, playing) {
+    if (!button) {
+      return;
+    }
+
+    var label = button.querySelector(".listen-toggle__label");
+
+    button.classList.toggle("is-active", playing);
+    button.setAttribute("aria-pressed", playing ? "true" : "false");
+    button.setAttribute(
+      "aria-label",
+      playing ? "Stop listening" : (button.getAttribute("data-idle-label") || "Listen")
+    );
+
+    if (label) {
+      label.textContent = playing ? "Stop" : "Listen";
+    }
+  }
+
+  /* -----------------------------------------------------------------------
      Pre-reading primer
      ----------------------------------------------------------------------- */
   function extractSightWords(chapter) {
@@ -2316,6 +2514,8 @@
     if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== "function") {
       return;
     }
+
+    stopBlockPlayback();
 
     try {
       window.speechSynthesis.cancel();
