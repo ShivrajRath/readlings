@@ -6,7 +6,8 @@ Readlings is a free, standalone reading curriculum website for young children. I
 
 ## What is included
 
-- **Seven reading levels (0–6):** from first CVC words to short chapter books, plus dedicated sight-word and common-pattern levels.
+- **Seven reading levels (0–6):** from first CVC words to short chapter books, plus dedicated sight-word and common-pattern levels. Each level has its own page listing all of its books.
+- **One page per level:** every level card opens `level.html?level=N`, with a level overview, reading focus, progress, and its complete book shelf.
 - **Forty illustrated storybooks / 124 chapters:** six books each at Levels 0, 1, and 5; three at Level 2; two each at Levels 3 and 4; and fifteen phonics pattern books at Level 6.
 - **Read-along narration:** automatic natural English voice selection, optional manual voice picker (US English and other English voices, male or female), 0.5× default speed, adjustable 0.25×–1.0× speed, synchronized word highlighting (underlined as it is read), automatic scrolling, and Play / Pause / Resume / Stop controls. Every page and paragraph also has a **Listen** button beside **Focus** to hear just that part again.
 - **Reader comfort tools:** Lexend, Comic Neue, and OpenDyslexic fonts; five text sizes; a toggleable line-focus mask.
@@ -36,6 +37,7 @@ All asset paths are relative, so the site works at a project URL such as `https:
 ```text
 .
 ├── index.html              # Homepage: reading trail, level picker, book catalog
+├── level.html              # Single reading level: overview, book shelf, level pager
 ├── reader.html             # Chapter reader, toolbars, dialogs, print containers
 ├── 404.html                # Friendly not-found page
 ├── site.webmanifest        # App icons and install metadata

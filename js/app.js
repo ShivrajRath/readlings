@@ -119,6 +119,8 @@
     try {
       if (page === "home") {
         initHome();
+      } else if (page === "level") {
+        initLevelPage();
       } else if (page === "reader") {
         initReader();
       }
@@ -380,6 +382,62 @@
     return "reader.html?book=" + encodeURIComponent(chapter.book.id) + "&chapter=" + encodeURIComponent(chapter.id);
   }
 
+  function levelUrl(levelId) {
+    return "level.html?level=" + encodeURIComponent(levelId);
+  }
+
+  function getLevelFromUrl() {
+    var raw = null;
+
+    try {
+      raw = new URLSearchParams(window.location.search).get("level");
+    } catch (error) {
+      return null;
+    }
+
+    if (raw === null || raw === "") {
+      return null;
+    }
+
+    var levelId = Number(raw);
+
+    if (!Number.isInteger(levelId)) {
+      return null;
+    }
+
+    for (var i = 0; i < DATA.levels.length; i += 1) {
+      if (DATA.levels[i].id === levelId) {
+        return DATA.levels[i];
+      }
+    }
+
+    return null;
+  }
+
+  function getLevelStartChapter(level) {
+    var firstChapter = null;
+
+    level.books.forEach(function (levelBook) {
+      levelBook.chapters.forEach(function (chapter) {
+        if (!firstChapter) {
+          firstChapter = chapter;
+        }
+      });
+    });
+
+    for (var b = 0; b < level.books.length; b += 1) {
+      var levelBook = level.books[b];
+
+      for (var c = 0; c < levelBook.chapters.length; c += 1) {
+        if (!isComplete(levelBook.chapters[c])) {
+          return levelBook.chapters[c];
+        }
+      }
+    }
+
+    return firstChapter;
+  }
+
   function printHeader(chapter) {
     return "Readlings — " + chapter.book.title + ": " + chapter.title + " (Level " + chapter.levelData.id + ")";
   }
@@ -588,10 +646,7 @@
   function initHome() {
     var levelGrid = document.getElementById("level-grid");
     var bookGrid = document.getElementById("book-grid");
-    var levelSection = document.getElementById("levels");
     var catalogStatus = document.getElementById("catalog-status");
-    var clearFilter = document.getElementById("clear-level-filter");
-    var filterHint = document.getElementById("filter-hint");
     var dialog = document.getElementById("book-dialog");
     var dialogContent = document.getElementById("book-dialog-content");
     var dialogClose = document.getElementById("book-dialog-close");
@@ -600,7 +655,6 @@
       return;
     }
 
-    var activeLevel = null;
     var dialogBookId = null;
 
     renderLevelCards();
@@ -608,40 +662,6 @@
     renderTrail();
     updateGlobalCounts();
     installDialogDismissal(dialog);
-
-    levelGrid.addEventListener("click", function (event) {
-      var card = event.target.closest("[data-level]");
-
-      if (!card) {
-        return;
-      }
-
-      var levelId = Number(card.getAttribute("data-level"));
-      activeLevel = activeLevel === levelId ? null : levelId;
-
-      renderLevelCards();
-      renderCatalog();
-
-      if (activeLevel !== null) {
-        var selected = levelGrid.querySelector('[data-level="' + activeLevel + '"]');
-        if (selected) {
-          selected.focus({ preventScroll: true });
-        }
-        var librarySection = document.getElementById("library");
-        if (librarySection) {
-          librarySection.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
-        }
-      }
-    });
-
-    clearFilter.addEventListener("click", function () {
-      activeLevel = null;
-      renderLevelCards();
-      renderCatalog();
-      if (levelSection) {
-        levelSection.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" });
-      }
-    });
 
     bookGrid.addEventListener("click", function (event) {
       var chaptersButton = event.target.closest("[data-open-book]");
@@ -676,135 +696,17 @@
     }
 
     function renderLevelCards() {
-      levelGrid.innerHTML = DATA.levels.map(function (level) {
-        var stats = getLevelStats(level);
-        var pressed = activeLevel === level.id;
-        var percent = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
-        var bookLabel = level.books.length + " " + plural("book", level.books.length);
-        var chapterLabel = stats.total + " " + plural("chapter", stats.total);
-
-        return (
-          '<button class="level-card" type="button" data-level="' + level.id + '" data-number="L' + level.id + '" ' +
-            'aria-pressed="' + pressed + '" ' +
-            'style="--card-color: ' + escapeHtml(level.color) + "; --card-soft: " + escapeHtml(level.soft) +
-              "; --card-ink: " + escapeHtml(level.ink) + ';">' +
-            '<span class="level-card__top">' +
-              '<span class="level-card__icon">' + icon(level.icon) + '</span>' +
-              '<span class="level-card__number">Level ' + level.id + '</span>' +
-            '</span>' +
-            '<span class="level-card__category">' + escapeHtml(level.category) + '</span>' +
-            '<span class="level-card__title">' + escapeHtml(level.name) + '</span>' +
-            '<span class="level-card__description">' + escapeHtml(level.description) + '</span>' +
-            '<span class="level-card__footer">' +
-              '<span class="level-card__meta"><span>' + bookLabel + ' · ' + chapterLabel + '</span>' +
-                '<span>' + stats.done + '/' + stats.total + ' ★</span></span>' +
-              '<span class="level-card__progress"><span style="width: ' + percent + '%;"></span></span>' +
-            '</span>' +
-          '</button>'
-        );
-      }).join("");
+      levelGrid.innerHTML = DATA.levels.map(levelCardMarkup).join("");
     }
 
     function renderCatalog() {
-      var visibleBooks = activeLevel === null
-        ? books
-        : books.filter(function (book) { return book.levelData.id === activeLevel; });
-      var level = activeLevel === null
-        ? null
-        : DATA.levels.filter(function (item) { return item.id === activeLevel; })[0];
-
-      if (activeLevel !== null && !level) {
-        activeLevel = null;
-        visibleBooks = books;
-      }
-
-      clearFilter.hidden = activeLevel === null;
-
       if (catalogStatus) {
-        catalogStatus.innerHTML = level
-          ? 'Showing <strong>' + visibleBooks.length + '</strong> ' + plural("book", visibleBooks.length) +
-            ' at <strong>Level ' + level.id + ' · ' + escapeHtml(level.name) + '</strong>'
-          : 'Showing <strong>all ' + visibleBooks.length + '</strong> books';
+        catalogStatus.innerHTML = 'Showing <strong>all ' + books.length + '</strong> books';
       }
 
-      if (filterHint) {
-        filterHint.innerHTML = level
-          ? icon("sparkle") + " Level " + level.id + " selected. Tap the card again or choose <strong>All levels</strong> to see every book."
-          : icon("sparkle") + " Tap a level card to filter the book nook.";
-      }
-
-      bookGrid.innerHTML = visibleBooks.length
-        ? visibleBooks.map(renderBookCard).join("")
-        : '<p class="empty-state">No books in this level just yet. Try another reading step!</p>';
-
-      if (typeof levelSection !== "undefined" && levelSection) {
-        levelSection.setAttribute("data-filtered", activeLevel === null ? "false" : "true");
-      }
-    }
-
-    function renderBookCard(book) {
-      var stats = getBookStats(book);
-      var level = book.levelData;
-      var nextChapter = getContinueChapter(book);
-      var href = nextChapter ? chapterUrl(nextChapter) : "index.html#library";
-      var actionLabel = stats.done === 0
-        ? "Start reading"
-        : stats.complete
-          ? "Read again"
-          : "Continue";
-      var stars = book.chapters.map(function (chapter) {
-        return '<span class="book-progress__star' + (isComplete(chapter) ? " is-earned" : "") + '" aria-hidden="true">' +
-          icon("star") + '</span>';
-      }).join("");
-      var sticker = stats.complete
-        ? '<span class="book-cover__sticker">' + icon("check") + ' All stars</span>'
-        : "";
-
-      return (
-        '<article class="book-card" style="--card-index: ' + book.index + ';">' +
-          '<div class="book-cover" style="--cover-color: ' + escapeHtml(level.color) + "; --cover-soft: " +
-            escapeHtml(level.soft) + "; --cover-ink: " + escapeHtml(level.ink) + ';">' +
-            '<div class="book-cover__top">' +
-              '<span class="cover-series">' + icon("book-open") + ' Readlings</span>' +
-              (stats.complete ? "" : '<span class="cover-level">Level ' + level.id + '</span>') +
-            '</div>' +
-            '<div class="cover-art" aria-hidden="true">' +
-              '<span class="cover-emoji">' + escapeHtml(book.emoji) + '</span>' +
-              '<span class="cover-star cover-star--one">✦</span>' +
-              '<span class="cover-star cover-star--two">★</span>' +
-            '</div>' +
-            '<div class="book-cover__title">' +
-              '<h3>' + escapeHtml(book.title) + '</h3>' +
-              '<p>' + escapeHtml(book.kicker) + '</p>' +
-            '</div>' +
-            sticker +
-          '</div>' +
-          '<div class="book-info">' +
-            '<div class="book-info__topline">' +
-              '<span class="book-level-chip">Level ' + level.id + ' · ' + escapeHtml(level.category) + '</span>' +
-              '<span>' + book.chapters.length + ' ' + plural("chapter", book.chapters.length) + '</span>' +
-            '</div>' +
-            '<p class="book-info__blurb">' + escapeHtml(book.blurb) + '</p>' +
-            '<div class="book-skills" aria-label="Reading skills">' +
-              book.skills.map(function (skill) { return '<span>' + escapeHtml(skill) + '</span>'; }).join("") +
-            '</div>' +
-            '<div class="book-progress">' +
-              '<span class="book-progress__stars" role="img" aria-label="' + stats.done + ' of ' +
-                stats.total + ' stars collected">' + stars + '</span>' +
-              '<span class="book-progress__label">' + stats.done + '/' + stats.total + ' stars</span>' +
-            '</div>' +
-            '<div class="book-actions">' +
-              '<a class="btn btn--primary btn--small" href="' + escapeHtml(href) + '">' +
-                actionLabel + icon("arrow-right") +
-              '</a>' +
-              '<button class="btn btn--ghost btn--small btn--chapters" type="button" data-open-book="' +
-                escapeHtml(book.id) + '" aria-label="See all chapters in ' + escapeHtml(book.title) + '">' +
-                icon("chapters") + ' Chapters' +
-              '</button>' +
-            '</div>' +
-          '</div>' +
-        '</article>'
-      );
+      bookGrid.innerHTML = books.length
+        ? books.map(renderBookCard).join("")
+        : '<p class="empty-state">No books just yet. Try another reading step!</p>';
     }
 
     function renderTrail() {
@@ -886,6 +788,292 @@
         }
       }
     });
+  }
+
+  /* ------------------------------------------------------------------------
+     Level page
+     ------------------------------------------------------------------------ */
+
+  function levelCardMarkup(level) {
+    var stats = getLevelStats(level);
+    var percent = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
+    var bookLabel = level.books.length + " " + plural("book", level.books.length);
+    var chapterLabel = stats.total + " " + plural("chapter", stats.total);
+
+    return (
+      '<a class="level-card" href="' + escapeHtml(levelUrl(level.id)) + '" data-level="' + level.id + '" data-number="L' + level.id + '" ' +
+        'style="--card-color: ' + escapeHtml(level.color) + "; --card-soft: " + escapeHtml(level.soft) +
+          "; --card-ink: " + escapeHtml(level.ink) + ';">' +
+        '<span class="level-card__top">' +
+          '<span class="level-card__icon">' + icon(level.icon) + '</span>' +
+          '<span class="level-card__number">Level ' + level.id + '</span>' +
+        '</span>' +
+        '<span class="level-card__category">' + escapeHtml(level.category) + '</span>' +
+        '<span class="level-card__title">' + escapeHtml(level.name) + '</span>' +
+        '<span class="level-card__description">' + escapeHtml(level.description) + '</span>' +
+        '<span class="level-card__footer">' +
+          '<span class="level-card__meta"><span>' + bookLabel + ' · ' + chapterLabel + '</span>' +
+            '<span>' + stats.done + '/' + stats.total + ' ★</span></span>' +
+          '<span class="level-card__progress"><span style="width: ' + percent + '%;"></span></span>' +
+          '<span class="level-card__open">Open level' + icon("arrow-right") + '</span>' +
+        '</span>' +
+      '</a>'
+    );
+  }
+
+  function renderBookCard(book, index) {
+    var stats = getBookStats(book);
+    var level = book.levelData;
+    var nextChapter = getContinueChapter(book);
+    var href = nextChapter ? chapterUrl(nextChapter) : "index.html#library";
+    var actionLabel = stats.done === 0
+      ? "Start reading"
+      : stats.complete
+        ? "Read again"
+        : "Continue";
+    var cardIndex = typeof index === "number" ? index : book.index;
+    var stars = book.chapters.map(function (chapter) {
+      return '<span class="book-progress__star' + (isComplete(chapter) ? " is-earned" : "") + '" aria-hidden="true">' +
+        icon("star") + '</span>';
+    }).join("");
+    var sticker = stats.complete
+      ? '<span class="book-cover__sticker">' + icon("check") + ' All stars</span>'
+      : "";
+
+    return (
+      '<article class="book-card" style="--card-index: ' + cardIndex + ';">' +
+        '<div class="book-cover" style="--cover-color: ' + escapeHtml(level.color) + "; --cover-soft: " +
+          escapeHtml(level.soft) + "; --cover-ink: " + escapeHtml(level.ink) + ';">' +
+          '<div class="book-cover__top">' +
+            '<span class="cover-series">' + icon("book-open") + ' Readlings</span>' +
+            (stats.complete ? "" : '<span class="cover-level">Level ' + level.id + '</span>') +
+          '</div>' +
+          '<div class="cover-art" aria-hidden="true">' +
+            '<span class="cover-emoji">' + escapeHtml(book.emoji) + '</span>' +
+            '<span class="cover-star cover-star--one">✦</span>' +
+            '<span class="cover-star cover-star--two">★</span>' +
+          '</div>' +
+          '<div class="book-cover__title">' +
+            '<h3>' + escapeHtml(book.title) + '</h3>' +
+            '<p>' + escapeHtml(book.kicker) + '</p>' +
+          '</div>' +
+          sticker +
+        '</div>' +
+        '<div class="book-info">' +
+          '<div class="book-info__topline">' +
+            '<span class="book-level-chip">Level ' + level.id + ' · ' + escapeHtml(level.category) + '</span>' +
+            '<span>' + book.chapters.length + ' ' + plural("chapter", book.chapters.length) + '</span>' +
+          '</div>' +
+          '<p class="book-info__blurb">' + escapeHtml(book.blurb) + '</p>' +
+          '<div class="book-skills" aria-label="Reading skills">' +
+            book.skills.map(function (skill) { return '<span>' + escapeHtml(skill) + '</span>'; }).join("") +
+          '</div>' +
+          '<div class="book-progress">' +
+            '<span class="book-progress__stars" role="img" aria-label="' + stats.done + ' of ' +
+              stats.total + ' stars collected">' + stars + '</span>' +
+            '<span class="book-progress__label">' + stats.done + '/' + stats.total + ' stars</span>' +
+          '</div>' +
+          '<div class="book-actions">' +
+            '<a class="btn btn--primary btn--small" href="' + escapeHtml(href) + '">' +
+              actionLabel + icon("arrow-right") +
+            '</a>' +
+            '<button class="btn btn--ghost btn--small btn--chapters" type="button" data-open-book="' +
+              escapeHtml(book.id) + '" aria-label="See all chapters in ' + escapeHtml(book.title) + '">' +
+              icon("chapters") + ' Chapters' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  function initLevelPage() {
+    var hero = document.getElementById("level-hero");
+    var booksSection = document.getElementById("level-books");
+    var bookGrid = document.getElementById("level-book-grid");
+    var catalogStatus = document.getElementById("level-catalog-status");
+    var pager = document.getElementById("level-pager");
+    var breadcrumbLevel = document.getElementById("breadcrumb-level");
+    var dialog = document.getElementById("book-dialog");
+    var dialogContent = document.getElementById("book-dialog-content");
+    var dialogClose = document.getElementById("book-dialog-close");
+    var level = getLevelFromUrl();
+
+    if (!hero || !bookGrid) {
+      return;
+    }
+
+    updateGlobalCounts();
+
+    if (!level) {
+      document.title = "Reading levels — Readlings";
+
+      if (breadcrumbLevel) {
+        breadcrumbLevel.textContent = "All levels";
+      }
+
+      hero.classList.add("level-hero--missing");
+      hero.innerHTML =
+        '<div class="level-hero__grid">' +
+          '<div class="level-hero__copy">' +
+            '<p class="eyebrow eyebrow--pill">' + icon("compass") + ' Reading levels</p>' +
+            '<h1 id="level-title">Choose a reading level.</h1>' +
+            '<p class="level-hero__lead">Seven gentle steps from first sounds to chapter books. Open the one that feels comfy.</p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="level-grid level-grid--inline">' + DATA.levels.map(levelCardMarkup).join("") + '</div>';
+
+      if (booksSection) {
+        booksSection.hidden = true;
+      }
+
+      if (pager) {
+        pager.hidden = true;
+      }
+
+      return;
+    }
+
+    var levelIndex = DATA.levels.indexOf(level);
+
+    document.title = "Level " + level.id + " · " + level.name + " — Readlings";
+
+    if (breadcrumbLevel) {
+      breadcrumbLevel.textContent = "Level " + level.id + " · " + level.name;
+    }
+
+    hero.style.setProperty("--level-color", level.color);
+    hero.style.setProperty("--level-soft", level.soft);
+    hero.style.setProperty("--level-ink", level.ink);
+    hero.style.setProperty("--level-line", LEVEL_LINES[level.id] || "#F0D988");
+
+    renderLevelHero();
+    renderLevelBooks();
+    renderLevelPager();
+    installDialogDismissal(dialog);
+
+    if (dialogClose) {
+      dialogClose.addEventListener("click", function () {
+        closeDialog(dialog);
+      });
+    }
+
+    bookGrid.addEventListener("click", function (event) {
+      var chaptersButton = event.target.closest("[data-open-book]");
+
+      if (!chaptersButton) {
+        return;
+      }
+
+      event.preventDefault();
+
+      var book = bookById[chaptersButton.getAttribute("data-open-book")];
+
+      if (!book || !dialogContent) {
+        return;
+      }
+
+      dialogContent.innerHTML = buildBookDialog(book, null, "book-dialog-title", "home");
+      openDialog(dialog);
+
+      if (dialogClose) {
+        dialogClose.focus({ preventScroll: true });
+      }
+    });
+
+    window.addEventListener("storage", function (event) {
+      if (!event.key || event.key === STORAGE_PROGRESS) {
+        progress = loadProgress();
+        renderLevelHero();
+        renderLevelBooks();
+        updateGlobalCounts();
+      }
+    });
+
+    function renderLevelHero() {
+      var stats = getLevelStats(level);
+      var startChapter = getLevelStartChapter(level);
+      var percent = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
+      var totalMinutes = level.books.reduce(function (sum, item) { return sum + item.minutes; }, 0);
+      var startLabel = stats.done === 0
+        ? "Start this level"
+        : stats.done === stats.total
+          ? "Read a favourite"
+          : "Continue this level";
+      var startAction = startChapter
+        ? '<a class="btn btn--primary" href="' + escapeHtml(chapterUrl(startChapter)) + '">' +
+            escapeHtml(startLabel) + icon("arrow-right") + '</a>'
+        : "";
+
+      hero.innerHTML =
+        '<span class="level-hero__number" aria-hidden="true">L' + level.id + '</span>' +
+        '<div class="level-hero__grid">' +
+          '<div class="level-hero__copy">' +
+            '<p class="eyebrow eyebrow--pill">' + icon(level.icon) + ' Level ' + level.id + ' · ' + escapeHtml(level.category) + '</p>' +
+            '<h1 id="level-title">' + escapeHtml(level.name) + '</h1>' +
+            '<p class="level-hero__lead">' + escapeHtml(level.description) + '</p>' +
+            '<ul class="level-hero__focus" aria-label="Level ' + level.id + ' reading focus">' +
+              level.focus.map(function (skill) { return '<li>' + escapeHtml(skill) + '</li>'; }).join("") +
+            '</ul>' +
+            '<div class="level-hero__actions">' + startAction +
+              '<a class="btn btn--ghost" href="index.html#levels">All reading levels</a>' +
+            '</div>' +
+          '</div>' +
+          '<aside class="level-hero__card" aria-label="Level ' + level.id + ' progress">' +
+            '<span class="level-hero__icon" aria-hidden="true">' + icon(level.icon) + '</span>' +
+            '<p class="level-hero__card-eyebrow">This level</p>' +
+            '<dl class="level-hero__stats">' +
+              '<div><dt>Books</dt><dd>' + level.books.length + '</dd></div>' +
+              '<div><dt>Chapters</dt><dd>' + stats.total + '</dd></div>' +
+              '<div><dt>About</dt><dd>' + totalMinutes + ' min</dd></div>' +
+            '</dl>' +
+            '<div class="level-hero__progress">' +
+              '<div class="level-hero__progress-track" role="progressbar" aria-label="Stars collected in Level ' + level.id + '" ' +
+                'aria-valuemin="0" aria-valuemax="' + stats.total + '" aria-valuenow="' + stats.done + '">' +
+                '<span style="width: ' + percent + '%;"></span>' +
+              '</div>' +
+              '<span><strong>' + stats.done + '</strong> of ' + stats.total + ' stars collected</span>' +
+            '</div>' +
+            '<p class="level-hero__guidance">' + icon("heart") + '<span>' + escapeHtml(level.guidance) + '</span></p>' +
+          '</aside>' +
+        '</div>';
+    }
+
+    function renderLevelBooks() {
+      if (catalogStatus) {
+        catalogStatus.innerHTML = 'Showing <strong>' + level.books.length + '</strong> ' +
+          plural("book", level.books.length) + ' at <strong>Level ' + level.id + ' · ' + escapeHtml(level.name) + '</strong>';
+      }
+
+      bookGrid.innerHTML = level.books.length
+        ? level.books.map(renderBookCard).join("")
+        : '<p class="empty-state">No books in this level just yet. Try another reading step!</p>';
+    }
+
+    function renderLevelPager() {
+      if (!pager) {
+        return;
+      }
+
+      var previous = levelIndex > 0 ? DATA.levels[levelIndex - 1] : null;
+      var next = levelIndex < DATA.levels.length - 1 ? DATA.levels[levelIndex + 1] : null;
+      var previousCard = previous
+        ? '<a class="level-pager__card" href="' + escapeHtml(levelUrl(previous.id)) + '" ' +
+            'style="--card-color: ' + escapeHtml(previous.color) + ';">' +
+            icon("arrow-left") +
+            '<span><small>Previous level</small><strong>Level ' + previous.id + ' · ' + escapeHtml(previous.name) + '</strong></span>' +
+          '</a>'
+        : '<span class="level-pager__spacer" aria-hidden="true"></span>';
+      var nextCard = next
+        ? '<a class="level-pager__card level-pager__card--next" href="' + escapeHtml(levelUrl(next.id)) + '" ' +
+            'style="--card-color: ' + escapeHtml(next.color) + ';">' +
+            '<span><small>Next level</small><strong>Level ' + next.id + ' · ' + escapeHtml(next.name) + '</strong></span>' +
+            icon("arrow-right") +
+          '</a>'
+        : '<span class="level-pager__spacer" aria-hidden="true"></span>';
+
+      pager.innerHTML = previousCard + nextCard;
+    }
   }
 
   function buildBookDialog(book, currentKey, titleId, context) {
