@@ -5365,7 +5365,7 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
 
 @media print {
   @page {
-    margin: 0.75in;
+    margin: 0.5in;
   }
 
   html,
@@ -5377,8 +5377,8 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
     color: #000 !important;
     background: #FFF !important;
     font-family: "Lexend", "Arial", sans-serif !important;
-    font-size: 16pt !important;
-    line-height: 1.8 !important;
+    font-size: 22pt !important;
+    line-height: 1.55 !important;
     -webkit-print-color-adjust: economy;
     print-color-adjust: economy;
   }
@@ -5439,13 +5439,13 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
 
   .print-running-header {
     display: block !important;
-    margin: 0 0 18pt;
+    margin: 0 0 12pt;
     padding-bottom: 4pt;
     color: #000 !important;
     background: #FFF !important;
     border-bottom: 0.5pt solid #000;
     font-family: "Lexend", "Arial", sans-serif !important;
-    font-size: 8.5pt !important;
+    font-size: 10pt !important;
     font-weight: 500 !important;
     line-height: 1.4 !important;
   }
@@ -5464,9 +5464,9 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
     border: 0 !important;
     border-radius: 0 !important;
     font-family: "Lexend", "Arial", sans-serif !important;
-    font-size: 16pt !important;
+    font-size: 22pt !important;
     font-weight: 400 !important;
-    line-height: 1.8 !important;
+    line-height: 1.55 !important;
     letter-spacing: normal !important;
     text-wrap: wrap;
     break-inside: auto !important;
@@ -5513,8 +5513,8 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
   }
 
   .print-chapter {
-    break-inside: avoid-page;
-    page-break-inside: avoid;
+    break-inside: auto;
+    page-break-inside: auto;
     break-after: page;
     page-break-after: always;
   }
@@ -5526,37 +5526,37 @@ body[data-reader-font="dyslexic"] .story-page .story-paragraph {
 
   .print-chapter__header {
     display: block;
-    margin-bottom: 0.45in;
+    margin-bottom: 0.3in;
     padding-bottom: 4pt;
     color: #000;
     border-bottom: 0.5pt solid #000;
-    font-size: 8.5pt;
+    font-size: 10pt;
     font-weight: 500;
     line-height: 1.4;
   }
 
   .print-chapter__kicker {
-    margin: 0 0 6pt;
-    font-size: 9pt;
+    margin: 0 0 8pt;
+    font-size: 11pt;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   .print-chapter h2 {
-    margin: 0 0 18pt;
+    margin: 0 0 14pt;
     color: #000;
-    font-size: 24pt;
+    font-size: 30pt;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.15;
     letter-spacing: normal;
   }
 
   .print-chapter p {
-    margin: 0 0 0.55em;
+    margin: 0 0 0.5em;
     color: #000;
-    font-size: 16pt;
-    line-height: 1.8;
+    font-size: 22pt;
+    line-height: 1.55;
     orphans: 3;
     widows: 3;
   }

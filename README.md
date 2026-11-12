@@ -12,7 +12,7 @@ Readlings is a free, standalone reading curriculum website for young children. I
 - **Read-along narration:** automatic natural English voice selection, optional manual voice picker (US English and other English voices, male or female), 0.5× default speed, adjustable 0.25×–1.0× speed, synchronized word highlighting (underlined as it is read), automatic scrolling, and Play / Pause / Resume / Stop controls. Every page and paragraph also has a **Listen** button beside **Focus** to hear just that part again.
 - **Reader comfort tools:** Lexend, Comic Neue, and OpenDyslexic fonts; five text sizes; a toggleable line-focus mask.
 - **Progress:** stars and last-read position are saved in `localStorage` on the device.
-- **Print editions:** print the current chapter or the whole book. Printed pages use a white background, black 16pt text, 1.8 line-height, 0.75in margins, a running header, and a page break per chapter.
+- **Print editions:** print the current chapter or the whole book. Printed pages use a white background, large black 22pt text, 1.55 line-height, 0.5in margins, a running header, and a page break per chapter.
 - **Accessible by default:** responsive layouts, keyboard support, visible focus styles, reduced-motion support, and a small 404 page.
 
 ## Run it locally
